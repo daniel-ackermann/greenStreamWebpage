@@ -1,0 +1,12 @@
+<div class="form-group">
+    <textarea [formControl]="importText" rows="10" class="form-control" placeholder="Paste your JSON here"></textarea>
+    <br>
+    <div class="d-flex justify-content-between">
+        <p>Erwartet wird ein Array aus Einträgen.</p>
+        <div>
+            <button class="btn btn-outline-primary" (click)="loadExample()">Load example</button>
+            <button class="btn btn-outline-primary mx-3" (click)="parse()">Parse JSON</button>
+            <button class="btn btn-outline-danger" (click)="import()">Importieren</button>
+        </div>
+    </div>
+</div>

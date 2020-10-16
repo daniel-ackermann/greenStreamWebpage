@@ -1,0 +1,17 @@
+<div class="card">
+    <div class="card-body">
+        <div class="d-flex justify-content-between">
+
+            <h5 class="card-title" [routerLink]="[{ outlets: { itemModal: ['item', item.id] } }]" >{{item.title}}</h5>
+            <div class="d-flex">
+                <i class="material-icons" *ngIf="globalStatus.loggedIn" [routerLink]="[{ outlets: { itemModal: ['edit', item.id] } }]">edit</i>
+                <i class="material-icons red" *ngIf="globalStatus.loggedIn" (click)="deleteItem(item.id)">delete</i>
+                <!-- <i class="material-icons" [ngClass]="{'red': item.likes}">thumb_up</i> -->
+            </div>
+        </div>
+        <p class="text-truncate text-muted">{{item.description}}</p>
+        <div class="d-flex justify-content-end">
+            <a href="#" href="{{item.url}}" class="btn btn-outline-primary" target="_blank">Öffnen</a>
+        </div>
+    </div>
+</div>

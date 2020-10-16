@@ -1,0 +1,18 @@
+
+<nav class="navbar fixed-top navbar-light bg-light">
+    <a class="navbar-brand" href="#">
+        <img src="../../assets/Nachhaltigkeitbutton.png" width="30" height="30" class="d-inline-block align-top" alt="">
+        Greenstream
+    </a>
+    <div class="d-flex">
+        <div *ngIf="globalStatus.loggedIn" class="nav-item">
+            <a class="nav-link" [routerLink]="['import']">JSON-Import</a>
+        </div>
+        <div class="nav-item">
+            <i [routerLink]="[{ outlets: { itemModal: ['new'] } }]" class="material-icons my-2 mx-2">add</i>
+        </div>
+        <div  class="nav-item">
+            <i [routerLink]="[{ outlets: { modal: ['login'] } }]" class="material-icons my-2">account_circle</i>
+        </div>
+    </div>
+</nav>

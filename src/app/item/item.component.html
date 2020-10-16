@@ -1,0 +1,18 @@
+<div class="card">
+    <div class="card-body">
+        <div class="d-flex justify-content-between">
+            <h5 class="card-title">
+                {{item.title}}
+            </h5>
+            <div>
+                <i class="material-icons" *ngIf="globalStatus.loggedIn">edit</i>
+                <i class="material-icons" [routerLink]="['']" title="Schließen">close</i>
+            </div>
+        </div>
+        <p class="card-text">{{item.description}}</p>
+        <dir class="d-flex justify-content-between p-0">
+            <!-- <i class="material-icons red">thumb_up</i> -->
+            <a href="#" href="{{item.url}}" class="btn btn-outline-primary" target="_blank">Öffnen</a>
+        </dir>
+    </div>
+</div>

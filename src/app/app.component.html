@@ -1,0 +1,12 @@
+<app-top-bar></app-top-bar>
+
+<div class="container">
+    <router-outlet name="modal"></router-outlet>
+    <router-outlet name="itemModal"></router-outlet>
+    <router-outlet></router-outlet>
+</div>
+<nav class="navbar navbar-light bg-light justify-content-end">
+    <div class="nav-item">
+        <a class="nav-link" [routerLink]="['impressum']">Impressum</a>
+    </div>
+</nav>
