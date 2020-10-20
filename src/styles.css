@@ -14,7 +14,7 @@ body {
 */
 .container{
     min-height: calc(100vh - 118px);
-    margin-top: 60px;
+    margin-top: 5rem;
 }
 /*
 router-outlet + *  {
@@ -164,34 +164,22 @@ app-top-bar h1 {
     cursor: pointer;
 }
 
-app-item, app-item-edit{
-    position: fixed;
-    z-index: 5000;
+app-item, app-item-edit, app-settings{
+    z-index: 1031;
     background-color: rgba(0, 0, 0, 0.5);
     height: 100%;
     width: 100%;
+    position: fixed;
     top: 0;
     right:0;
     bottom: 0;
     left: 0;
-    /* outline: 0; */
-    padding: 0 15px 0 15px;
-    /* margin-top: auto; */
-    /* margin-bottom: auto; */
+    padding: 0 1rem;
     overflow-x: hidden;
     overflow-y: auto;
-    /* display:block; */
 }
-app-item > *, app-item-edit > *{
+
+app-item > div, app-item-edit > div, app-settings > div{
     max-width: 720px;
-    margin-left:auto;
-    margin-right:auto;
-    position: absolute!important;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    /* bottom: 0; */
-    /* right: 0; */
-    /* overflow-x: hidden; */
-    /* overflow-y: scroll; */
+    margin: 1rem auto;
 }
