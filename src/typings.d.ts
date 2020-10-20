@@ -1,4 +1,4 @@
-export interface Item{
+export interface Item {
     title: string;
     description: string;
     likes: number;
@@ -6,17 +6,29 @@ export interface Item{
     id: number;
 }
 
-export interface Topic{
+export interface Topic {
     id: number;
     topic: string;
 }
 
-export interface Type{
+export interface Type {
     id: number;
     type: string;
 }
 
-export interface InputError{
+export interface InputError {
     valid: boolean;
     message: string;
+}
+
+export interface User {
+    id: number;
+    email: string;
+    role: string;
+    language: string;
+}
+
+export interface Language{
+    value: string;
+    name: string;
 }
