@@ -9,16 +9,16 @@
         <form [formGroup]="item">
             <div class="form-group">
                 <label for="title">Titel</label>
-                <input type="text" id="title" class="form-control" formControlName="title">
+                <input type="text" id="title" class="form-control" formControlName="title" placeholder="Titel">
             </div>
             <input class="form-control" type="hidden" formControlName="id">
             <div class="form-group">
                 <label for="description">Beschreibung</label>
-                <textarea class="form-control" formControlName="description" id="description" rows="7"></textarea>
+                <textarea class="form-control" formControlName="description" id="description" rows="10" placeholder="Beschreibung"></textarea>
             </div>
             <div class="form-group">
                 <label for="exampleFormControlInput1">Internet-Addresse</label>
-                <input class="form-control" type="text" id="url" formControlName="url">
+                <input class="form-control" type="text" id="url" formControlName="url" placeholder="http://wichtige.info">
             </div>
             <div class="form-inline form-group justify-content-between">
                 <div class="form-check form-check-inline">
@@ -35,19 +35,32 @@
                         <input class="form-control" type="number" id="likes" formControlName="likes">
                     </div>
                 </div>
+                <div class="form-group">
+                    <select formControlName="language" class="form-control">
+                        <option *ngFor="let language of languages" [value]="language.value">
+                            {{ language.name }}
+                        </option>
+                    </select>
+                </div>
             </div>
-            <div class="d-flex justify-content-between p-0 form-group ">
-                <select formControlName="type_id">
-                    <option *ngFor="let type of types" [value]="type.id">
-                      {{ type.name }}
-                    </option>
-                </select>
-                <select formControlName="topic_id">
-                    <option *ngFor="let topic of topics" [value]="topic.id">
-                      {{ topic.name }}
-                    </option>
-                </select>
-                <a href="#" (click)="save()" class="btn btn-outline-primary">Speichern</a>
+            <div class="p-0 form-group ">
+                <div class="form-group">
+                    <select formControlName="type_id" class="form-control">
+                        <option *ngFor="let type of types" [value]="type.id">
+                            {{ type.name }}
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select formControlName="topic_id" class="form-control">
+                        <option *ngFor="let topic of topics" [value]="topic.id">
+                            {{ topic.name }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <a href="#" (click)="save()" class="btn btn-outline-primary w-100">Speichern</a>
             </div>
             
         </form>

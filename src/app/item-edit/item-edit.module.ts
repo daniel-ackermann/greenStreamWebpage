@@ -2,9 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ItemEditComponent } from './item-edit.component';
 import { RouterModule } from '@angular/router';
-import { GlobalStatus } from '../globalStatus';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ListComponent } from '../list/list.component';
 
 
 
@@ -26,10 +24,7 @@ import { ListComponent } from '../list/list.component';
             }
         ])
     ],
-    exports: [
-        ItemEditComponent
-    ],
-    providers: [GlobalStatus],
+    exports: [ItemEditComponent],
     bootstrap: [ItemEditComponent]
 })
 export class ItemEditModule { }

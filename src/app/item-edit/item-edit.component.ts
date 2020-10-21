@@ -2,10 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GlobalStatus } from '../globalStatus';
 import { ItemService } from '../item.service';
-import { Item, Topic, Type } from 'src/typings';
-
+import { Item, Language, Topic, Type } from 'src/typings';
+import { environment } from "src/environments/environment";
+import { LoginService } from '../login.service';
+import { LoginRequestService } from '../loginRequest.service';
 
 @Component({
     selector: 'app-item-edit',
@@ -13,7 +14,6 @@ import { Item, Topic, Type } from 'src/typings';
     styleUrls: ['./item-edit.component.css']
 })
 export class ItemEditComponent implements OnInit {
-    mainUrl = "http://localhost:4200";
     title = "Hinzufügen";
     item = new FormGroup({
         title: new FormControl(''),
@@ -24,41 +24,56 @@ export class ItemEditComponent implements OnInit {
         explanation_id: new FormControl(0),
         type_id: new FormControl(1),
         topic_id: new FormControl(1),
-        language: new FormControl(),
+        language: new FormControl("de"),
         simple: new FormControl(0),
         // not set for each item, but for each type
         view_external: new FormControl(),
         name: new FormControl()
     });
-    constructor(public globalStatus: GlobalStatus, private http: HttpClient, private route: ActivatedRoute, private router: Router, private itemService: ItemService) {}
+    constructor(    private http: HttpClient,
+                    private route: ActivatedRoute,
+                    private router: Router,
+                    private itemService: ItemService,
+                    private loginService: LoginService,
+                    private loginRequestService: LoginRequestService
+                    ) {
+                        this.loginService.onStatusChange.subscribe((loggedIn) => {
+                            if(loggedIn === false){
+                                this.loginRequestService.requestLogin().catch(() => {
+                                    this.router.navigate(['/']);
+                                })
+                            }
+                        });
+                    }
     id: number;
     topics:Topic[] = [];
     types:Type[] = [];
+    languages:Language[] = [{
+            name: "Deutsch",
+            value: "de"
+        },
+        {
+            name: "English",
+            value: "en"
+        }
+    ];
 
     ngOnInit(): void {
-        this.http.get<Topic[]>(`${this.mainUrl}/api/topics`).subscribe({
-            error: (err) => {
-                console.error(err);
-            },
-            next: (data: Topic[]) => {
-                this.topics = data;
-            }
+        this.http.get<Topic[]>(`${environment.apiMainUrl}/${environment.topicsPath}`).subscribe((data: Topic[]) => {
+            this.topics = data;
         })
-        this.http.get<Type[]>(`${this.mainUrl}/api/types`).subscribe({
-            error: (err) => {
-                console.error(err);
-            },
-            next: (data: Type[]) => {
-                this.types = data;
-            }
+        this.http.get<Type[]>(`${environment.apiMainUrl}/${environment.typesPath}`).subscribe((data: Type[]) => {
+            this.types = data;
         })
-        this.id = parseInt(this.route.snapshot.paramMap.get('id')) || undefined;
-        if (this.id == undefined) {
+        this.http.get<Language[]>(`${environment.apiMainUrl}/${environment.languagesPath}`).subscribe((data: Language[]) => {
+            this.languages = data;
+        })
+        this.id = parseInt(this.route.snapshot.paramMap.get('id'), 10) || undefined;
+        if (this.id === undefined) {
             console.log("new Item");
         }else{
             this.title = "Bearbeiten";
             this.itemService.getItem(this.id).subscribe((data: Item) => {
-                console.log(data[0]);
                 this.item.setValue(data[0]);
             });
         }
@@ -69,14 +84,15 @@ export class ItemEditComponent implements OnInit {
         delete newItem.view_external;
         delete newItem.name;
         console.log("save");
-        if(this.id == undefined){
+        if(this.id === undefined){
             this.itemService.add(newItem).subscribe(err => {
-                console.log(err);
+                console.log("err");
             });
         }else{
             this.itemService.put(newItem).subscribe(err => {
-                console.log(err);
+                console.log("err");
             });
         }
+        this.router.navigate(['']);
     }
 }
