@@ -1,32 +1,41 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
+import { LoginService } from '../login.service';
+import { LoginRequestService } from '../loginRequest.service';
 
 @Component({
     selector: 'app-import-json',
     templateUrl: './import-json.component.html',
     styleUrls: ['./import-json.component.css']
 })
-export class ImportJSONComponent implements OnInit {
+export class ImportJSONComponent {
     importText = new FormControl('');
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private loginService: LoginService, private loginRequestService: LoginRequestService, private router: Router) {
+        this.loginService.onStatusChange.subscribe((loggedIn) => {
+            if(loggedIn === false){
+                this.loginRequestService.requestLogin().catch(() => {
+                    this.router.navigate(['/']);
+                })
+            }
+        });
+    }
 
-    ngOnInit(): void {}
-    
     import(){
         const data = this.importText.value;
-        this.importText.setValue("Das war erfolgreich!");
         setTimeout(() => {
             this.importText.setValue('');
         }, 5*1000);
-        this.http.post("http://localhost:4200/api/import", {data: data}).subscribe(err => {
-            console.log(err);
+        this.http.post(`${environment.apiMainUrl}/${environment.importPath}`, {data}).subscribe(err => {
+            this.importText.setValue("Das war erfolgreich!");
         });
     }
     parse(){
         let data = this.importText.value;
         console.log(data);
-        if(data == ""){
+        if(data === ""){
             return;
         }
         try{
