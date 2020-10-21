@@ -1,18 +1,21 @@
 
 <nav class="navbar fixed-top navbar-light bg-light">
-    <a class="navbar-brand" href="#">
-        <img src="../../assets/Nachhaltigkeitbutton.png" width="30" height="30" class="d-inline-block align-top" alt="">
+    <a class="navbar-brand" [routerLink]="['']" >
+        <img src="../../assets/Nachhaltigkeitbutton.png" width="50" height="50" class="d-inline-block align-top" alt="">
         Greenstream
     </a>
     <div class="d-flex">
-        <div *ngIf="globalStatus.loggedIn" class="nav-item">
-            <a class="nav-link" [routerLink]="['import']">JSON-Import</a>
+        <div class="nav-item" *ngIf="loginService.isLoggedIn">
+            <i [routerLink]="['import']" class="material-icons m-2">unarchive</i>
         </div>
-        <div class="nav-item">
-            <i [routerLink]="[{ outlets: { itemModal: ['new'] } }]" class="material-icons my-2 mx-2">add</i>
+        <div class="nav-item" *ngIf="loginService.isLoggedIn">
+            <i [routerLink]="[{ outlets: { itemModal: ['new'] } }]" class="material-icons m-2">add_box</i>
+        </div>
+        <div class="nav-item" *ngIf="loginService.isLoggedIn">
+            <i [routerLink]="[{ outlets: { itemModal: ['settings'] } }]" class="material-icons m-2">settings</i>
         </div>
         <div  class="nav-item">
-            <i [routerLink]="[{ outlets: { modal: ['login'] } }]" class="material-icons my-2">account_circle</i>
+            <i (click)="requestLogin()" class="material-icons m-2">account_circle</i>
         </div>
     </div>
 </nav>
