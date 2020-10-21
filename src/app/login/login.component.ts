@@ -1,12 +1,10 @@
-import { Component, Injectable, Input, OnInit } from '@angular/core';
-import { Location } from '@angular/common'
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { FormControl } from '@angular/forms';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { GlobalStatus } from '../globalStatus';
-import { ActivatedRoute, Router } from '@angular/router';
-import { createFalse } from 'typescript';
-import { InputError } from 'src/typings';
+import { environment } from 'src/environments/environment';
+import { InputError, User } from 'src/typings';
+import { LoginService } from '../login.service';
 
 @Component({
     selector: 'login',
@@ -14,7 +12,7 @@ import { InputError } from 'src/typings';
     styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-    title = "Einstellungen";
+    title = "Login";
     registerError = "";
     loginError = "";
     register = 0;
@@ -23,102 +21,69 @@ export class LoginComponent {
     username = new FormControl('');
     password = new FormControl('');
     closeResult: string = '';
-    constructor(private http: HttpClient, private modalService: NgbModal, public activeModal: NgbActiveModal, public globalStatus: GlobalStatus, private router: Router) { }
+    constructor(
+        private http: HttpClient,
+        private modalService: NgbModal,
+        public activeModal: NgbActiveModal,
+        public loginService: LoginService
+    ) { }
 
     doLogin() {
-        const {valid, message} = this.validateInput();
+        const { valid, message } = this.validateInput();
         this.loginError = message;
-        if(!valid){
+        if (!valid) {
             return;
         }
         const options = {
-            username: this.globalStatus.username = this.username.value,
+            username: this.username.value,
             password: this.password.value,
             email: this.email.value,
             role: 'admin'
         }
-        let url = "http://localhost:4200/login";
-        this.http.post(url, options).subscribe({
-            error: (err) => {
-                if (err.status == 200) {
-                    console.log("Erfolgreich eingeloggt!");
-                    this.globalStatus.loggedIn = true;
-                    this.modalService.dismissAll();
-                } else {
-                    this.loginError = err.error;
-                    console.log(err);
-                }
-            }
+        this.loginService.doLogin(options).then((data:User) => {
+            // this.modalService.dismissAll();
+            this.activeModal.close();
+            console.log(data);
+        }).catch((err) => {
+            this.loginError = err.error;
         });
     }
-    createAccount(){
-        const {valid, message} = this.validateInput();
+    createAccount() {
+        const { valid, message } = this.validateInput();
         this.registerError = message;
-        if(!valid){
+        if (!valid) {
             return;
         }
         const options = {
-            username: this.globalStatus.username = this.username.value,
+            username: this.username.value,
             password: this.password.value,
             email: this.email.value,
             role: 'admin'
         }
-        let url = "http://localhost:4200/account";
-        this.http.post(url, options).subscribe({
-            error: (err) => {
-                if (err.status == 200) {
-                    console.log("Erfolgreich registriert!");
-                    this.globalStatus.loggedIn = true;
-                    this.modalService.dismissAll();
-                } else {
-                    this.registerError = err.error;
-                    console.log(err);
-                }
-            }
+        this.loginService.createAccount(options).then(() => {
+            this.modalService.dismissAll();
+        }).catch((err) => {
+            this.registerError = err.error;
         });
-
     }
 
     doLogout() {
-        this.http.delete("http://localhost:4200/login").subscribe({
-            error: (err: HttpErrorResponse) => {
-                if (err.status != 200) {
-                    console.log(err);
-                }
-                console.log("Abgemeldet");
-                this.globalStatus.loggedIn = false;
-                this.modalService.dismissAll();
-                this.email.setValue('');
-                this.username.setValue('');
-                this.password.setValue('');
-            },
-            next: (data) => {
-            }
+        this.loginService.doLogout().then(() => {
+            this.email.setValue('');
+            this.username.setValue('');
+            this.password.setValue('');
+            this.modalService.dismissAll();
+        }).catch((err) => {
+            console.log(err);
         });
     }
-    deleteAccount() {
-        this.http.delete("http://localhost:4200/account").subscribe({
-            error: (err) => {
-                console.log(err);
-                if (err.status == 200) {
-                    console.log("Abgemeldet");
-                    this.globalStatus.loggedIn = false;
-                    this.modalService.dismissAll();
-                }
-            },
-            next: (data) => {
-                
-                console.log(data);
-            }
-        });
-    }
-    requestPassword(){
+    requestPassword() {
         this.requested = true;
-        this.http.get<string>("http://localhost:4200/account", {params:{user: this.email.value}}).subscribe({
+        this.http.get<string>(`${environment.apiMainUrl}/${environment.requestPasswordPath}`, { params: { user: this.email.value } }).subscribe({
             error: err => {
                 console.error(err);
             },
-            next: (data:string) => {
+            next: (data: string) => {
                 setTimeout(() => {
                     this.modalService.dismissAll();
                 }, 5 * 1000);
@@ -126,14 +91,14 @@ export class LoginComponent {
         })
     }
 
-    validateInput(): InputError{
-        if(this.password.valid == false){
+    validateInput(): InputError {
+        if (this.password.valid === false) {
             return {
                 valid: false,
                 message: "Geben Sie ein Passwort an."
             };
         }
-        if(this.email.valid == false){
+        if (this.email.valid === false) {
             return {
                 valid: false,
                 message: "Geben Sie eine Email-Addresse an."
@@ -147,16 +112,3 @@ export class LoginComponent {
 }
 
 
-@Component({
-    template:``
-})
-export class LoginModal implements OnInit{
-    constructor(private modalService: NgbModal, private location: Location){}
-    ngOnInit(){
-        this.modalService.open(LoginComponent, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-            
-        }, (reason) => {
-            this.location.back();
-        });
-    }
-}

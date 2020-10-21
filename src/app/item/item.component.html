@@ -5,8 +5,8 @@
                 {{item.title}}
             </h5>
             <div>
-                <i class="material-icons" *ngIf="globalStatus.loggedIn">edit</i>
-                <i class="material-icons" [routerLink]="['']" title="Schließen">close</i>
+                <i class="material-icons mx-2" *ngIf="loginService.isLoggedIn" [routerLink]="['/', { outlets: { itemModal: ['edit', item.id] } }]">edit</i>
+                <i class="material-icons mx-2" [routerLink]="['']" title="Schließen">close</i>
             </div>
         </div>
         <p class="card-text">{{item.description}}</p>

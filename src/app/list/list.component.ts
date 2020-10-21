@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { GlobalStatus } from '../globalStatus';
-import { ItemService } from '../item.service';
-import { Item } from "../../typings";
+import { ItemService } from 'src/app/item.service';
+import { Item } from "src/typings";
+import { LoginService } from '../login.service';
 
 @Component({
   selector: 'app-list',
@@ -11,12 +11,10 @@ import { Item } from "../../typings";
 export class ListComponent implements OnInit{
     searchText = "";
     items:Item[];
-    constructor(public globalStatus:GlobalStatus, public itemService: ItemService){}
+    constructor(public itemService: ItemService, private loginService: LoginService){}
 
     ngOnInit(){
-        this.itemService.getItems().subscribe(data => {
-            this.items = data;
-        });
+        this.getItems();
         this.itemService.onRemove.subscribe((id:number) => {
             this.remove(id);
         });
@@ -26,11 +24,19 @@ export class ListComponent implements OnInit{
         this.itemService.onAdd.subscribe((item:Item) => {
             this.items.push(item);
         });
+        this.loginService.onLanguageChange.subscribe((language: string) => {
+            this.getItems();
+        });
     }
-    
+
+    getItems(){
+        this.itemService.getItems().subscribe(data => {
+            this.items = data;
+        });
+    }
     remove(id:number){
         for(let i = 0; i < this.items.length; i++){
-            if(this.items[i].id == id){
+            if(this.items[i].id === id){
                 this.items.splice(i,1);
             }
         }
@@ -38,7 +44,7 @@ export class ListComponent implements OnInit{
 
     replace(item:Item){
         for(let i = 0; i < this.items.length; i++){
-            if(this.items[i].id == item.id){
+            if(this.items[i].id === item.id){
                 this.items[i] = item;
             }
         }

@@ -4,8 +4,8 @@
 
             <h5 class="card-title" [routerLink]="[{ outlets: { itemModal: ['item', item.id] } }]" >{{item.title}}</h5>
             <div class="d-flex">
-                <i class="material-icons" *ngIf="globalStatus.loggedIn" [routerLink]="[{ outlets: { itemModal: ['edit', item.id] } }]">edit</i>
-                <i class="material-icons red" *ngIf="globalStatus.loggedIn" (click)="deleteItem(item.id)">delete</i>
+                <i class="material-icons mx-2" *ngIf="loginService.isLoggedIn" [routerLink]="[{ outlets: { itemModal: ['edit', item.id] } }]">edit</i>
+                <i class="material-icons ml-2 red" *ngIf="loginService.isLoggedIn" (click)="deleteItem(item.id)">delete</i>
                 <!-- <i class="material-icons" [ngClass]="{'red': item.likes}">thumb_up</i> -->
             </div>
         </div>

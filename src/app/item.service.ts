@@ -1,42 +1,38 @@
 import { HttpClient } from '@angular/common/http';
-import { EventEmitter, Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Item } from 'src/typings';
 
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { Observable, of, Subject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
     providedIn: 'root'
 })
-export class ItemService implements OnInit {
+export class ItemService {
     items;
-    mainUrl = "http://localhost:4200";
-    path = "api/items"
     constructor(private http: HttpClient) { }
     onRemove: Subject<number> = new Subject<number>();
     onEdit: Subject<Item> = new Subject<Item>();
     onAdd: Subject<Item> = new Subject<Item>();
 
-    ngOnInit() {
-    }
-
     remove(id: number) {
         this.onRemove.next(id);
-        this.http.delete(`${this.mainUrl}/${this.path}/${id}`).subscribe((err) => {
+        this.http.delete(`${environment.apiMainUrl}/${environment.itemsPath}/${id}`).subscribe((err) => {
             console.log(err);
         });
     }
 
     getItems() {
-        return this.http.get<[Item]>(`${this.mainUrl}/${this.path}`).pipe(
+        return this.http.get<[Item]>(`${environment.apiMainUrl}/${environment.itemsPath}`).pipe(
             tap(_ => console.log('fetched items')),
             catchError(this.handleError<Item[]>('getItems', []))
         );
     }
 
     getItem(id: number): Observable<Item> {
-        const url = `${this.mainUrl}/${this.path}/${id}`;
+        const url = `${environment.apiMainUrl}/${environment.itemsPath}/${id}`;
         return this.http.get<Item>(url).pipe(
             tap(_ => console.log(`fetched item id=${id}`)),
             catchError(this.handleError<Item>(`getItem id=${id}`))
@@ -45,14 +41,14 @@ export class ItemService implements OnInit {
 
     put(item:Item): Observable<Item>{
         this.onEdit.next(item);
-        return this.http.put<Item>(`${this.mainUrl}/${this.path}/${item.id}`, item).pipe(
+        return this.http.put<Item>(`${environment.apiMainUrl}/${environment.itemsPath}/${item.id}`, item).pipe(
             tap(_ => console.log(`fetched item id=${item.id}`)),
             catchError(this.handleError<Item>(`getItem id=${item.id}`))
         )
     }
 
     add(item:Item){
-        return this.http.post<Item>(`${this.mainUrl}/${this.path}`, item).pipe(
+        return this.http.post<Item>(`${environment.apiMainUrl}/${environment.itemsPath}`, item).pipe(
             tap(_ => {
                 console.log(`added item id=${item.id}`)
                 this.onAdd.next(item);
