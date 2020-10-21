@@ -9,5 +9,7 @@ export const environment = {
     logoutPath: "login",
     registerPath: "account",
     deregisterPath:"account",
-    requestPasswordPath: "account"
+    requestPasswordPath: "account",
+    userPath:"api/user",
+    languagesPath:"api/language",
 };
