@@ -1,5 +1,5 @@
 {
-  "name": "pyvxogqmxyx.angular",
+  "name": "green-stream-webpage",
   "version": "0.0.0",
   "private": true,
   "dependencies": {
@@ -27,7 +27,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "deploy": "./deployment.sh"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1001.6",
