@@ -2,7 +2,7 @@
     <div class="card-header">
         <div class="d-flex justify-content-between">
             <h3>{{title}}</h3>
-            <i class="material-icons" [routerLink]="['']" title="Schließen">close</i>
+            <i class="material-icons" (click)="close()" title="Schließen">close</i>
         </div>
     </div>
     <div class="card-body">

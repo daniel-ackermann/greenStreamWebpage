@@ -59,4 +59,7 @@ export class SettingsComponent {
             this.location.back();
         })
     }
+    close(){
+        this.location.back();
+    }
 }

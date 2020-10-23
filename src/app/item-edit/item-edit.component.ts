@@ -1,4 +1,5 @@
 import { HttpClient } from '@angular/common/http';
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -35,7 +36,8 @@ export class ItemEditComponent implements OnInit {
                     private router: Router,
                     private itemService: ItemService,
                     private loginService: LoginService,
-                    private loginRequestService: LoginRequestService
+                    private loginRequestService: LoginRequestService,
+                    private location: Location
                     ) {
                         this.loginService.onStatusChange.subscribe((loggedIn) => {
                             if(loggedIn === false){
@@ -94,5 +96,9 @@ export class ItemEditComponent implements OnInit {
             });
         }
         this.router.navigate(['']);
+    }
+
+    close(){
+        this.location.back();
     }
 }
