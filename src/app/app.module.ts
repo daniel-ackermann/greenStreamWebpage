@@ -30,6 +30,7 @@ import { BottomBarComponent } from './bottom-bar/bottom-bar.component';
             { path: 'new', outlet: 'itemModal', loadChildren: () => import('./item-edit/item-edit.module').then(m => m.ItemEditModule) },
             { path: 'settings', outlet: 'itemModal', loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule) },
             { path: 'impressum', loadChildren: () => import('./impressum/impressum.module').then(m => m.ImpressumModule) },
+            { path: 'privacy', loadChildren: () => import('./privacy/privacy.module').then(m => m.PrivacyModule) },
             { path: 'import', loadChildren: () => import('./import-json/import-json.module').then(m => m.ImportJSONModule) },
             // { path: 'login', outlet: 'modal', component: LoginModal },
             {
