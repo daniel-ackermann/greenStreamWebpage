@@ -20,4 +20,5 @@
 - write README.md
 - ~~improve communication with user on login screen~~
 - ~~add searchbar~~
-- globalStatus is not in sync between item-edit and list
+- ~~globalStatus is not in sync between item-edit and list~~
+- ~~add privacy policy~~
