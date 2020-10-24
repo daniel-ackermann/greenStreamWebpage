@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiMainUrl: "http://localhost:4200",
+  apiMainUrl: "https://localhost:4200",
   importPath: "api/import",
   itemsPath: "api/items",
   topicsPath: "api/topics",
