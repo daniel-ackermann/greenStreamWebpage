@@ -10,18 +10,20 @@ export class LoginRequestService {
         id: -1,
         email: "",
         role: "visitor",
-        language: "en"
+        language: ""
     };
     constructor(private modalService: NgbModal) {
     }
-    requestLogin() {
+    requestLogin(mode: number = 0) {
         return new Promise((resolve, reject) => {
-            this.modalService.open(LoginComponent, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+            let modalRef = this.modalService.open(LoginComponent, { ariaLabelledBy: 'modal-basic-title' });
+            modalRef.result.then((result) => {
                 console.log(result);
                 resolve();
             }, (reason) => {
                 reject();
             });
+            modalRef.componentInstance.register = mode;
         })
     }
 }

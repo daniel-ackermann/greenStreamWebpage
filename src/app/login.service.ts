@@ -13,21 +13,24 @@ export class LoginService {
         id: -1,
         email: "",
         role: "visitor",
-        language: "en"
+        language: "",
+        username: ""
     };
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) { }
 
-    isSignedIn(){
-        this.http.get(`${environment.apiMainUrl}/${environment.loginPath}`).subscribe((result: boolean|User) => {
-            if(result ===  false){
+    isSignedIn() {
+        this.http.get(`${environment.apiMainUrl}/${environment.loginPath}`).subscribe((result: boolean | User) => {
+            console.log("isSignedIn", result);
+            if (result === false) {
                 this.isLoggedIn = false;
                 this.onStatusChange.next(false);
-                return;
+                this.setUserLanguage("");
+            } else {
+                this.user = result as User;
+                this.setUserLanguage(this.user.language);
+                this.isLoggedIn = true;
+                this.onStatusChange.next(true);
             }
-            this.user = result as User;
-            this.setUserLanguage(this.user.language);
-            this.isLoggedIn = true;
-            this.onStatusChange.next(true);
         });
     }
     doLogin(options: any) {
@@ -37,7 +40,7 @@ export class LoginService {
                 error: (err) => {
                     reject(err);
                 },
-                next:(user: User) => {
+                next: (user: User) => {
                     console.log("Erfolgreich eingeloggt!");
                     this.onStatusChange.next(true);
                     this.isLoggedIn = true;
@@ -49,7 +52,7 @@ export class LoginService {
             });
         });
     }
-    async createAccount(options: any){
+    async createAccount(options: any) {
         return new Promise((resolve, reject) => {
             const url = `${environment.apiMainUrl}/${environment.registerPath}`;
             this.http.post(url, options).subscribe({
@@ -66,7 +69,7 @@ export class LoginService {
         });
     }
 
-    doLogout(){
+    doLogout() {
         return new Promise((resolve, reject) => {
             this.http.delete(`${environment.apiMainUrl}/${environment.logoutPath}`).subscribe(() => {
                 console.log("Abgemeldet");
@@ -76,7 +79,7 @@ export class LoginService {
             });
         });
     }
-    deleteAccount(){
+    deleteAccount() {
         return new Promise((resolve) => {
             this.http.delete(`${environment.apiMainUrl}/${environment.deregisterPath}/${this.user.email}`).subscribe((data) => {
                 console.log(data);
@@ -86,11 +89,11 @@ export class LoginService {
             });
         });
     }
-    setUserLanguage(language: string){
+    setUserLanguage(language: string) {
         console.log("set language to ", language);
         this.user.language = language;
         this.onLanguageChange.next(language);
-        if(this.isLoggedIn){
+        if (this.isLoggedIn) {
             this.http.put(`${environment.apiMainUrl}/${environment.userPath}/${this.user.email}`, this.user).subscribe((data) => {
                 console.log(data);
             });
