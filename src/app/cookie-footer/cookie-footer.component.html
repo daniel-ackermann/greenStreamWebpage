@@ -1,0 +1,10 @@
+<div *ngIf="!cookiesApproved">
+    <nav class="navbar navbar-light fixed-bottom bg-light justify-content-between">
+        <div>
+            <div>Mit der Nutzung dieser Seite akzeptieren Sie Cookies. <a href="/privacy">Datenschutzbestimmung</a></div>
+        </div>
+        <div class="form-inline">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="button" (click)="acceptCookies()">Zustimmen</button>
+        </div>
+    </nav>
+</div>
