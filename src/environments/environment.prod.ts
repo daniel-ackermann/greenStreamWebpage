@@ -1,6 +1,6 @@
 export const environment = {
     production: true,
-    apiMainUrl: "http://appsterdb.ackermann.digital:3000",
+    apiMainUrl: "https://appsterdb.ackermann.digital",
     importPath: "api/import",
     itemsPath: "api/items",
     topicsPath: "api/topics",

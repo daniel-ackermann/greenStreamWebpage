@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormControl } from '@angular/forms';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -15,12 +15,14 @@ export class LoginComponent {
     title = "Login";
     registerError = "";
     loginError = "";
-    register = 0;
     requested = false;
     email = new FormControl('');
     username = new FormControl('');
     password = new FormControl('');
     closeResult: string = '';
+    
+    @Input() register: number;
+
     constructor(
         private http: HttpClient,
         private modalService: NgbModal,

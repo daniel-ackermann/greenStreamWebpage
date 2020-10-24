@@ -26,6 +26,7 @@ export interface User {
     email: string;
     role: string;
     language: string;
+    username?:string;
 }
 
 export interface Language{
