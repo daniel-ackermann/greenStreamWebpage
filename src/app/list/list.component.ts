@@ -14,7 +14,6 @@ export class ListComponent implements OnInit{
     constructor(public itemService: ItemService, private loginService: LoginService){}
 
     ngOnInit(){
-        this.getItems();
         this.itemService.onRemove.subscribe((id:number) => {
             this.remove(id);
         });
