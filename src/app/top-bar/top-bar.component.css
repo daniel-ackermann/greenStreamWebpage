@@ -2,3 +2,6 @@
     font-size: 2.2rem;
     margin: -.3rem 1rem -.3rem 0;
 }
+i:after{
+    display: none;
+}
