@@ -1,0 +1,11 @@
+<h2 class="d-flex justify-content-between">
+    <span>
+        You created
+        <span class="badge badge-light">{{items.length}}</span>
+    </span>
+    <label for="search" class="sr-only">Suche</label>
+    <input class="form-control py-0 ml-3" id="search" type="search" placeholder="🔎" [(ngModel)]="searchText">
+</h2>
+<div class="card-columns">
+    <app-list-item [items]="items" [searchText]="searchText"></app-list-item>
+</div>
