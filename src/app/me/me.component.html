@@ -1,0 +1,41 @@
+<div class="">
+    <!-- <div class="card-header">
+        <div class="d-flex justify-content-between">
+            <h3>Einstellungen</h3>
+        </div>
+    </div> -->
+    <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="">
+            <div class="d-flex">
+                <svg height="200" width="200" class="m-3">
+                    <circle cx="100" cy="100" r="100" stroke="none" fill="aqua" />
+                    <text x="100" y="100" text-anchor="middle" dominant-baseline="middle" stroke="none"
+                        font-color="white" font-size="100">{{"A" | uppercase}}</text>
+                </svg>
+                <div>
+                    <h3>Sprachen</h3>
+                    <div class="form-group m-0" formArrayName="orders"
+                        *ngFor="let order of ordersFormArray.controls; let i = index">
+                        <label>
+                            <input class="" type="checkbox" [formControlName]="i">
+                            {{languages[i].name}}
+                        </label>
+                    </div>
+                    <small>Select at least one language, otherwise english will be selected.</small>
+                    <h3>Account</h3>
+                    <button class="btn btn-danger mr-auto" (click)="deleteAccount()">Account löschen</button>
+                    <!-- <h3 class="d-flex justify-content-between">Reviewed
+                        <button class="btn btn-outline-primary" [routerLink]="['reviewed']">Öffnen</button>
+                    </h3>
+                    <h3 class="d-flex justify-content-between">
+                        Created
+                        <button class="btn btn-outline-primary" [routerLink]="['created']">Öffnen</button>
+                    </h3> -->
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+    </form>
+</div>
