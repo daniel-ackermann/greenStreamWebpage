@@ -3,19 +3,24 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
-  apiMainUrl: "https://localhost:4200",
-  importPath: "api/import",
-  itemsPath: "api/items",
-  topicsPath: "api/topics",
-  typesPath: "api/types",
-  loginPath: "login",
-  logoutPath: "login",
-  registerPath: "account",
-  deregisterPath:"account",
-  requestPasswordPath: "account",
-  userPath:"api/user",
-  languagesPath:"api/language"
+    production: false,
+    apiMainUrl: "https://localhost:4200",
+    importPath: "api/import",
+    itemsPath: "api/items",
+    reviewedItemsPath: "api/items/reviewed",
+    createdItemsPath: "api/items/created",
+    reviewItemsPath: "api/items/review",
+    topicsPath: "api/topics",
+    typesPath: "api/types",
+    loginPath: "login",
+    logoutPath: "login",
+    registerPath: "account",
+    deregisterPath: "account",
+    requestPasswordPath: "account",
+    userPath: "api/user",
+    languagesPath: "api/language",
+    feedbackItemsPath: "api/feedback/item",
+    deleteFeedbackPath: "api/feedback"
 };
 
 /*
