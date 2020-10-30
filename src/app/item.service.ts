@@ -5,17 +5,18 @@ import { Item } from 'src/typings';
 import { catchError, tap } from 'rxjs/operators';
 import { Observable, of, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { LoginService } from './login.service';
 
 
 @Injectable({
     providedIn: 'root'
 })
 export class ItemService {
-    items;
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private loginService: LoginService) { }
     onRemove: Subject<number> = new Subject<number>();
     onEdit: Subject<Item> = new Subject<Item>();
     onAdd: Subject<Item> = new Subject<Item>();
+    onReview: Subject<number> = new Subject<number>();
 
     remove(id: number) {
         this.onRemove.next(id);
@@ -29,6 +30,34 @@ export class ItemService {
             tap(_ => console.log('fetched items')),
             catchError(this.handleError<Item[]>('getItems', []))
         );
+    }
+
+
+
+    getReviewItems(){
+        return this.http.get<[Item]>(`${environment.apiMainUrl}/${environment.reviewItemsPath}`).pipe(
+            tap(_ => console.log('fetched items')),
+            catchError(this.handleError<Item[]>('getReviewItems', []))
+        );
+    }
+
+    getReviewedItems(){
+        return this.http.get<[Item]>(`${environment.apiMainUrl}/${environment.reviewedItemsPath}`).pipe(
+            tap(_ => console.log('fetched items')),
+            catchError(this.handleError<Item[]>('getReviewedItems', []))
+        );
+    }
+
+    getCreatedItems(){
+        return this.http.get<[Item]>(`${environment.apiMainUrl}/${environment.createdItemsPath}`).pipe(
+            tap(_ => console.log('fetched items')),
+            catchError(this.handleError<Item[]>('getCreatedItems', []))
+        );
+    }
+
+    review(id:number){
+        this.onReview.next(id);
+        return this.http.get(`${environment.apiMainUrl}/${environment.reviewItemsPath}/${id}`).subscribe();
     }
 
     getItem(id: number): Observable<Item> {

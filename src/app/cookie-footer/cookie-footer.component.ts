@@ -9,7 +9,7 @@ export class CookieFooterComponent {
     cookiesApproved: boolean = false;
 
     acceptCookies() {
-        document.cookie = "acceptCookies=true";
+        document.cookie = "acceptCookies=true;same-site=lax";
         console.log("acceptCookies");
         this.cookiesApproved = true;
     }

@@ -1,0 +1,28 @@
+<div class="card">
+    <div class="card-body">
+        <div class="d-flex justify-content-between">
+            <h5 class="card-title">
+                {{item.title}}
+            </h5>
+            <div>
+                <!-- <i class="material-icons mx-2" *ngIf="loginService.isLoggedIn" [routerLink]="[{ outlets: { itemModal: ['edit', item.id] } }]">edit</i> -->
+                <i class="material-icons mx-2" (click)="review(item.id)" title="Review" *ngIf="item.reviewed==0">check</i>
+                <i class="material-icons mx-2" (click)="close()" title="Schließen">close</i>
+            </div>
+        </div>
+        <p class="card-text">{{item.description}}</p>
+        <div class="d-flex justify-content-between p-0">
+            <!-- <i class="material-icons red">thumb_up</i> -->
+            <a href="#" href="{{item.url}}" class="btn btn-outline-primary" target="_blank" rel="noopener">Öffnen</a>
+        </div>
+        <div *ngIf="loginService.isLoggedIn && feedback.length != 0">
+            <ul class="list-group">
+                <li class="list-group-item disabled">Feedback:</li>
+                <li class="list-group-item d-flex justify-content-between" *ngFor="let entry of feedback; let i = index">
+                    {{entry.feedback}}
+                    <i class="material-icons" (click)="deleteFeedback(entry.id, i)">delete</i>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

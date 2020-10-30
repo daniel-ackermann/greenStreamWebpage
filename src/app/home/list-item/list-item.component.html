@@ -1,0 +1,23 @@
+<div *ngFor="let item of items | filter: searchText">
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <h3 class="card-title text-truncate" [routerLink]="['..', { outlets: { itemModal: ['item', item.id] } }]">
+                    {{item.title}}
+                </h3>
+                <div class="d-flex">
+                    <i class="material-icons mx-2" *ngIf="loginService.isLoggedIn"
+                        [routerLink]="['..', { outlets: { itemModal: ['edit', item.id] } }]">edit</i>
+                    <i class="material-icons ml-2 red" *ngIf="loginService.isLoggedIn"
+                        (click)="deleteItem(item.id)">delete</i>
+                    <!-- <i class="material-icons" [ngClass]="{'red': item.likes}">thumb_up</i> -->
+                </div>
+            </div>
+            <p class="text-truncate text-muted">{{item.description}}</p>
+            <div class="d-flex justify-content-end">
+                <a href="#" href="{{item.url}}" class="btn btn-outline-primary" target="_blank"
+                    rel="noopener">Öffnen</a>
+            </div>
+        </div>
+    </div>
+</div>

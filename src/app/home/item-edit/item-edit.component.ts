@@ -3,11 +3,11 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ItemService } from '../item.service';
+import { ItemService } from 'src/app/item.service';
 import { Item, Language, Topic, Type } from 'src/typings';
 import { environment } from "src/environments/environment";
-import { LoginService } from '../login.service';
-import { LoginRequestService } from '../loginRequest.service';
+import { LoginService } from 'src/app/login.service';
+import { LoginRequestService } from 'src/app/loginRequest.service';
 
 @Component({
     selector: 'app-item-edit',
@@ -27,6 +27,7 @@ export class ItemEditComponent implements OnInit {
         topic_id: new FormControl(1),
         language: new FormControl("de"),
         simple: new FormControl(0),
+        reviewed: new FormControl(0),
         // not set for each item, but for each type
         view_external: new FormControl(),
         name: new FormControl()
@@ -35,7 +36,7 @@ export class ItemEditComponent implements OnInit {
                     private route: ActivatedRoute,
                     private router: Router,
                     private itemService: ItemService,
-                    private loginService: LoginService,
+                    public loginService: LoginService,
                     private loginRequestService: LoginRequestService,
                     private location: Location
                     ) {

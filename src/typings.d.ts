@@ -4,6 +4,7 @@ export interface Item {
     likes: number;
     url: string;
     id: number;
+    reviewed?:number;
 }
 
 export interface Topic {
@@ -26,10 +27,16 @@ export interface User {
     email: string;
     role: string;
     language: string;
-    username?:string;
+    username?: string;
 }
 
-export interface Language{
+export interface Language {
     value: string;
     name: string;
+}
+
+export interface Feedback { 
+    id: number;
+    information_id: number;
+    feedback:string;
 }

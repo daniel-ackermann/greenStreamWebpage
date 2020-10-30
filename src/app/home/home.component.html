@@ -1,0 +1,16 @@
+<ul class="nav justify-content-center" *ngIf="loginService.isLoggedIn">
+    <li class="nav-item">
+        <a class="nav-link" [routerLink]="['list']">All</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" [routerLink]="['created']">Created</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" [routerLink]="['reviewed']">Reviewed</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" [routerLink]="['review']">Review</a>
+    </li>
+</ul>
+<router-outlet></router-outlet>
+<router-outlet name="itemModal"></router-outlet>

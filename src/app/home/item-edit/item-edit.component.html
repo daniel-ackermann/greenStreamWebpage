@@ -59,6 +59,12 @@
                     </select>
                 </div>
             </div>
+            <div *ngIf="loginService.isLoggedIn">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="reviewed" formControlName="reviewed">
+                    <label class="form-check-label" for="reviewed">Reviewed</label>
+                </div>
+            </div>
             <div>
                 <a href="#" (click)="save()" class="btn btn-outline-primary w-100">Speichern</a>
             </div>

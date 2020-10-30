@@ -1,15 +1,17 @@
 <nav class="navbar fixed-top navbar-light bg-light">
-    <a class="navbar-brand" [routerLink]="['']">
-        <img src="../../assets/favicon.ico" width="50" height="50" class="d-inline-block align-top" alt="">
-        Greenstream
-    </a>
+    <h1>
+        <a class="navbar-brand" [routerLink]="['']">
+            <img src="../../assets/favicon.ico" width="49" height="50" class="d-inline-block align-top" alt="">
+            Greenstream
+        </a>
+    </h1>
     <div class="d-flex">
         <div class="nav-item" *ngIf="loginService.isLoggedIn">
-            <i [routerLink]="[{ outlets: { itemModal: ['new'] } }]" class="material-icons m-2">add_box</i>
+            <i [routerLink]="['list', { outlets: { itemModal: ['new'] } }]" class="material-icons m-2">add_box</i>
         </div>
-        <div class="nav-item" *ngIf="loginService.isLoggedIn">
-            <i [routerLink]="[{ outlets: { itemModal: ['settings'] } }]" class="material-icons m-2">settings</i>
-        </div>
+        <!-- <div class="nav-item" *ngIf="loginService.isLoggedIn" title="Account">
+            <i [routerLink]="['me']" class="material-icons m-2">settings</i>
+        </div> -->
         <div class="row">
             <div class="col">
                 <div ngbDropdown class="d-inline-block">
@@ -40,24 +42,34 @@
                             <button ngbDropdownItem (click)="requestLogin(-1)">Forgot password?</button>
                         </div>
                         <div *ngIf="loginService.isLoggedIn">
-                            <button ngbDropdownItem>{{loginService.user.username}} ({{loginService.user.role}})</button>
+                            <button ngbDropdownItem  [routerLink]="['me']" >{{loginService.user.username}} ({{loginService.user.role}})</button>
                             <div class="dropdown-divider"></div>
-                            <button ngbDropdownItem class="d-flex"><i class="material-icons pr-1">add_box</i> Topic</button>
-                            <button ngbDropdownItem class="d-flex"><i class="material-icons pr-1">add_box</i> Type</button>
-                            <button ngbDropdownItem class="d-flex"><i class="material-icons pr-1">add_box</i> Language</button>
-                            <button ngbDropdownItem class="d-flex"><i class="material-icons pr-1">add_box</i> other User</button>
+                            <!-- <button ngbDropdownItem class="d-flex">
+                                <i class="material-icons pr-1">add_box</i>
+                                Topic
+                            </button>
+                            <button ngbDropdownItem class="d-flex">
+                                <i class="material-icons pr-1">add_box</i>
+                                Type
+                            </button>
+                            <button ngbDropdownItem class="d-flex">
+                                <i class="material-icons pr-1">add_box</i>
+                                Language
+                            </button>
+                            <button ngbDropdownItem class="d-flex">
+                                <i class="material-icons pr-1">add_box</i> other
+                                User
+                            </button> -->
                             <button ngbDropdownItem class="d-flex" [routerLink]="['import']">
                                 <i class="material-icons pr-1">unarchive</i>
                                 Import JSON
                             </button>
                             <div class="dropdown-divider"></div>
-                            <button ngbDropdownItem  (click)="doLogout()">Logout</button>
+                            <button ngbDropdownItem (click)="doLogout()">Logout</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
     </div>
 </nav>
