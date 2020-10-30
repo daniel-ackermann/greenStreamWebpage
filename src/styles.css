@@ -159,6 +159,7 @@ app-top-bar h1 {
     direction: ltr;
     -moz-font-feature-settings: 'liga';
     -moz-osx-font-smoothing: grayscale;
+    height: max-content;
 }
 .material-icons:hover{
     cursor: pointer;
