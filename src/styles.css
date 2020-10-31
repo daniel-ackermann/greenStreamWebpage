@@ -14,7 +14,7 @@ body {
 */
 .container{
     min-height: calc(100vh - 118px);
-    margin-top: 5rem;
+    margin-top: 6rem;
 }
 /*
 router-outlet + *  {
@@ -183,4 +183,23 @@ app-item, app-item-edit, app-settings{
 app-item > div, app-item-edit > div, app-settings > div{
     max-width: 720px;
     margin: 1rem auto;
+}
+
+input[type="search"]{
+    max-width: 3rem;
+    border:none;
+    padding-right: 0;
+}
+input[type="search"]:focus::placeholder{
+    color: transparent;
+    content:"";
+}
+input[type="search"]:focus{
+    max-width: 20rem;
+    border: 1px solid #ced4da;
+}
+input[type="search"]::placeholder{
+    font-family: 'Material Icons';
+    font-size: 24px;
+    color: black;
 }
