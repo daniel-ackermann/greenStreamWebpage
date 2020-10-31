@@ -9,6 +9,7 @@ export const environment = {
     itemsPath: "api/items",
     reviewedItemsPath: "api/items/reviewed",
     createdItemsPath: "api/items/created",
+    likedItemsPath: "api/items/liked",
     reviewItemsPath: "api/items/review",
     topicsPath: "api/topics",
     typesPath: "api/types",
@@ -18,9 +19,10 @@ export const environment = {
     deregisterPath: "account",
     requestPasswordPath: "account",
     userPath: "api/user",
-    languagesPath: "api/language",
+    languagesPath: "api/languages",
     feedbackItemsPath: "api/feedback/item",
-    deleteFeedbackPath: "api/feedback"
+    deleteFeedbackPath: "api/feedback",
+    toggleLikePath:"api/items/status"
 };
 
 /*
@@ -31,10 +33,3 @@ export const environment = {
  * on performance if an error is thrown.
  */
 // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
-
-
-/*
-Copyright Google LLC. All Rights Reserved.
-Use of this source code is governed by an MIT-style license that
-can be found in the LICENSE file at http://angular.io/license
-*/
