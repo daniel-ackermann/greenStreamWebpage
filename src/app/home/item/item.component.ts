@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 import { LoginService } from 'src/app/login.service';
 import { ItemModule } from './item.module';
 import { ItemService } from 'src/app/item.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
     selector: 'app-item',
@@ -16,6 +17,7 @@ import { ItemService } from 'src/app/item.service';
 export class ItemComponent implements OnInit {
     item: Item;
     feedback: Feedback[] = [];
+    feedbackText = new FormControl('');
     constructor(
         public loginService: LoginService,
         private http: HttpClient,
@@ -51,6 +53,15 @@ export class ItemComponent implements OnInit {
     deleteFeedback(id: number, index: number) {
         this.http.delete(`${environment.apiMainUrl}/${environment.deleteFeedbackPath}/${id}`).subscribe();
         this.feedback.splice(index, 1);
+    }
+    addFeedback(){
+        const newFeedback = {
+            feedback: this.feedbackText.value,
+            information_id: this.id
+        };
+        this.feedback.push(newFeedback);
+        this.http.post(`${environment.apiMainUrl}/${environment.deleteFeedbackPath}`, newFeedback).subscribe();
+        this.feedbackText.setValue('');
     }
     close() {
         this.location.back()
