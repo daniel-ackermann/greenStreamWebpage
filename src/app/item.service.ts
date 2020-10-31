@@ -55,6 +55,13 @@ export class ItemService {
         );
     }
 
+    getLikedItems(){
+        return this.http.get<[Item]>(`${environment.apiMainUrl}/${environment.likedItemsPath}`).pipe(
+            tap(_ => console.log('fetched items')),
+            catchError(this.handleError<Item[]>('getCreatedItems', []))
+        );
+    }
+
     review(id:number){
         this.onReview.next(id);
         return this.http.get(`${environment.apiMainUrl}/${environment.reviewItemsPath}/${id}`).subscribe();

@@ -5,6 +5,7 @@ export interface Item {
     url: string;
     id: number;
     reviewed?:number;
+    liked?: boolean;
 }
 
 export interface Topic {

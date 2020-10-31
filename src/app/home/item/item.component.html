@@ -6,14 +6,20 @@
                 <span *ngIf="item.reviewed==0" class="text-truncate text-muted"> | Not reviewed yet!</span>
             </h5>
             <div>
-                <!-- <i class="material-icons mx-2" *ngIf="loginService.isLoggedIn" [routerLink]="[{ outlets: { itemModal: ['edit', item.id] } }]">edit</i> -->
                 <i class="material-icons green mx-2" *ngIf="item.reviewed==1"
                     title="Reviewed by Admin and Published">verified</i>
                 <a href="#" href="{{item.url}}" class="" target="_blank" rel="noopener" title="Öffnen">
                     <i class="material-icons">open_in_browser</i>
                 </a>
-                <i class="material-icons mx-2" (click)="review(item.id)" title="Review"
-                    *ngIf="item.reviewed==0 && loginService.isLoggedIn && loginService.user.role === 'admin'">check</i>
+                <span *ngIf="loginService.isLoggedIn">
+                    <i class=" material-icons"
+                        (click)="updateStatus({item_id: item.id, liked: !item.liked})">{{ item.liked | likeIcon}}</i>
+
+                    <i class="material-icons mx-2"
+                        *ngIf="item.reviewed==0 && loginService.user.role === 'admin'"
+                        (click)="review(item.id)" title="Review">check</i>
+
+                </span>
                 <i class="material-icons mx-2" (click)="close()" title="Schließen">close</i>
             </div>
         </div>

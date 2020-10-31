@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ItemComponent } from './item.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -10,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         ItemComponent
     ],
     imports: [
+        SharedModule,
         CommonModule,
         FormsModule,
         ReactiveFormsModule,

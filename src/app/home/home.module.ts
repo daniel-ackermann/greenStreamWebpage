@@ -9,6 +9,8 @@ import { ReviewComponent } from './review/review.component';
 import { ReviewedComponent } from './reviewed/reviewed.component';
 import { ListItemComponent } from './list-item/list-item.component';
 import { FilterPipe } from './list-item/filter.pipe';
+import { LikedComponent } from './liked/liked.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 
@@ -20,9 +22,11 @@ import { FilterPipe } from './list-item/filter.pipe';
         ReviewComponent,
         ReviewedComponent,
         ListItemComponent,
-        FilterPipe
+        FilterPipe,
+        LikedComponent
     ],
     imports: [
+        SharedModule,
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
@@ -41,6 +45,10 @@ import { FilterPipe } from './list-item/filter.pipe';
                     {
                         path: 'created',
                         component: CreatedComponent
+                    },
+                    {
+                        path: 'liked',
+                        component: LikedComponent
                     },
                     {
                         path: 'review',

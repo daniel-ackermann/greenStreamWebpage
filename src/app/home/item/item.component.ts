@@ -66,6 +66,10 @@ export class ItemComponent implements OnInit {
         this.http.post(`${environment.apiMainUrl}/${environment.deleteFeedbackPath}`, newFeedback).subscribe();
         this.feedbackText.setValue('');
     }
+    updateStatus(data:any){
+        this.http.post(`${environment.apiMainUrl}/${environment.toggleLikePath}`, data).subscribe();
+        this.item.liked = !this.item.liked;
+    }
     close() {
         this.location.back()
     }

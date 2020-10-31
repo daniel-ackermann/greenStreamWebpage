@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ListItemComponent } from './list-item.component';
 import { FilterPipe } from './filter.pipe';
 import { RouterModule } from '@angular/router';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 
@@ -12,6 +13,7 @@ import { RouterModule } from '@angular/router';
         ListItemComponent
     ],
     imports: [
+        SharedModule,
         CommonModule,
         RouterModule.forChild([
             {
