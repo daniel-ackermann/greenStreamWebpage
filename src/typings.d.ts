@@ -36,7 +36,8 @@ export interface Language {
 }
 
 export interface Feedback { 
-    id: number;
+    id?: number;
     information_id: number;
     feedback:string;
+    created_by_id?: number;
 }
