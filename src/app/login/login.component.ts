@@ -40,7 +40,7 @@ export class LoginComponent {
             username: this.username.value,
             password: this.password.value,
             email: this.email.value,
-            role: 'admin'
+            role: 'member'
         }
         this.loginService.doLogin(options).then((data:User) => {
             // this.modalService.dismissAll();
@@ -60,7 +60,7 @@ export class LoginComponent {
             username: this.username.value,
             password: this.password.value,
             email: this.email.value,
-            role: 'admin'
+            role: 'member'
         }
         this.loginService.createAccount(options).then(() => {
             this.modalService.dismissAll();
