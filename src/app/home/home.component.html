@@ -6,10 +6,10 @@
         <a class="nav-link" [routerLink]="['created']">Created</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" [routerLink]="['reviewed']">Reviewed</a>
+        <a class="nav-link" [routerLink]="['reviewed']" *ngIf="loginService.user.role=='admin'">Reviewed</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" [routerLink]="['review']">Review</a>
+        <a class="nav-link" [routerLink]="['review']" *ngIf="loginService.user.role=='admin'">Review</a>
     </li>
 </ul>
 <router-outlet></router-outlet>

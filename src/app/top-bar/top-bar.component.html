@@ -42,9 +42,11 @@
                             <button ngbDropdownItem (click)="requestLogin(-1)">Forgot password?</button>
                         </div>
                         <div *ngIf="loginService.isLoggedIn">
-                            <button ngbDropdownItem  [routerLink]="['me']" >{{loginService.user.username}} ({{loginService.user.role}})</button>
-                            <div class="dropdown-divider"></div>
-                            <!-- <button ngbDropdownItem class="d-flex">
+                            <button ngbDropdownItem [routerLink]="['me']">{{loginService.user.username}}
+                                ({{loginService.user.role}})</button>
+                            <span *ngIf="loginService.user.role=='admin'">
+                                <div class="dropdown-divider"></div>
+                                <!-- <button ngbDropdownItem class="d-flex">
                                 <i class="material-icons pr-1">add_box</i>
                                 Topic
                             </button>
@@ -60,10 +62,12 @@
                                 <i class="material-icons pr-1">add_box</i> other
                                 User
                             </button> -->
-                            <button ngbDropdownItem class="d-flex" [routerLink]="['import']">
-                                <i class="material-icons pr-1">unarchive</i>
-                                Import JSON
-                            </button>
+                                <button ngbDropdownItem class="d-flex" [routerLink]="['import']">
+                                    <i class="material-icons pr-1">unarchive</i>
+                                    Import JSON
+                                </button>
+
+                            </span>
                             <div class="dropdown-divider"></div>
                             <button ngbDropdownItem (click)="doLogout()">Logout</button>
                         </div>
