@@ -55,6 +55,9 @@ export class ItemComponent implements OnInit {
         this.feedback.splice(index, 1);
     }
     addFeedback(){
+        if(this.feedbackText.value == ""){
+            return;
+        }
         const newFeedback = {
             feedback: this.feedbackText.value,
             information_id: this.id
