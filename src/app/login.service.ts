@@ -9,6 +9,8 @@ export class LoginService {
     isLoggedIn: boolean = false;
     onStatusChange: Subject<boolean> = new Subject<boolean>();
     onLanguageChange: Subject<string> = new Subject<string>();
+    onNameChange: Subject<string> = new Subject<string>();
+    
     user: User = {
         id: -1,
         email: "",
@@ -21,7 +23,7 @@ export class LoginService {
     isSignedIn() {
         this.http.get(`${environment.apiMainUrl}/${environment.loginPath}`).subscribe((result: boolean | User) => {
             console.log("isSignedIn", result);
-            if (result === false) {
+            if (result === false || result === null) {
                 this.isLoggedIn = false;
                 this.onStatusChange.next(false);
                 this.setUserLanguage("");
@@ -93,10 +95,9 @@ export class LoginService {
         console.log("set language to ", language);
         this.user.language = language;
         this.onLanguageChange.next(language);
-        if (this.isLoggedIn) {
-            this.http.put(`${environment.apiMainUrl}/${environment.userPath}/${this.user.email}`, this.user).subscribe((data) => {
-                console.log(data);
-            });
-        }
+    }
+    setUserName(username: string){
+        this.user.username = username;
+        this.onNameChange.next(username);
     }
 }
