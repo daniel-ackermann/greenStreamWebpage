@@ -9,18 +9,18 @@
                 <i class="material-icons green mx-2" *ngIf="item.reviewed==1"
                     title="Reviewed by Admin and Published">verified</i>
                 <a href="#" href="{{item.url}}" class="" target="_blank" rel="noopener" title="Öffnen">
-                    <i class="material-icons">open_in_browser</i>
+                    <i class="material-icons mx-2">open_in_browser</i>
                 </a>
                 <span *ngIf="loginService.isLoggedIn">
-                    <i class=" material-icons"
+                    <i class=" material-icons mx-2"
                         (click)="updateStatus({item_id: item.id, liked: !item.liked})">{{ item.liked | likeIcon}}</i>
 
                     <i class="material-icons mx-2"
-                        *ngIf="item.reviewed==0 && loginService.user.role === 'admin'"
+                        *ngIf="item.reviewed!=1 && loginService.user.role === 'admin'"
                         (click)="review(item.id)" title="Review">check</i>
 
                 </span>
-                <i class="material-icons mx-2" (click)="close()" title="Schließen">close</i>
+                <i class="material-icons ml-2" (click)="close()" title="Schließen">close</i>
             </div>
         </div>
         <p class="card-text">{{item.description}}</p>

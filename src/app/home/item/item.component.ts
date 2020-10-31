@@ -69,6 +69,7 @@ export class ItemComponent implements OnInit {
     updateStatus(data:any){
         this.http.post(`${environment.apiMainUrl}/${environment.toggleLikePath}`, data).subscribe();
         this.item.liked = !this.item.liked;
+        this.itemService.put(this.item).subscribe();
     }
     close() {
         this.location.back()
