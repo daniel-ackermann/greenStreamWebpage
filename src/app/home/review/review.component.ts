@@ -16,9 +16,11 @@ export class ReviewComponent implements OnInit {
     constructor(private loginService: LoginService, private router: Router, private itemService: ItemService) { }
 
     ngOnInit(): void {
-        if(!this.loginService.isLoggedIn){
-            this.router.navigate(['']);
-        }
+        this.loginService.onStatusChange.subscribe(status => {
+            if(!status){
+                this.router.navigate(['']);
+            }
+        })
         this.itemService.getReviewItems().subscribe((data) => {
             console.log(data);
             this.items = data;

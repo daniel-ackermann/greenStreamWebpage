@@ -96,7 +96,7 @@ export class ItemEditComponent implements OnInit {
                 console.log("err");
             });
         }
-        this.router.navigate(['']);
+        this.location.back();
     }
 
     close(){

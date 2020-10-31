@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ItemService } from 'src/app/item.service';
 import { LoginService } from 'src/app/login.service';
+import { LoginRequestService } from 'src/app/loginRequest.service';
 import { Item } from 'src/typings';
 
 @Component({
@@ -12,16 +13,27 @@ import { Item } from 'src/typings';
 export class ReviewedComponent implements OnInit {
     searchText = "";
     items: Item[] = [];
-    constructor(public itemService: ItemService, private router: Router, private loginService: LoginService) { }
+    constructor(
+        public itemService: ItemService,
+        private router: Router,
+        private loginService: LoginService,
+        private loginRequestService: LoginRequestService) { }
 
     ngOnInit(): void {
-        if(!this.loginService.isLoggedIn){
-            this.router.navigate(['']);
-        }
+        this.requestItems();
+        this.loginService.onStatusChange.subscribe(status => {
+            if (!status) {
+                this.loginRequestService.requestLogin().then(() => {
+                    this.requestItems();
+                }).catch(err => {
+                    this.router.navigate(['']);
+                });
+            }
+        })
+    }
+    requestItems(){
         this.itemService.getReviewedItems().subscribe((data) => {
-            console.log(data);
             this.items = data;
         });
     }
-
 }
