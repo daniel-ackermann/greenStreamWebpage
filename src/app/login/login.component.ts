@@ -1,10 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'src/environments/environment';
 import { InputError, User } from 'src/typings';
 import { LoginService } from '../login.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'login',
@@ -16,18 +17,29 @@ export class LoginComponent {
     registerError = "";
     loginError = "";
     requested = false;
-    email = new FormControl('');
-    username = new FormControl('');
-    password = new FormControl('');
+    email = new FormControl('', [
+        Validators.required,
+        Validators.minLength(4),
+    ]);
+    username = new FormControl('', [
+        Validators.required,
+        Validators.minLength(4),
+    ]);
+    password = new FormControl('', [
+        Validators.required,
+        Validators.minLength(4),
+    ]);
     closeResult: string = '';
-    
+
     @Input() register: number;
 
     constructor(
         private http: HttpClient,
+        private router: Router,
         private modalService: NgbModal,
         public activeModal: NgbActiveModal,
-        public loginService: LoginService
+        public loginService: LoginService,
+        public route: ActivatedRoute
     ) { }
 
     doLogin() {
@@ -42,7 +54,7 @@ export class LoginComponent {
             email: this.email.value,
             role: 'member'
         }
-        this.loginService.doLogin(options).then((data:User) => {
+        this.loginService.doLogin(options).then((data: User) => {
             // this.modalService.dismissAll();
             this.activeModal.close();
             console.log(data);
@@ -94,17 +106,17 @@ export class LoginComponent {
     }
 
     validateInput(): InputError {
-        if (this.password.valid === false) {
-            return {
-                valid: false,
-                message: "Geben Sie ein Passwort an."
-            };
-        }
         if (this.email.valid === false) {
             return {
                 valid: false,
                 message: "Geben Sie eine Email-Addresse an."
             }
+        }
+        if (this.password.valid === false) {
+            return {
+                valid: false,
+                message: "Geben Sie ein Passwort an."
+            };
         }
         return {
             valid: true,
