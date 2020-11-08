@@ -2,12 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Feedback, Item } from 'src/typings';
+import { Feedback, Item, Status } from 'src/typings';
 import { environment } from 'src/environments/environment';
 import { LoginService } from 'src/app/login.service';
 import { ItemModule } from './item.module';
 import { ItemService } from 'src/app/item.service';
 import { FormControl } from '@angular/forms';
+import { isDefined } from '@angular/compiler/src/util';
+import { LoginRequestService } from 'src/app/loginRequest.service';
 
 @Component({
     selector: 'app-item',
@@ -20,11 +22,13 @@ export class ItemComponent implements OnInit {
     feedbackText = new FormControl('');
     constructor(
         public loginService: LoginService,
+        private loginRequestService: LoginRequestService,
         private http: HttpClient,
         private route: ActivatedRoute,
         private router: Router,
         private location: Location,
-        private itemService: ItemService) {
+        private itemService: ItemService)
+    {
         this.item = {
             title: '',
             likes: 0,
@@ -40,8 +44,9 @@ export class ItemComponent implements OnInit {
         if (this.id === undefined) {
             this.router.navigate(['item']);
         }
-        this.http.get(`${environment.apiMainUrl}/${environment.itemsPath}/${this.id}`).subscribe((data: [Item]) => {
+        this.http.get(`${environment.apiMainUrl}/${environment.itemsPath}/${this.id}`).subscribe((data: Item[]) => {
             if (data.length < 1) {
+                console.log("item not found");
                 this.router.navigate(['/']);
             }
             this.item = data[0];
@@ -50,10 +55,12 @@ export class ItemComponent implements OnInit {
             this.feedback = data;
         })
     }
+    
     deleteFeedback(id: number, index: number) {
         this.http.delete(`${environment.apiMainUrl}/${environment.deleteFeedbackPath}/${id}`).subscribe();
         this.feedback.splice(index, 1);
     }
+
     addFeedback(){
         if(this.feedbackText.value == ""){
             return;
@@ -66,14 +73,32 @@ export class ItemComponent implements OnInit {
         this.http.post(`${environment.apiMainUrl}/${environment.deleteFeedbackPath}`, newFeedback).subscribe();
         this.feedbackText.setValue('');
     }
-    updateStatus(data:any){
+
+    updateStatus(data: Status) {
+        if (this.loginService.isLoggedIn) {
+            this.setStatus(data);
+        }else{
+            this.loginRequestService.requestLogin().then(() => {
+                this.setStatus(data);
+            }).catch(() => {})
+        }
+    }
+
+    setStatus(data: Status) {
         this.http.post(`${environment.apiMainUrl}/${environment.toggleLikePath}`, data).subscribe();
-        this.item.liked = !this.item.liked;
+        if(isDefined(data.liked)){
+            this.item.liked = data.liked;
+        }
+        if(isDefined(data.watchlist)){
+            this.item.watchlist = data.watchlist;
+        }
         this.itemService.put(this.item).subscribe();
     }
+
     close() {
         this.location.back()
     }
+
     review(id: number) {
         this.itemService.review(id);
         this.location.back()

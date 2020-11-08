@@ -44,3 +44,9 @@ export interface Feedback {
     feedback:string;
     created_by_id?: number;
 }
+
+export interface Status {
+    item_id: number;
+    liked?: boolean;
+    watchlist?: boolean;
+}
