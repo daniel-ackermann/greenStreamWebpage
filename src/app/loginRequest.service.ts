@@ -10,7 +10,7 @@ export class LoginRequestService {
         id: -1,
         email: "",
         role: "visitor",
-        language: ""
+        language: []
     };
     constructor(private modalService: NgbModal) {
     }

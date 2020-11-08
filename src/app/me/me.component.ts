@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { LoginService } from '../login.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { LoginRequestService } from '../loginRequest.service';
+import { User } from 'src/typings';
 
 
 @Component({
@@ -12,7 +14,7 @@ import { environment } from 'src/environments/environment';
     templateUrl: './me.component.html',
     styleUrls: ['./me.component.css']
 })
-export class MeComponent {
+export class MeComponent implements OnInit {
     languages = [{
         name: "Deutsch",
         value: "de"
@@ -28,20 +30,48 @@ export class MeComponent {
         return this.settings.get('selectedLanguage') as FormArray;
     }
 
-    constructor(private http: HttpClient, public loginService: LoginService, private location: Location, public router: Router) {
+    constructor(
+        private http: HttpClient,
+        public loginService: LoginService,
+        private location: Location,
+        public router: Router,
+        private loginRequestService: LoginRequestService)
+    {
         this.settings = new FormGroup({
             username: new FormControl(this.loginService.user.username || ''),
             selectedLanguage: new FormArray([]),
             email: new FormControl(this.loginService.user.email),
             role:  new FormControl(this.loginService.user.role)
         });
-        this.addCheckboxes();
+    }
+    
+    async ngOnInit(){
+        this.loginService.isSignedIn().then((user:User)=> {
+            this.initUser();
+        }).catch(err => {
+            this.loginRequestService.requestLogin().then(() => {
+                this.initUser();
+            }).catch(() => {
+                this.router.navigate(['/']);
+            })
+        });
     }
 
-    private addCheckboxes() {
+    private initUser(){
+        this.loginService.onStatusChange.subscribe((status: boolean) => {
+            if(!status){
+                this.router.navigate(['']);
+            }
+        });
+        this.settings.patchValue({
+            username: this.loginService.user.username,
+            email: this.loginService.user.email,
+            role: this.loginService.user.role
+        });
+        // add checkboxes
         const checkArray: FormArray = this.settings.get('selectedLanguage') as FormArray;
         this.languages.forEach((lang) => {
-            if (this.loginService.user.language.split(',').includes(lang.value)) {
+            if (this.loginService.user.language.includes(lang.value)) {
                 checkArray.push(new FormControl(true))
             } else {
                 checkArray.push(new FormControl(false))

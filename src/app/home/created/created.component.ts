@@ -40,7 +40,7 @@ export class CreatedComponent implements OnInit {
         this.itemService.onAdd.subscribe((item: Item) => {
             this.items.push(item);
         });
-        this.loginService.onLanguageChange.subscribe((language: string) => {
+        this.loginService.onLanguageChange.subscribe((language: string[]) => {
             this.requestItems();
         });
     }
