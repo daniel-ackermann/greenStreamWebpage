@@ -10,6 +10,8 @@ import { ReviewedComponent } from './reviewed/reviewed.component';
 import { ListItemComponent } from './list-item/list-item.component';
 import { FilterPipe } from './list-item/filter.pipe';
 import { LikedComponent } from './liked/liked.component';
+import { WatchedComponent } from './watched/watched.component';
+import { WatchlistComponent } from './watchlist/watchlist.component';
 import { SharedModule } from '../shared/shared.module';
 
 
@@ -23,7 +25,9 @@ import { SharedModule } from '../shared/shared.module';
         ReviewedComponent,
         ListItemComponent,
         FilterPipe,
-        LikedComponent
+        LikedComponent,
+        WatchedComponent,
+        WatchlistComponent
     ],
     imports: [
         SharedModule,
@@ -49,6 +53,14 @@ import { SharedModule } from '../shared/shared.module';
                     {
                         path: 'liked',
                         component: LikedComponent
+                    },
+                    {
+                        path: 'history',
+                        component: WatchedComponent
+                    },
+                    {
+                        path: 'watchlist',
+                        component: WatchlistComponent
                     },
                     {
                         path: 'review',

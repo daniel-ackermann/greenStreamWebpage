@@ -9,6 +9,12 @@
         <a class="nav-link" [routerLink]="['liked']" *ngIf="loginService.isLoggedIn">Liked</a>
     </li>
     <li class="nav-item">
+        <a class="nav-link" [routerLink]="['history']" *ngIf="loginService.isLoggedIn">History</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" [routerLink]="['watchlist']" *ngIf="loginService.isLoggedIn">Watch Later</a>
+    </li>
+    <li class="nav-item">
         <a class="nav-link" [routerLink]="['reviewed']" *ngIf="loginService.user.role=='admin'">Reviewed</a>
     </li>
     <li class="nav-item">
