@@ -16,8 +16,8 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     constructor(private loginService: LoginService){
     }
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        if(this.loginService.user.language != ""){
-            request = request.clone({ headers: request.headers.set('Accept-Language', this.loginService.user.language) });
+        if(this.loginService.user.language.length != 0){
+            request = request.clone({ headers: request.headers.set('Accept-Language', this.loginService.user.language.toString()) });
         }
  
         return next.handle(request)
