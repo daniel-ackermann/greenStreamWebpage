@@ -1,11 +1,15 @@
 html {
     position: relative;
     min-height: 100%;
+    /* font-size: 0.8rem; */
 }
+
 body {
     margin-bottom: 60px;
     margin-top: 5rem;
+    /* font-size: 1.2rem; */
 }
+
 .footer {
     position: absolute;
     bottom: 0;
@@ -14,7 +18,9 @@ body {
     background-color: #f5f5f5;
 }
 
+
 /* fallback */
+
 @font-face {
     font-family: 'Material Icons';
     font-style: normal;
@@ -38,44 +44,53 @@ body {
     -moz-osx-font-smoothing: grayscale;
     height: max-content;
 }
-.material-icons:hover{
+
+.material-icons:hover,
+a:hover {
     cursor: pointer;
 }
 
-app-item, app-item-edit, app-settings{
+app-item,
+app-item-edit,
+app-settings {
     z-index: 1031;
     background-color: rgba(0, 0, 0, 0.5);
     height: 100%;
     width: 100%;
     position: fixed;
     top: 0;
-    right:0;
+    right: 0;
     bottom: 0;
     left: 0;
-    padding: 0 1rem;
+    padding: 0 .4rem;
     overflow-x: hidden;
     overflow-y: auto;
 }
 
-app-item > div, app-item-edit > div, app-settings > div{
+app-item>div,
+app-item-edit>div,
+app-settings>div {
     max-width: 720px;
     margin: 1rem auto;
 }
 
-input[type="search"]{
+input[type="search"] {
     max-width: 3rem;
-    border:none;
+    border: none;
     padding-right: 0;
 }
-input[type="search"]:focus::placeholder{
+
+input[type="search"]:focus::placeholder {
     color: transparent;
-    content:"";
+    content: "";
 }
-input[type="search"]:focus{
+
+input[type="search"]:focus {
     max-width: 20rem;
     border: 1px solid #ced4da;
 }
-input[type="search"]::placeholder{
+
+input[type="search"]::placeholder {
     font-family: 'Material Icons';
     font-size: 24px;
     color: black;

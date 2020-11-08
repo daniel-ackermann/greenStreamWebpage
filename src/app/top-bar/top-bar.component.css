@@ -1,7 +1,21 @@
-.navbar-brand{
+.navbar-brand {
     font-size: 2.2rem;
-    margin: -.3rem 1rem -.3rem 0;
+    /* margin: -.3rem 1rem -.3rem 0; */
 }
-i:after{
+
+i:after {
     display: none;
+}
+
+a {
+    padding: 0;
+    margin: 0;
+}
+
+h1 {
+    margin: 0 0 0 .5rem;
+}
+
+nav {
+    padding: .5rem;
 }

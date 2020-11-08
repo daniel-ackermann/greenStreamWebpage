@@ -1,6 +1,12 @@
-.red{
+.red {
     color: #f00;
 }
-.green{
+
+.green {
     color: #0f0;
+}
+
+h5 {
+    font-size: 1.2rem;
+    font-weight: bold;
 }
