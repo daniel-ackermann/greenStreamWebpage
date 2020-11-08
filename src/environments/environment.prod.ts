@@ -11,6 +11,8 @@ export const environment = {
     createdItemsPath: "api/items/created",
     likedItemsPath: "api/items/liked",
     reviewItemsPath: "api/items/review",
+    watchedItemsPath: "api/items/watched",
+    watchListItemsPath: "api/items/watchlist",
     topicsPath: "api/topics",
     typesPath: "api/types",
     loginPath: "login",

@@ -62,6 +62,20 @@ export class ItemService {
         );
     }
 
+    getWatchedItems(){
+        return this.http.get<[Item]>(`${environment.apiMainUrl}/${environment.watchedItemsPath}`).pipe(
+            tap(_ => console.log('fetched items')),
+            catchError(this.handleError<Item[]>('getCreatedItems', []))
+        );        
+    }
+
+    getWatchListItems(){
+        return this.http.get<[Item]>(`${environment.apiMainUrl}/${environment.watchListItemsPath}`).pipe(
+            tap(_ => console.log('fetched items')),
+            catchError(this.handleError<Item[]>('getCreatedItems', []))
+        );        
+    }
+
     review(id:number){
         this.onReview.next(id);
         return this.http.get(`${environment.apiMainUrl}/${environment.reviewItemsPath}/${id}`).subscribe();
