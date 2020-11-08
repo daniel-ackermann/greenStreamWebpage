@@ -6,6 +6,8 @@ export interface Item {
     id: number;
     reviewed?:number;
     liked?: boolean;
+    watchlist?: boolean;
+    created_by_id?: number;
 }
 
 export interface Topic {
@@ -27,7 +29,7 @@ export interface User {
     id: number;
     email: string;
     role: string;
-    language: string;
+    language: string[];
     username?: string;
 }
 
