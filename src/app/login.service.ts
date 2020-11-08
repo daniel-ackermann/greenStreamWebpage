@@ -8,31 +8,40 @@ import { User } from 'src/typings';
 export class LoginService {
     isLoggedIn: boolean = false;
     onStatusChange: Subject<boolean> = new Subject<boolean>();
-    onLanguageChange: Subject<string> = new Subject<string>();
+    onLanguageChange: Subject<string[]> = new Subject<string[]>();
     onNameChange: Subject<string> = new Subject<string>();
-    
+
     user: User = {
         id: -1,
         email: "",
         role: "visitor",
-        language: "",
+        language: [],
         username: ""
     };
     constructor(private http: HttpClient) { }
 
-    isSignedIn() {
-        this.http.get(`${environment.apiMainUrl}/${environment.loginPath}`).subscribe((result: boolean | User) => {
-            console.log("isSignedIn", result);
-            if (result === false || result === null) {
-                this.isLoggedIn = false;
-                this.onStatusChange.next(false);
-                this.setUserLanguage("");
-            } else {
-                this.user = result as User;
-                this.setUserLanguage(this.user.language);
-                this.isLoggedIn = true;
-                this.onStatusChange.next(true);
-            }
+    async isSignedIn(): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.http.get(`${environment.apiMainUrl}/${environment.loginPath}`).subscribe({
+                error: (err) => {
+                    reject();
+                },
+                next: (result: boolean | User) => {
+                    console.log("isSignedIn", result);
+                    if (result === false || result === null) {
+                        this.isLoggedIn = false;
+                        this.onStatusChange.next(false);
+                        this.setUserLanguage([]);
+                        reject();
+                    } else {
+                        this.user = result as User;
+                        this.setUserLanguage(this.user.language);
+                        this.isLoggedIn = true;
+                        this.onStatusChange.next(true);
+                        resolve(this.user);
+                    }
+                }
+            })
         });
     }
     doLogin(options: any) {
@@ -46,14 +55,17 @@ export class LoginService {
                     console.log("Erfolgreich eingeloggt!");
                     this.onStatusChange.next(true);
                     this.isLoggedIn = true;
+                    if (this.user.language != user.language) {
+                        this.setUserLanguage(user.language);
+                    }
                     this.user = user;
-                    this.setUserLanguage(user.language);
                     console.log(user.language);
                     resolve(user);
                 }
             });
         });
     }
+
     async createAccount(options: any) {
         return new Promise((resolve, reject) => {
             const url = `${environment.apiMainUrl}/${environment.registerPath}`;
@@ -81,6 +93,7 @@ export class LoginService {
             });
         });
     }
+    
     deleteAccount() {
         return new Promise((resolve) => {
             this.http.delete(`${environment.apiMainUrl}/${environment.deregisterPath}/${this.user.email}`).subscribe((data) => {
@@ -91,12 +104,14 @@ export class LoginService {
             });
         });
     }
-    setUserLanguage(language: string) {
+
+    setUserLanguage(language: string[]) {
         console.log("set language to ", language);
         this.user.language = language;
         this.onLanguageChange.next(language);
     }
-    setUserName(username: string){
+
+    setUserName(username: string) {
         this.user.username = username;
         this.onNameChange.next(username);
     }
