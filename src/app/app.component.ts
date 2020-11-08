@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
         private injector: Injector
     ) {
         // get signedIn status from server
-        this.loginService.isSignedIn();
+        this.loginService.isSignedIn().catch(()=>{});
     }
     async ngOnInit() {
         if (document.cookie == "") {
