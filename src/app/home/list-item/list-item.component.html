@@ -4,27 +4,27 @@
             {{item.title}}
         </h3>
         <p class="text-muted">{{item.description}}</p>
-        <div class="icon-footer pt-2 d-flex justify-content-between">
+        <div class="icon-footer d-flex justify-content-between">
             <span>
-                <i class="material-icons mr-2" title="Like/Unlike"
+                <i class="material-icons action" title="Like/Unlike"
                     (click)="updateStatus({id: item.id, liked: !item.liked}, i)">{{item.liked | likeIcon}}</i>
-                <i class="material-icons mr-2" title="Watch/Unwatch"
+                <i class="material-icons action" title="Watch/Unwatch"
                     (click)="updateStatus({id: item.id, watchlist: !item.watchlist}, i)">{{item.watchlist | watchList}}</i>
             </span>
             <span *ngIf="loginService.isLoggedIn">
-                <i class="material-icons mx-2 green my-auto"
+                <i class="material-icons green"
                     *ngIf="item.reviewed == 1 && item.created_by_id == loginService.user.id"
                     title="Reviewed by Admin and Published">verified</i>
-                <i class="material-icons mx-2 my-auto"
+                <i class="material-icons"
                     *ngIf="item.reviewed == 0 && item.created_by_id == loginService.user.id"
                     title="Not reviewed yet">unpublished</i>
             </span>
 
             <div>
-                <i class="material-icons mx-2" title="Edit Item" *ngIf="loginService.isLoggedIn && loginService.user.role === 'admin'" [routerLink]="['..', { outlets: { itemModal: ['edit', item.id] } }]">edit</i>
-                <i class="material-icons mx-2 red" title="Delete Item" *ngIf="loginService.isLoggedIn && loginService.user.role === 'admin'" (click)="deleteItem(item.id)">delete</i>
+                <i class="material-icons action" title="Edit Item" *ngIf="loginService.isLoggedIn && loginService.user.role === 'admin'" [routerLink]="['..', { outlets: { itemModal: ['edit', item.id] } }]">edit</i>
+                <i class="material-icons action red" title="Delete Item" *ngIf="loginService.isLoggedIn && loginService.user.role === 'admin'" (click)="deleteItem(item.id)">delete</i>
                 <a href="{{item.url}}" class="" target="_blank" rel="noopener noreferrer" title="Open in Browser">
-                    <i class="material-icons ml-2">open_in_browser</i>
+                    <i class="material-icons action">open_in_browser</i>
                 </a>
             </div>
         </div>

@@ -2,14 +2,13 @@
     <div class="card-header">
         <div class="d-flex justify-content-between">
             <h3>Einstellungen</h3>
-            <i class="material-icons" (click)="close()" title="Schließen">close</i>
+            <i class="material-icons action" (click)="close()" title="Schließen">close</i>
         </div>
     </div>
     <form [formGroup]="form" (ngSubmit)="submit()">
         <div class="card-body">
             <h3>Sprache</h3>
-            <div class="form-group m-0" formArrayName="orders"
-                *ngFor="let order of ordersFormArray.controls; let i = index">
+            <div class="form-group m-0" formArrayName="orders" *ngFor="let order of ordersFormArray.controls; let i = index">
                 <label>
                     <input class="" type="checkbox" [formControlName]="i">
                     {{languages[i].name}}

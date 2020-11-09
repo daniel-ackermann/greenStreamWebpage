@@ -8,17 +8,17 @@
             <div class="d-flex">
                 <i class="material-icons green mx-2" *ngIf="item.reviewed==1 && item.created_by_id == loginService.user.id" title="Reviewed by Admin and Published">verified</i>
                 <a href="#" href="{{item.url}}" class="" target="_blank" rel="noopener noreferrer" title="Öffnen">
-                    <i class="material-icons mx-2">open_in_browser</i>
+                    <i class="material-icons action">open_in_browser</i>
                 </a>
-                <i class=" material-icons mx-2" (click)="updateStatus({id: item.id, liked: !item.liked})">{{ item.liked | likeIcon}}</i>
+                <i class=" material-icons action" (click)="updateStatus({id: item.id, liked: !item.liked})">{{ item.liked | likeIcon}}</i>
 
-                <i class=" material-icons mx-2" (click)="updateStatus({id: item.id, watchlist: !item.watchlist})">{{ item.watchlist | watchList }}</i>
+                <i class=" material-icons action" (click)="updateStatus({id: item.id, watchlist: !item.watchlist})">{{ item.watchlist | watchList }}</i>
                 <span *ngIf="loginService.isLoggedIn">
-                    <i class="material-icons mx-2" *ngIf="item.reviewed!=1 && loginService.user.role === 'admin'"
+                    <i class="material-icons action" *ngIf="item.reviewed!=1 && loginService.user.role === 'admin'"
                         (click)="review(item.id)" title="Review">check</i>
 
                 </span>
-                <i class="material-icons ml-2" (click)="close()" title="Schließen">close</i>
+                <i class="material-icons action" (click)="close()" title="Schließen">close</i>
             </div>
         </div>
         <p class="card-text">{{item.description}}</p>
@@ -27,7 +27,7 @@
             <ul class="list-group">
                 <li class="list-group-item d-flex justify-content-between" *ngFor="let entry of feedback; let i = index">
                     {{entry.feedback}}
-                    <i class="material-icons" *ngIf="loginService.isLoggedIn" (click)="deleteFeedback(entry.id, i)">delete</i>
+                    <i class="material-icons action" *ngIf="loginService.isLoggedIn" (click)="deleteFeedback(entry.id, i)">delete</i>
                 </li>
             </ul>
         </div>

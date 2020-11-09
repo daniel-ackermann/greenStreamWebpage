@@ -7,7 +7,7 @@
     </a>
     <div class="d-flex">
         <div class="nav-item" *ngIf="loginService.isLoggedIn">
-            <i [routerLink]="['list', { outlets: { itemModal: ['new'] } }]" class="material-icons m-2">add_box</i>
+            <i [routerLink]="['list', { outlets: { itemModal: ['new'] } }]" class="material-icons action">add_box</i>
         </div>
         <!-- <div class="nav-item" *ngIf="loginService.isLoggedIn" title="Account">
             <i [routerLink]="['me']" class="material-icons m-2">settings</i>
@@ -15,7 +15,7 @@
         <div class="row">
             <div class="col">
                 <div ngbDropdown class="d-inline-block">
-                    <i class="material-icons m-2" id="dropdownForm1" ngbDropdownToggle>account_circle</i>
+                    <i class="material-icons action" id="dropdownForm1" ngbDropdownToggle>account_circle</i>
                     <div ngbDropdownMenu aria-labelledby="dropdownForm1" class="dropdown-menu dropdown-menu-right">
                         <!-- <form class="px-4 py-3">
                             <div class="form-group">
@@ -63,7 +63,7 @@
                                 User
                             </button> -->
                                 <button ngbDropdownItem class="d-flex" [routerLink]="['import']">
-                                    <i class="material-icons pr-1">unarchive</i>
+                                    <i class="material-icons">unarchive</i>
                                     Import JSON
                                 </button>
 

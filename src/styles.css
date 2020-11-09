@@ -66,9 +66,16 @@ body {
     -moz-font-feature-settings: 'liga';
     -moz-osx-font-smoothing: grayscale;
     height: max-content;
+    padding: .3rem;
+    cursor: default;
 }
 
-.material-icons:hover,
+.action:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    border-radius: 100%;
+}
+
 a:hover {
     cursor: pointer;
 }
