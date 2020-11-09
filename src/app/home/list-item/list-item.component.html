@@ -1,14 +1,14 @@
 <div *ngFor="let item of items | filter: searchText let i = index" class="item">
     <div class="list-item">
-        <h3 class="card-title" [routerLink]="['..', { outlets: { itemModal: ['item', item.id] } }]" title="{{item.title}}">
+        <a href="{{item.url}}" class="card-title h3" target="_blank" rel="noopener noreferrer" title="Open in Browser">
             {{item.title}}
-        </h3>
+        </a>
         <p class="text-muted">{{item.description}}</p>
         <div class="icon-footer d-flex justify-content-between">
             <span>
-                <i class="material-icons action" title="Like/Unlike"
+                <i class="material-icons action" title="like/unlike"
                     (click)="updateStatus({id: item.id, liked: !item.liked}, i)">{{item.liked | likeIcon}}</i>
-                <i class="material-icons action" title="Watch/Unwatch"
+                <i class="material-icons action" title="watch later"
                     (click)="updateStatus({id: item.id, watchlist: !item.watchlist}, i)">{{item.watchlist | watchList}}</i>
             </span>
             <span *ngIf="loginService.isLoggedIn">
@@ -23,9 +23,7 @@
             <div>
                 <i class="material-icons action" title="Edit Item" *ngIf="loginService.isLoggedIn && loginService.user.role === 'admin'" [routerLink]="['..', { outlets: { itemModal: ['edit', item.id] } }]">edit</i>
                 <i class="material-icons action red" title="Delete Item" *ngIf="loginService.isLoggedIn && loginService.user.role === 'admin'" (click)="deleteItem(item.id)">delete</i>
-                <a href="{{item.url}}" class="" target="_blank" rel="noopener noreferrer" title="Open in Browser">
-                    <i class="material-icons action">open_in_browser</i>
-                </a>
+                <i class="material-icons action" [routerLink]="['..', { outlets: { itemModal: ['item', item.id] } }]" title="give feedback">feedback</i>
             </div>
         </div>
     </div>

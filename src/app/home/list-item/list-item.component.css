@@ -1,9 +1,11 @@
-.red{
+.red {
     color: #f00;
 }
-h3{
-    cursor: pointer;
+
+a {
+    color: black;
 }
-.green{
+
+.green {
     color: #0f0;
 }
