@@ -1,16 +1,16 @@
 {
     "/api/*": {
-        "target": "http://localhost:3000",
+        "target": "https://localhost",
         "secure": false,
         "logLevel": "debug"
     },
     "/login/*": {
-        "target": "http://localhost:3000",
+        "target": "https://localhost",
         "secure": false,
         "logLevel": "debug"
     },
     "/account/*": {
-        "target": "http://localhost:3000",
+        "target": "https://localhost",
         "secure": false,
         "logLevel": "debug"
     }
