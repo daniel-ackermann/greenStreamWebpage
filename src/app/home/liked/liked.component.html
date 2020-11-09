@@ -6,6 +6,9 @@
     <label for="search" class="sr-only">Suche</label>
     <input class="form-control ml-3" id="search" type="search" placeholder="search" [(ngModel)]="searchText">
 </h2>
+<div *ngIf="showNoItemHint" class="d-flex alert alert-light" role="alert">
+    You can like an item by clicking the <i class="material-icons" title="plus">favorite_border</i>-Icon on the list of items on the main page.
+</div>
 <div class="card-columns">
     <app-list-item [items]="items" [searchText]="searchText"></app-list-item>
 </div>

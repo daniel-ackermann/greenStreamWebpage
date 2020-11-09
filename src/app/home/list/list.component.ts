@@ -10,7 +10,8 @@ import { LoginService } from 'src/app/login.service';
 })
 export class ListComponent implements OnInit {
     searchText = "";
-    items: Item[] = [];
+        items: Item[] = [];
+    showNoItemHint: boolean = false;
     loaded: boolean = false;
     constructor(public itemService: ItemService, private loginService: LoginService) { }
 
@@ -32,7 +33,11 @@ export class ListComponent implements OnInit {
 
     getItems() {
         this.itemService.getItems().subscribe(data => {
-            this.items = data;
+            if(data.length > 0){
+                this.items = data;
+            }else{
+                this.showNoItemHint = true;
+            }
         });
     }
     remove(id: number) {

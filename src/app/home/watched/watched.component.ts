@@ -13,6 +13,7 @@ import { Item } from 'src/typings';
 export class WatchedComponent implements OnInit {
     searchText = "";
     items: Item[] = [];
+    showNoItemHint: boolean = false;
     constructor(
         public itemService: ItemService,
         private loginService: LoginService,
@@ -46,7 +47,11 @@ export class WatchedComponent implements OnInit {
     }
     requestItems(){
         this.itemService.getWatchedItems().subscribe((data) => {
-            this.items = data;
+            if(data.length > 0){
+                this.items = data;
+            }else{
+                this.showNoItemHint = true;
+            }
         });
     }
     remove(id: number) {

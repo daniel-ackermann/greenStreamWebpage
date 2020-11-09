@@ -12,7 +12,8 @@ import { Item } from 'src/typings';
 })
 export class WatchlistComponent implements OnInit {
     searchText = "";
-    items: Item[] = [];
+        items: Item[] = [];
+    showNoItemHint: boolean = false;
     constructor(
         public itemService: ItemService,
         private loginService: LoginService,
@@ -47,7 +48,11 @@ export class WatchlistComponent implements OnInit {
     }
     requestItems(){
         this.itemService.getWatchListItems().subscribe((data) => {
-            this.items = data;
+            if(data.length > 0){
+                this.items = data;
+            }else{
+                this.showNoItemHint = true;
+            }
         });
     }
     remove(id: number) {

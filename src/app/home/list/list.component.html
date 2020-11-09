@@ -6,6 +6,9 @@
     <label for="search" class="sr-only">Suche</label>
     <input class="form-control ml-3" id="search" type="search" placeholder="search" [(ngModel)]="searchText">
 </h2>
+<div *ngIf="showNoItemHint" class="alert alert-light" role="alert">
+    There went something wrong! Please try again later.
+</div>
 <div class="card-columns">
     <app-list-item [items]="items" [searchText]="searchText"></app-list-item>
 </div>

@@ -11,7 +11,8 @@ import { Item } from 'src/typings';
 })
 export class ReviewComponent implements OnInit {
     searchText = "";
-    items: Item[] = [];
+        items: Item[] = [];
+    showNoItemHint: boolean = false;
 
     constructor(private loginService: LoginService, private router: Router, private itemService: ItemService) { }
 
@@ -22,8 +23,11 @@ export class ReviewComponent implements OnInit {
             }
         })
         this.itemService.getReviewItems().subscribe((data) => {
-            console.log(data);
-            this.items = data;
+            if(data.length > 0){
+                this.items = data;
+            }else{
+                this.showNoItemHint = true;
+            }
         });
         this.itemService.onReview.subscribe((id:number)=> {
             this.remove(id);

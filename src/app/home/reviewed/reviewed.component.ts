@@ -12,7 +12,8 @@ import { Item } from 'src/typings';
 })
 export class ReviewedComponent implements OnInit {
     searchText = "";
-    items: Item[] = [];
+        items: Item[] = [];
+    showNoItemHint: boolean = false;
     constructor(
         public itemService: ItemService,
         private router: Router,
@@ -33,7 +34,11 @@ export class ReviewedComponent implements OnInit {
     }
     requestItems(){
         this.itemService.getReviewedItems().subscribe((data) => {
-            this.items = data;
+            if(data.length > 0){
+                this.items = data;
+            }else{
+                this.showNoItemHint = true;
+            }
         });
     }
 }

@@ -12,7 +12,8 @@ import { Item } from 'src/typings';
 })
 export class LikedComponent implements OnInit {
     searchText = "";
-    items: Item[] = [];
+        items: Item[] = [];
+    showNoItemHint: boolean = false;
     constructor(
         public itemService: ItemService,
         private loginService: LoginService,
@@ -46,7 +47,11 @@ export class LikedComponent implements OnInit {
     }
     requestItems(){
         this.itemService.getLikedItems().subscribe((data) => {
-            this.items = data;
+            if(data.length > 0){
+                this.items = data;
+            }else{
+                this.showNoItemHint = true;
+            }
         });
     }
     remove(id: number) {
