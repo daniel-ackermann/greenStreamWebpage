@@ -46,7 +46,7 @@ export interface Feedback {
 }
 
 export interface Status {
-    item_id: number;
+    id: number;
     liked?: boolean;
     watchlist?: boolean;
 }

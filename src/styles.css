@@ -8,6 +8,29 @@ body {
     margin-bottom: 60px;
     margin-top: 5rem;
     /* font-size: 1.2rem; */
+    /* background-color: lavender; */
+}
+
+.list-item {
+    padding: 1.25rem 1.25rem 0 1.25rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, .125);
+}
+
+.icon-footer {
+    border-top: solid 1px lightgray;
+}
+
+.item {
+    padding-bottom: 1rem;
+    display: inline-block;
+    width: 100%;
 }
 
 .footer {
@@ -78,11 +101,13 @@ input[type="search"] {
     max-width: 3rem;
     border: none;
     padding-right: 0;
+    background-color: transparent;
 }
 
 input[type="search"]:focus::placeholder {
     color: transparent;
     content: "";
+    background-color: #fff;
 }
 
 input[type="search"]:focus {

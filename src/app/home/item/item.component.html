@@ -10,9 +10,9 @@
                 <a href="#" href="{{item.url}}" class="" target="_blank" rel="noopener noreferrer" title="Öffnen">
                     <i class="material-icons mx-2">open_in_browser</i>
                 </a>
-                <i class=" material-icons mx-2" (click)="updateStatus({item_id: item.id, liked: !item.liked})">{{ item.liked | likeIcon}}</i>
+                <i class=" material-icons mx-2" (click)="updateStatus({id: item.id, liked: !item.liked})">{{ item.liked | likeIcon}}</i>
 
-                <i class=" material-icons mx-2" (click)="updateStatus({item_id: item.id, watchlist: !item.watchlist})">{{ item.watchlist | watchList }}</i>
+                <i class=" material-icons mx-2" (click)="updateStatus({id: item.id, watchlist: !item.watchlist})">{{ item.watchlist | watchList }}</i>
                 <span *ngIf="loginService.isLoggedIn">
                     <i class="material-icons mx-2" *ngIf="item.reviewed!=1 && loginService.user.role === 'admin'"
                         (click)="review(item.id)" title="Review">check</i>

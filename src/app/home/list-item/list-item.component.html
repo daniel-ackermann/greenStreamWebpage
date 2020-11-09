@@ -1,33 +1,31 @@
 <div *ngFor="let item of items | filter: searchText let i = index" class="item">
-    <div class="card">
-        <div class="card-body">
-            <h3 class="card-title text-truncate" [routerLink]="['..', { outlets: { itemModal: ['item', item.id] } }]">
-                {{item.title}}
-            </h3>
-            <p class="text-muted">{{item.description}}</p>
-            <div class="d-flex justify-content-between">
-                <span>
-                    <i class="material-icons mr-2" title="Like/Unlike"
-                        (click)="updateStatus({item_id: item.id, liked: !item.liked}, i)">{{item.liked | likeIcon}}</i>
-                    <i class="material-icons mr-2" title="Watch/Unwatch"
-                        (click)="updateStatus({item_id: item.id, watchlist: !item.watchlist}, i)">{{item.watchlist | watchList}}</i>
-                    <span *ngIf="loginService.isLoggedIn">
-                        <i class="material-icons mx-2 green my-auto"
-                            *ngIf="item.reviewed == 1 && item.created_by_id == loginService.user.id"
-                            title="Reviewed by Admin and Published">verified</i>
-                        <i class="material-icons mx-2 my-auto"
-                            *ngIf="item.reviewed == 0 && item.created_by_id == loginService.user.id"
-                            title="Not reviewed yet">unpublished</i>
-                    </span>
-                </span>
+    <div class="list-item">
+        <h3 class="card-title" [routerLink]="['..', { outlets: { itemModal: ['item', item.id] } }]" title="{{item.title}}">
+            {{item.title}}
+        </h3>
+        <p class="text-muted">{{item.description}}</p>
+        <div class="icon-footer pt-2 d-flex justify-content-between">
+            <span>
+                <i class="material-icons mr-2" title="Like/Unlike"
+                    (click)="updateStatus({id: item.id, liked: !item.liked}, i)">{{item.liked | likeIcon}}</i>
+                <i class="material-icons mr-2" title="Watch/Unwatch"
+                    (click)="updateStatus({id: item.id, watchlist: !item.watchlist}, i)">{{item.watchlist | watchList}}</i>
+            </span>
+            <span *ngIf="loginService.isLoggedIn">
+                <i class="material-icons mx-2 green my-auto"
+                    *ngIf="item.reviewed == 1 && item.created_by_id == loginService.user.id"
+                    title="Reviewed by Admin and Published">verified</i>
+                <i class="material-icons mx-2 my-auto"
+                    *ngIf="item.reviewed == 0 && item.created_by_id == loginService.user.id"
+                    title="Not reviewed yet">unpublished</i>
+            </span>
 
-                <div>
-                    <i class="material-icons mx-2" title="Edit Item" *ngIf="loginService.isLoggedIn && loginService.user.role === 'admin'" [routerLink]="['..', { outlets: { itemModal: ['edit', item.id] } }]">edit</i>
-                    <i class="material-icons mx-2 red" title="Delete Item" *ngIf="loginService.isLoggedIn && loginService.user.role === 'admin'" (click)="deleteItem(item.id)">delete</i>
-                    <a href="{{item.url}}" class="" target="_blank" rel="noopener noreferrer" title="Open in Browser">
-                        <i class="material-icons ml-2">open_in_browser</i>
-                    </a>
-                </div>
+            <div>
+                <i class="material-icons mx-2" title="Edit Item" *ngIf="loginService.isLoggedIn && loginService.user.role === 'admin'" [routerLink]="['..', { outlets: { itemModal: ['edit', item.id] } }]">edit</i>
+                <i class="material-icons mx-2 red" title="Delete Item" *ngIf="loginService.isLoggedIn && loginService.user.role === 'admin'" (click)="deleteItem(item.id)">delete</i>
+                <a href="{{item.url}}" class="" target="_blank" rel="noopener noreferrer" title="Open in Browser">
+                    <i class="material-icons ml-2">open_in_browser</i>
+                </a>
             </div>
         </div>
     </div>
