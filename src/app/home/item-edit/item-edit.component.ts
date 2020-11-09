@@ -20,7 +20,6 @@ export class ItemEditComponent implements OnInit {
         title: new FormControl(''),
         description: new FormControl(''),
         id: new FormControl(),
-        likes: new FormControl(0),
         url: new FormControl(''),
         explanation_id: new FormControl(0),
         type_id: new FormControl(1),
@@ -77,7 +76,7 @@ export class ItemEditComponent implements OnInit {
         }else{
             this.title = "Bearbeiten";
             this.itemService.getItem(this.id).subscribe((data: Item) => {
-                this.item.setValue(data[0]);
+                this.item.patchValue(data[0]);
             });
         }
     }
