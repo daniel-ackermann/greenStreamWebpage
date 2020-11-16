@@ -6,8 +6,8 @@
     <label for="search" class="sr-only">Suche</label>
     <input class="form-control ml-3" id="search" type="search" placeholder="search" [(ngModel)]="searchText">
 </h2>
-<div *ngIf="showNoItemHint" class="d-flex alert alert-light" role="alert">
-    Your watch list is empty. You can add items with the <i class="material-icons">turned_in_not</i> icon.
+<div *ngIf="showNoItemHint" class="alert alert-light" role="alert">
+    Your watch list is empty. You can add items with the <i class="material-icons">turned_in_not</i>-icon.
 </div>
 <div class="card-columns">
     <app-list-item [items]="items" [searchText]="searchText"></app-list-item>
