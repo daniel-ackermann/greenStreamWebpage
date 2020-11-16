@@ -4,7 +4,7 @@ import { LoginService } from 'src/app/login.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { Item } from 'src/typings';
+import { Status } from 'src/typings';
 import { isDefined } from '@angular/compiler/src/util';
 import { LoginRequestService } from 'src/app/loginRequest.service';
 
@@ -28,18 +28,22 @@ export class ListItemComponent {
         this.itemService.remove(id);
     }
 
-    updateStatus(data: any, index: number, remove: boolean = false) {
+    updateStatus(data: Status, index: number, remove: boolean = false) {
         if (this.loginService.isLoggedIn) {
             this.setStatus(data, index, remove);
-        }else{
+        } else {
             this.loginRequestService.requestLogin().then(() => {
                 this.setStatus(data, index, remove);
-            }).catch(() => {})
+            }).catch(() => { })
         }
     }
-    
-    setStatus(data: any, index: number, remove: boolean = false) {
-        console.log("setStatus");
+
+    openItem(url: string, id: number, index: number) {
+        window.open(url, "_blank", "noopener noreferrer");
+        this.setStatus({ id: id, watched: true }, index);
+    }
+
+    setStatus(data: Status, index: number, remove: boolean = false) {
         this.http.post(`${environment.apiMainUrl}/${environment.toggleLikePath}`, data).subscribe();
         if (isDefined(data.liked)) {
             this.items[index].liked = data.liked;

@@ -1,8 +1,10 @@
 <div *ngFor="let item of items | filter: searchText let i = index" class="item">
     <div class="list-item">
-        <a href="{{item.url}}" class="card-title h3" target="_blank" rel="noopener noreferrer" title="Open in Browser">
+        <h5 class="card-title" target="_blank" rel="noopener noreferrer" title="Open in Browser"
+            (click)="openItem(item.url, item.id, i)">
+            <i class="material-icons rotate45" title="{{item.name}}">{{item.name | typeIcon }}</i>
             {{item.title}}
-        </a>
+        </h5>
         <p class="text-muted">{{item.description}}</p>
         <div class="icon-footer d-flex justify-content-between">
             <span>
@@ -11,19 +13,20 @@
                 <i class="material-icons action" title="watch later"
                     (click)="updateStatus({id: item.id, watchlist: !item.watchlist}, i)">{{item.watchlist | watchList}}</i>
             </span>
-            <span *ngIf="loginService.isLoggedIn">
-                <i class="material-icons green"
-                    *ngIf="item.reviewed == 1 && item.created_by_id == loginService.user.id"
-                    title="Reviewed by Admin and Published">verified</i>
-                <i class="material-icons"
-                    *ngIf="item.reviewed == 0 && item.created_by_id == loginService.user.id"
-                    title="Not reviewed yet">unpublished</i>
+            <span *ngIf="loginService.isLoggedIn" class="my-auto">
+                <i class="material-icons green" *ngIf="item.created_by_id == loginService.user.id"
+                    title="Reviewed by Admin and Published">{{item.reviewed | reviewed}}</i>
             </span>
 
             <div>
-                <i class="material-icons action" title="Edit Item" *ngIf="loginService.isLoggedIn && loginService.user.role === 'admin'" [routerLink]="['..', { outlets: { itemModal: ['edit', item.id] } }]">edit</i>
-                <i class="material-icons action red" title="Delete Item" *ngIf="loginService.isLoggedIn && loginService.user.role === 'admin'" (click)="deleteItem(item.id)">delete</i>
-                <i class="material-icons action" [routerLink]="['..', { outlets: { itemModal: ['item', item.id] } }]" title="give feedback">feedback</i>
+                <i class="material-icons action" title="Edit Item"
+                    *ngIf="loginService.isLoggedIn && loginService.user.role === 'admin'"
+                    [routerLink]="['..', { outlets: { itemModal: ['edit', item.id] } }]">edit</i>
+                <i class="material-icons action red" title="Delete Item"
+                    *ngIf="loginService.isLoggedIn && loginService.user.role === 'admin'"
+                    (click)="deleteItem(item.id)">delete</i>
+                <i class="material-icons action" [routerLink]="['..', { outlets: { itemModal: ['item', item.id] } }]"
+                    title="give feedback">feedback</i>
             </div>
         </div>
     </div>
