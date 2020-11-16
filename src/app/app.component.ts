@@ -1,4 +1,6 @@
+import { Location } from '@angular/common';
 import { Component, ComponentFactoryResolver, Injector, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { SwUpdate } from '@angular/service-worker';
 import { LoginService } from './login.service';
 
 @Component({
@@ -13,10 +15,12 @@ export class AppComponent implements OnInit {
     constructor(private loginService: LoginService,
         private viewContainerRef: ViewContainerRef,
         private cfr: ComponentFactoryResolver,
-        private injector: Injector
+        private injector: Injector,
+        private swUpdate: SwUpdate,
+        private location: Location
     ) {
         // get signedIn status from server
-        this.loginService.isSignedIn().catch(()=>{});
+        this.loginService.isSignedIn().catch(() => { });
     }
     async ngOnInit() {
         if (document.cookie == "") {
@@ -25,5 +29,17 @@ export class AppComponent implements OnInit {
             const factory = this.cfr.resolveComponentFactory(CookieFooterComponent)
             const { instance } = this.viewContainerRef.createComponent(factory, null, this.injector);
         }
+
+        if (this.swUpdate.isEnabled) {
+            this.swUpdate.available.subscribe(() => {
+                if (confirm("New version available. Load New Version?")) {
+                    window.location.reload();
+                }
+            });
+        }
+    }
+
+    closeModal(){
+        // this.location.back();
     }
 }

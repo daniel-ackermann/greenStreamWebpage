@@ -12,6 +12,8 @@ import { HttpErrorInterceptor } from './http.interceptor';
 import { LoginService } from './login.service';
 import { LoginRequestService } from './loginRequest.service';
 import { BottomBarComponent } from './bottom-bar/bottom-bar.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
     imports: [
@@ -32,7 +34,8 @@ import { BottomBarComponent } from './bottom-bar/bottom-bar.component';
                 redirectTo: 'list',
                 pathMatch: 'full'
             }
-        ], { useHash: false, scrollPositionRestoration: 'enabled' })
+        ], { useHash: false, scrollPositionRestoration: 'enabled' }),
+        ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
     ],
     declarations: [
         LoginComponent,
