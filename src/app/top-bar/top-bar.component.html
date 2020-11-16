@@ -6,18 +6,16 @@
         </h1>
     </a>
     <div class="d-flex">
-        <div class="nav-item" *ngIf="loginService.isLoggedIn">
+        <div class="nav-item" *ngIf="loginService.isLoggedIn" title="Add item">
             <i [routerLink]="['list', { outlets: { itemModal: ['new'] } }]" class="material-icons action">add_box</i>
         </div>
         <!-- <div class="nav-item" *ngIf="loginService.isLoggedIn" title="Account">
             <i [routerLink]="['me']" class="material-icons m-2">settings</i>
         </div> -->
-        <div class="row">
-            <div class="col">
-                <div ngbDropdown class="d-inline-block">
-                    <i class="material-icons action" id="dropdownForm1" ngbDropdownToggle>account_circle</i>
-                    <div ngbDropdownMenu aria-labelledby="dropdownForm1" class="dropdown-menu dropdown-menu-right">
-                        <!-- <form class="px-4 py-3">
+        <div ngbDropdown class="d-inline-block">
+            <i class="material-icons action" id="dropdownForm1" ngbDropdownToggle title="Account settings">account_circle</i>
+            <div ngbDropdownMenu aria-labelledby="dropdownForm1" class="dropdown-menu dropdown-menu-right">
+                <!-- <form class="px-4 py-3">
                             <div class="form-group">
                                 <label for="exampleDropdownFormEmail1">Email address</label>
                                 <input type="email" class="form-control" id="exampleDropdownFormEmail1"
@@ -36,17 +34,18 @@
                             </div>
                             <button type="submit" class="btn btn-primary">Sign in</button>
                         </form> -->
-                        <div *ngIf="!loginService.isLoggedIn">
-                            <button ngbDropdownItem (click)="requestLogin()">Login</button>
-                            <button ngbDropdownItem (click)="requestLogin(1)">Sign up</button>
-                            <button ngbDropdownItem (click)="requestLogin(-1)">Forgot password?</button>
-                        </div>
-                        <div *ngIf="loginService.isLoggedIn">
-                            <button ngbDropdownItem [routerLink]="['me']">{{loginService.user.username}}
-                                ({{loginService.user.role}})</button>
-                            <span *ngIf="loginService.user.role=='admin'">
-                                <div class="dropdown-divider"></div>
-                                <!-- <button ngbDropdownItem class="d-flex">
+                <div *ngIf="!loginService.isLoggedIn">
+                    <button ngbDropdownItem (click)="requestLogin()">Login</button>
+                    <button ngbDropdownItem (click)="requestLogin(1)">Sign up</button>
+                    <button ngbDropdownItem (click)="requestLogin(-1)">Forgot password?</button>
+                </div>
+                <div *ngIf="loginService.isLoggedIn">
+                    <h5 class="dropdown-header">{{loginService.user.username}}
+                        ({{loginService.user.role}})</h5>
+                    <button ngbDropdownItem [routerLink]="['me']">Settings</button>
+                    <span *ngIf="loginService.user.role=='admin'">
+                        <div class="dropdown-divider"></div>
+                        <!-- <button ngbDropdownItem class="d-flex">
                                 <i class="material-icons pr-1">add_box</i>
                                 Topic
                             </button>
@@ -62,16 +61,14 @@
                                 <i class="material-icons pr-1">add_box</i> other
                                 User
                             </button> -->
-                                <button ngbDropdownItem class="d-flex" [routerLink]="['import']">
-                                    <i class="material-icons">unarchive</i>
-                                    Import JSON
-                                </button>
+                        <button ngbDropdownItem class="d-flex" [routerLink]="['import']">
+                            <i class="material-icons">unarchive</i>
+                            Import JSON
+                        </button>
 
-                            </span>
-                            <div class="dropdown-divider"></div>
-                            <button ngbDropdownItem (click)="doLogout()">Logout</button>
-                        </div>
-                    </div>
+                    </span>
+                    <div class="dropdown-divider"></div>
+                    <button ngbDropdownItem (click)="doLogout()">Logout</button>
                 </div>
             </div>
         </div>
