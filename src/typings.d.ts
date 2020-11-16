@@ -49,4 +49,5 @@ export interface Status {
     id: number;
     liked?: boolean;
     watchlist?: boolean;
+    watched?: boolean;
 }
