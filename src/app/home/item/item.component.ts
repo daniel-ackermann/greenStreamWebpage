@@ -99,6 +99,11 @@ export class ItemComponent implements OnInit {
         this.location.back()
     }
 
+    openItem(item: Item){
+        window.open(item.url, "_blank", "noopener noreferrer");
+        this.updateStatus({id: this.item.id, watched: true});
+    }
+
     review(id: number) {
         this.itemService.review(id);
         this.location.back()
