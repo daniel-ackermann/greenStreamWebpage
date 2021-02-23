@@ -1,24 +1,37 @@
 h1 {
-    font-size: 2rem;
     line-height: unset;
-}
-
-i:after {
-    display: none;
+    margin: 0 0 0 .5rem;
+    font-size: 2rem;
 }
 
 a {
     color: white;
-    padding: 0;
-    margin: 0;
+    padding: 0 2em;
+    line-height: 3rem;
 }
 
-h1 {
-    margin: 0 0 0 .5rem;
+a.menu-item:hover,
+.active {
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 nav {
     padding: .5rem;
     background-color: #44aa00;
     color: white;
+}
+
+.dropdown-toggle {
+    background-color: transparent;
+    color: white;
+    border: none;
+    padding: 0;
+}
+
+.dropdown-toggle:after {
+    display: none;
+}
+
+.menu a {
+    padding: 0 1em;
 }

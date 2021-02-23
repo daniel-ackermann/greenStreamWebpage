@@ -7,7 +7,6 @@ html {
 body {
     margin-bottom: 60px;
     margin-top: 5rem;
-    /* font-size: 1.2rem; */
     background-color: #eeeeee;
 }
 
@@ -49,6 +48,7 @@ body {
     font-style: normal;
     font-weight: 400;
     src: url(https://fonts.gstatic.com/s/materialicons/v55/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2) format('woff2');
+    font-display: swap;
 }
 
 .material-icons {
@@ -71,19 +71,20 @@ body {
 
 .action {
     padding: .3rem;
+    margin: .1rem;
 }
 
 .action:hover {
     background-color: rgba(0, 0, 0, 0.1);
     cursor: pointer;
-    border-radius: 100%;
+    border-radius: 25%;
 }
 
 a:hover {
     cursor: pointer;
 }
 
-.modal-backdrop{
+.modal-backdrop {
     z-index: 1031;
     background-color: rgba(0, 0, 0, 0.5);
     height: 100%;
@@ -97,13 +98,20 @@ a:hover {
     overflow-x: hidden;
     overflow-y: auto;
 }
-.dialog{
-    max-width: 720px;
+
+.dialog {
     z-index: 1032;
     position: absolute;
-    /* top: 50%; */
     left: 50%;
     transform: translate(-50%, 0%);
+    width: 90%;
+}
+
+@media (min-width: 576px) {
+    .dialog {
+        max-width: 720px;
+        /* min-width: 50%; */
+    }
 }
 
 input[type="search"] {
@@ -111,6 +119,7 @@ input[type="search"] {
     border: none;
     padding-right: 0;
     background-color: transparent;
+    cursor: pointer;
 }
 
 input[type="search"]:focus::placeholder {
@@ -122,6 +131,7 @@ input[type="search"]:focus::placeholder {
 input[type="search"]:focus {
     max-width: 20rem;
     border: 1px solid #ced4da;
+    cursor: text;
 }
 
 input[type="search"]::placeholder {
