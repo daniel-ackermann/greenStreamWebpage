@@ -22,3 +22,24 @@
 - ~~add searchbar~~
 - ~~globalStatus is not in sync between item-edit and list~~
 - ~~add privacy policy~~
+- ~~Feedback nur für admins sichtbar~~
+- ~~öffnen erweitert history~~
+- ~~feedback/open tauschen~~
+
+## Später:
+- lazy loading
+- Liste aller Feedbacks
+- Email bei neuem Feedback?
+
+# Routes
+
+    /login
+    /me
+    /list
+        /all
+        /created
+        /reviewed
+        /review
+    /impressum
+    /import
+    /privacy
