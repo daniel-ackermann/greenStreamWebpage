@@ -7,7 +7,7 @@
     <input class="form-control ml-3" id="search" type="search" placeholder="search" [(ngModel)]="searchText">
 </h2>
 <div *ngIf="showNoItemHint" class="alert alert-light" role="alert">
-    There is nothing to review. Take a break! <i class="material-icons">free_breakfast</i>
+    There are no items to review. Take a break! <i class="material-icons">free_breakfast</i>
 </div>
 <div class="card-columns">
     <app-list-item [items]="items" [searchText]="searchText"></app-list-item>
