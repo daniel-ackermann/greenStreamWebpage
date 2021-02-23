@@ -7,36 +7,46 @@
                     {{item.title}}
                     <span *ngIf="item.reviewed==0" class="text-truncate text-muted"> | Not reviewed yet!</span>
                 </h5>
-                <div class="d-flex">
+                <div class="d-flex align-items-start">
                     <i class="material-icons green mx-2"
                         *ngIf="item.reviewed==1 && item.created_by_id == loginService.user.id"
                         title="Reviewed by Admin and Published">verified</i>
-                        <i class=" material-icons action" (click)="updateStatus({id: item.id, liked: !item.liked})">{{ item.liked | likeIcon}}</i>
-                    
-                        <i class=" material-icons action" (click)="updateStatus({id: item.id, watchlist: !item.watchlist})">{{ item.watchlist | watchList }}</i>
+                    <i class=" material-icons action" (click)="updateStatus({id: item.id, liked: !item.liked})">{{
+                        item.liked | likeIcon}}</i>
+
+                    <i class=" material-icons action"
+                        (click)="updateStatus({id: item.id, watchlist: !item.watchlist})">{{ item.watchlist | watchList
+                        }}</i>
                     <span *ngIf="loginService.isLoggedIn">
                         <i class="material-icons action" *ngIf="item.reviewed!=1 && loginService.user.role === 'admin'"
-                        (click)="review(item.id)" title="Review">check_box</i>
+                            (click)="review(item.id)" title="Review">check_box</i>
 
                     </span>
                     <i class="material-icons action" (click)="close()" title="Schließen">close</i>
                 </div>
             </div>
             <p class="card-text">{{item.description}}</p>
-            <div *ngIf="feedback.length != 0">
+            <div *ngIf="loginService.isLoggedIn && (loginService.user.role =='admin') && feedback.length != 0">
                 <h6>Gegebenes Feedback:</h6>
                 <ul class="list-group">
-                    <li class="list-group-item d-flex justify-content-between" *ngFor="let entry of feedback; let i = index">
+                    <li class="list-group-item d-flex justify-content-between align-items-start"
+                        *ngFor="let entry of feedback; let i = index">
                         {{entry.feedback}}
-                        <i class="material-icons action" *ngIf="loginService.isLoggedIn" (click)="deleteFeedback(entry.id, i)">delete</i>
+                        <i class="material-icons action" (click)="deleteFeedback(entry.id, i)">delete</i>
                     </li>
                 </ul>
             </div>
             <br>
-            <h6>Hinterlasse ein Feedback:</h6>
-            <textarea class="w-100" rows="10" [formControl]="feedbackText" type="text" name="" id="" placeholder="Your Feedback here"></textarea>
-            <div class="d-flex justify-content-end">
-                <button class="btn btn-primary ml-2 mt-auto" (click)="addFeedback()">Save</button>
+            <div *ngIf="loginService.isLoggedIn">
+                <h6>Hinterlasse ein Feedback:</h6>
+                <textarea class="w-100" rows="10" [formControl]="feedbackText" type="text" name="" id=""
+                    placeholder="Your Feedback here"></textarea>
+                <div class="d-flex justify-content-end">
+                    <button class="btn btn-primary ml-2 mt-auto" (click)="addFeedback()">Save</button>
+                </div>
+            </div>
+            <div class="alert alert-primary" *ngIf="!loginService.isLoggedIn">
+                Um Feedback geben zu können bitte einloggen!
             </div>
         </div>
     </div>

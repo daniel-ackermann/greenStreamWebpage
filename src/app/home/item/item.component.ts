@@ -8,7 +8,6 @@ import { LoginService } from 'src/app/login.service';
 import { ItemModule } from './item.module';
 import { ItemService } from 'src/app/item.service';
 import { FormControl } from '@angular/forms';
-import { isDefined } from '@angular/compiler/src/util';
 import { LoginRequestService } from 'src/app/loginRequest.service';
 
 @Component({
@@ -86,10 +85,10 @@ export class ItemComponent implements OnInit {
 
     setStatus(data: Status) {
         this.http.post(`${environment.apiMainUrl}/${environment.toggleLikePath}`, data).subscribe();
-        if(isDefined(data.liked)){
+        if(typeof data.liked !== 'undefined'){
             this.item.liked = data.liked;
         }
-        if(isDefined(data.watchlist)){
+        if(typeof data.watchlist !== 'undefined'){
             this.item.watchlist = data.watchlist;
         }
         this.itemService.put(this.item).subscribe();
