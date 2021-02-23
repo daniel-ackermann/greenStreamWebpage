@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Status } from 'src/typings';
-import { isDefined } from '@angular/compiler/src/util';
 import { LoginRequestService } from 'src/app/loginRequest.service';
 
 @Component({
@@ -45,10 +44,10 @@ export class ListItemComponent {
 
     setStatus(data: Status, index: number, remove: boolean = false) {
         this.http.post(`${environment.apiMainUrl}/${environment.toggleLikePath}`, data).subscribe();
-        if (isDefined(data.liked)) {
+        if (typeof data.liked !== 'undefined') {
             this.items[index].liked = data.liked;
         }
-        if (isDefined(data.watchlist)) {
+        if ( typeof data.watchlist !== 'undefined' ) {
             this.items[index].watchlist = data.watchlist;
         }
         if (remove) {
