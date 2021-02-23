@@ -37,10 +37,11 @@ import { environment } from '../environments/environment';
                 pathMatch: 'full'
             }
         ], {
-            useHash: false,
-            scrollPositionRestoration: 'enabled',
-            anchorScrolling: 'enabled'
-        }),
+    useHash: false,
+    scrollPositionRestoration: 'enabled',
+    anchorScrolling: 'enabled',
+    relativeLinkResolution: 'legacy'
+}),
         ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
     ],
     declarations: [

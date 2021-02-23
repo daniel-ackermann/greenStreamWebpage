@@ -15,7 +15,7 @@ export class LoginRequestService {
     constructor(private modalService: NgbModal) {
     }
     requestLogin(mode: number = 0) {
-        return new Promise((resolve, reject) => {
+        return new Promise<void>((resolve, reject) => {
             let modalRef = this.modalService.open(LoginComponent, { ariaLabelledBy: 'modal-basic-title' });
             modalRef.result.then((result) => {
                 console.log(result);

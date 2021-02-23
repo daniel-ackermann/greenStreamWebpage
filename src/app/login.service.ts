@@ -67,7 +67,7 @@ export class LoginService {
     }
 
     async createAccount(options: any) {
-        return new Promise((resolve, reject) => {
+        return new Promise<void>((resolve, reject) => {
             const url = `${environment.apiMainUrl}/${environment.registerPath}`;
             this.http.post(url, options).subscribe({
                 error: (err) => {
@@ -84,7 +84,7 @@ export class LoginService {
     }
 
     doLogout() {
-        return new Promise((resolve, reject) => {
+        return new Promise<void>((resolve, reject) => {
             this.http.delete(`${environment.apiMainUrl}/${environment.logoutPath}`).subscribe(() => {
                 console.log("Abgemeldet");
                 this.onStatusChange.next(false);
