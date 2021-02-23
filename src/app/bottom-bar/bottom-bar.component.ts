@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 import { LoginService } from '../login.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { LoginService } from '../login.service';
 })
 export class BottomBarComponent implements OnInit {
     constructor(public router: Router, private loginService: LoginService) {}
-
+    version = environment.version;
     ngOnInit(): void {
     }
 }
