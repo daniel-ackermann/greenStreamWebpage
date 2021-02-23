@@ -54,12 +54,16 @@
                         <input class="form-control" type="password" [formControl]="password" id="password">
                     </div>
                 </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" [formControl]="privacy" id="privacy">
+                    <label class="form-check-label" for="privacy">Ich akzeptiere die <a target="_blank" [routerLink]="['privacy']">Datenschutzbestimmungen.</a></label>
+                </div>
                 <div *ngIf="registerError != ''" class="alert alert-danger" role="alert">
                     {{registerError}}
                 </div>
                 <div class="d-flex justify-content-between">
                     <a class="nav-link px-0" (click)="nav.select(-1)">Forgot Password?</a>
-                    <button type="submit" class="btn btn-primary" (click)="createAccount()" ngbAutofocus>Register</button>
+                    <button type="submit" class="btn btn-primary" (click)="createAccount()" [disabled]="!privacy.value" ngbAutofocus>Register</button>
                 </div>
             </ng-template>
         </li>

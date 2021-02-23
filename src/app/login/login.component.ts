@@ -29,6 +29,10 @@ export class LoginComponent {
         Validators.required,
         Validators.minLength(4),
     ]);
+    privacy = new FormControl('', [
+        Validators.required,
+        Validators.requiredTrue
+    ]);
     closeResult: string = '';
 
     @Input() register: number;
