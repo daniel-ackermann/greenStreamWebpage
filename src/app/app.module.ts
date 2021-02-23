@@ -23,18 +23,24 @@ import { environment } from '../environments/environment';
         FormsModule,
         ReactiveFormsModule,
         RouterModule.forRoot([
-            { path: 'impressum',    loadChildren: () => import('./impressum/impressum.module')      .then(m => m.ImpressumModule) },
-            { path: 'privacy',      loadChildren: () => import('./privacy/privacy.module')          .then(m => m.PrivacyModule) },
-            { path: 'import',       loadChildren: () => import('./import-json/import-json.module')  .then(m => m.ImportJSONModule) },
-            { path: 'me',           loadChildren: () => import('./me/me.module')                    .then(m => m.MeModule)},
-            { path: 'list',         loadChildren: () => import('./home/home.module')                .then(m => m.HomeModule) },
+            { path: 'impressum', loadChildren: () => import('./impressum/impressum.module').then(m => m.ImpressumModule) },
+            { path: 'privacy', loadChildren: () => import('./privacy/privacy.module').then(m => m.PrivacyModule) },
+            { path: 'import', loadChildren: () => import('./import-json/import-json.module').then(m => m.ImportJSONModule) },
+            { path: 'me', loadChildren: () => import('./me/me.module').then(m => m.MeModule) },
+            { path: 'list', loadChildren: () => import('./home/home.module').then(m => m.HomeModule) },
+            { path: 'index', loadChildren: () => import('./index/index.module').then(m => m.IndexModule) },
+            { path: 'about', loadChildren: () => import('./about/about.module').then(m => m.AboutModule) },
             // { path: 'item',         loadChildren: () => import('./item/')}
             {
                 path: '**',
-                redirectTo: 'list',
+                redirectTo: 'index',
                 pathMatch: 'full'
             }
-        ], { useHash: false, scrollPositionRestoration: 'enabled' }),
+        ], {
+            useHash: false,
+            scrollPositionRestoration: 'enabled',
+            anchorScrolling: 'enabled'
+        }),
         ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
     ],
     declarations: [
