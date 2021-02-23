@@ -24,5 +24,6 @@ export const environment = {
     languagesPath: "api/languages",
     feedbackItemsPath: "api/feedback/item",
     deleteFeedbackPath: "api/feedback",
-    toggleLikePath:"api/items/status"
+    toggleLikePath: "api/items/status",
+    version: "0.1.2"
 };
