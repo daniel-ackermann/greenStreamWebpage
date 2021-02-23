@@ -1,0 +1,15 @@
+h1,
+h2,
+h3 {
+    text-decoration: underline;
+    text-decoration-color: lightgrey;
+    text-decoration-thickness: 5px;
+}
+
+h1:hover,
+h2:hover,
+h3:hover {
+    transition: 0.5s;
+    text-decoration-color: #44aa00;
+    text-decoration-thickness: 5px;
+}
