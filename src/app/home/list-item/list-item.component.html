@@ -1,17 +1,19 @@
 <div *ngFor="let item of items | filter: searchText let i = index" class="item">
     <div class="list-item">
-        <h5 class="card-title" target="_blank" rel="noopener noreferrer" title="Open in Browser"
+        <button class="h5 card-title d-flex justify-content-between" target="_blank" title="Open in Browser"
             (click)="openItem(item.url, item.id, i)">
-            <i class="material-icons rotate45" title="{{item.name}}">{{item.name | typeIcon }}</i>
             {{item.title}}
-        </h5>
+            <i class="material-icons green pl-2" [ngClass]="{'rotate45': item.type_id>7}" title="{{item.name}}">{{item.type_id | typeIcon}}</i>
+        </button>
         <p class="text-muted">{{item.description}}</p>
         <div class="icon-footer d-flex justify-content-between">
             <span>
-                <i class="material-icons action" title="like/unlike"
-                    (click)="updateStatus({id: item.id, liked: !item.liked}, i)">{{item.liked | likeIcon}}</i>
-                <i class="material-icons action" title="watch later"
-                    (click)="updateStatus({id: item.id, watchlist: !item.watchlist}, i)">{{item.watchlist | watchList}}</i>
+                <button title="like/unlike" (click)="updateStatus({id: item.id, liked: !item.liked}, i)">
+                    <i class="material-icons action">{{item.liked | likeIcon}}</i>
+                </button>
+                <button title="watch later" (click)="updateStatus({id: item.id, watchlist: !item.watchlist}, i)">
+                    <i class="material-icons action">{{item.watchlist | watchList}}</i>
+                </button>
             </span>
             <span *ngIf="loginService.isLoggedIn" class="my-auto">
                 <i class="material-icons green" *ngIf="item.created_by_id == loginService.user.id"
@@ -21,12 +23,12 @@
             <div>
                 <i class="material-icons action" title="Edit Item"
                     *ngIf="loginService.isLoggedIn && loginService.user.role === 'admin'"
-                    [routerLink]="['..', { outlets: { itemModal: ['edit', item.id] } }]">edit</i>
+                    [routerLink]="['..', { outlets: { itemModal: ['edit', item.id] } }]" tabindex="-1">edit</i>
                 <i class="material-icons action red" title="Delete Item"
                     *ngIf="loginService.isLoggedIn && loginService.user.role === 'admin'"
                     (click)="deleteItem(item.id)">delete</i>
                 <i class="material-icons action" [routerLink]="['..', { outlets: { itemModal: ['item', item.id] } }]"
-                    title="give feedback">feedback</i>
+                    title="give feedback" tabindex="-1">feedback</i>
             </div>
         </div>
     </div>

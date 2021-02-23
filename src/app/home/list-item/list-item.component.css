@@ -1,15 +1,27 @@
 .red {
-    color: #f00;
+    color: #D32F2F;
 }
 
-h5 {
+.h5 {
     cursor: pointer;
+    color: black;
 }
 
 .green {
-    color: #0f0;
+    color: #70B45A;
+}
+
+.gray {
+    color: lightgray;
 }
 
 .rotate45{
     transform: rotate(-45deg);
+}
+
+button {
+    border: none;
+    background-color: transparent;
+    padding: 0;
+    text-align: left;
 }
