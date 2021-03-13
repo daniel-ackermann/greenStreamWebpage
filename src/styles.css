@@ -1,7 +1,6 @@
 html {
     position: relative;
-    min-height: 100%;
-    /* font-size: 0.8rem; */
+    min-height: 125vh;
 }
 
 body {
