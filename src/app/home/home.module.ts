@@ -36,8 +36,7 @@ import { SharedModule } from '../shared/shared.module';
         ReactiveFormsModule,
         RouterModule.forChild([
             { path: 'item', outlet: 'itemModal', loadChildren: () => import('./item/item.module').then(m => m.ItemModule) },
-            { path: 'edit', outlet: 'itemModal', loadChildren: () => import('./item-edit/item-edit.module').then(m => m.ItemEditModule) },
-            { path: 'new', outlet: 'itemModal', loadChildren: () => import('./item-edit/item-edit.module').then(m => m.ItemEditModule) },
+            { path: 'edit', outlet: 'itemModal', loadChildren: () => import('../item-edit/item-edit.module').then(m => m.ItemEditModule) },
             {
                 path: '',
                 component: HomeComponent,

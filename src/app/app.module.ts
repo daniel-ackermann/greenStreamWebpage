@@ -30,6 +30,8 @@ import { environment } from '../environments/environment';
             { path: 'list', loadChildren: () => import('./home/home.module').then(m => m.HomeModule) },
             { path: 'index', loadChildren: () => import('./index/index.module').then(m => m.IndexModule) },
             { path: 'about', loadChildren: () => import('./about/about.module').then(m => m.AboutModule) },
+            { path: 'passwordRestore', loadChildren: () => import('./password-restore/password-restore.module').then(m => m.PasswordRestoreModule) },
+            { path: 'new', outlet: 'itemModal', loadChildren: () => import('./item-edit/item-edit.module').then(m => m.ItemEditModule) },
             // { path: 'item',         loadChildren: () => import('./item/')}
             {
                 path: '**',
