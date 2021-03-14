@@ -1,9 +1,37 @@
+<!-- <div *ngIf="items?.length == 0">
+    <div class="item" *ngFor="let i of [].constructor(15)">
+        <div class="list-item">
+            <div class="h5 card-title d-flex justify-content-between w-50" style="height: 1.5em;">
+                <div class="load-wraper">
+                    <div class="activity"></div>
+                </div>
+            </div>
+            <div style="height: 1.5em;margin: 1em 0;">
+                <div class="load-wraper">
+                    <div class="activity"></div>
+                </div>
+            </div>
+            <div class="icon-footer d-flex justify-content-between">
+                <span>
+                    <button title="like/unlike">
+                        <i class="material-icons action">favorite</i>
+                    </button>
+                    <button title="watch later">
+                        <i class="material-icons action">turned_in</i>
+                    </button>
+                </span>
+                <div>
+                    <i class="material-icons action" title="give feedback" tabindex="-1">feedback</i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
 <div *ngFor="let item of items | filter: searchText let i = index" class="item">
     <div class="list-item">
-        <button class="h5 card-title d-flex justify-content-between" target="_blank" title="Open in Browser"
-            (click)="openItem(item.url, item.id, i)">
+        <button class="h5 card-title d-flex justify-content-between" target="_blank" title="Open in Browser" (click)="openItem(item.url, item.id, i)">
             {{item.title}}
-            <i class="material-icons green pl-2" [ngClass]="{'rotate45': item.type_id>7}" title="{{item.name}}">{{item.type_id | typeIcon}}</i>
+            <i class="material-icons green pl-2" [ngClass]="{'rotate45': item.type_id>7}" title="{{item.name}}">{{item.icon}}</i>
         </button>
         <p class="text-muted">{{item.description}}</p>
         <div class="icon-footer d-flex justify-content-between">
@@ -21,14 +49,9 @@
             </span>
 
             <div>
-                <i class="material-icons action" title="Edit Item"
-                    *ngIf="loginService.isLoggedIn && loginService.user.role === 'admin'"
-                    [routerLink]="['..', { outlets: { itemModal: ['edit', item.id] } }]" tabindex="-1">edit</i>
-                <i class="material-icons action red" title="Delete Item"
-                    *ngIf="loginService.isLoggedIn && loginService.user.role === 'admin'"
-                    (click)="deleteItem(item.id)">delete</i>
-                <i class="material-icons action" [routerLink]="['..', { outlets: { itemModal: ['item', item.id] } }]"
-                    title="give feedback" tabindex="-1">feedback</i>
+                <i class="material-icons action" title="Edit Item" *ngIf="loginService.isLoggedIn && loginService.user.role === 'admin'" [routerLink]="['..', { outlets: { itemModal: ['edit', item.id] } }]" tabindex="-1">edit</i>
+                <i class="material-icons action red" title="Delete Item" *ngIf="loginService.isLoggedIn && loginService.user.role === 'admin'" (click)="deleteItem(item.id)">delete</i>
+                <i class="material-icons action" [routerLink]="['..', { outlets: { itemModal: ['item', item.id] } }]" title="give feedback" tabindex="-1">feedback</i>
             </div>
         </div>
     </div>
