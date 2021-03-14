@@ -20,6 +20,7 @@ export const environment = {
     registerPath: "account",
     deregisterPath: "account",
     requestPasswordPath: "account",
+    setPassword: "passwordRestore",
     userPath: "api/user",
     languagesPath: "api/languages",
     feedbackItemsPath: "api/feedback/item",

@@ -20,10 +20,11 @@ export const environment = {
     registerPath: "account",
     deregisterPath: "account",
     requestPasswordPath: "account",
+    setPassword: "passwordRestore",
     userPath: "api/user",
     languagesPath: "api/languages",
     feedbackItemsPath: "api/feedback/item",
     deleteFeedbackPath: "api/feedback",
     toggleLikePath: "api/items/status",
-    version: "0.1.2"
+    version: "0.1.3"
 };
