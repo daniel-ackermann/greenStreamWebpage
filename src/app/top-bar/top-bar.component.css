@@ -4,34 +4,51 @@ h1 {
     font-size: 2rem;
 }
 
-a {
-    color: white;
-    padding: 0 2em;
-    line-height: 3rem;
+.nav-item {
+    padding: 0 .5em;
 }
 
-a.menu-item:hover,
 .active {
     background-color: rgba(0, 0, 0, 0.1);
-}
-
-nav {
-    padding: .5rem;
-    background-color: #44aa00;
-    color: white;
-}
-
-.dropdown-toggle {
-    background-color: transparent;
-    color: white;
-    border: none;
-    padding: 0;
 }
 
 .dropdown-toggle:after {
     display: none;
 }
 
-.menu a {
-    padding: 0 1em;
+button {
+    border: none;
+    background-color: transparent;
+}
+
+.navbar-custom {
+    padding: .5rem;
+    background-color: #44aa00;
+}
+
+
+/* change the brand and text color */
+
+.navbar-custom .navbar-brand,
+.navbar-custom .navbar-text {
+    color: rgba(255, 255, 255, 1);
+}
+
+
+/* change the link color */
+
+.navbar-custom .navbar-nav .nav-link {
+    color: #3c0e00;
+}
+
+
+/* change the color of active or hovered links */
+
+.navbar-custom .nav-item.active .nav-link,
+.navbar-custom .nav-item:hover .nav-link {
+    color: #ffffff;
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%280, 0, 0, 0.5%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }

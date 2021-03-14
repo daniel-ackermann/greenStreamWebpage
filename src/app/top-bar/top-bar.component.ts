@@ -11,6 +11,7 @@ import { LoginRequestService } from '../loginRequest.service';
 })
 export class TopBarComponent {
     constructor(private loginRequestService: LoginRequestService, public loginService: LoginService, private modalService: NgbModal) { }
+    collapsed: boolean = true;
     requestLogin(mode?: number) {
         this.loginRequestService.requestLogin(mode).catch((err) => {
             console.error(err);
