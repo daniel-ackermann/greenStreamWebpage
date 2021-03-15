@@ -31,6 +31,9 @@ export class ReviewedComponent implements OnInit {
                 });
             }
         })
+        this.itemService.onRemove.subscribe((id:number)=> {
+            this.remove(id);
+        });
     }
     requestItems(){
         this.itemService.getReviewedItems().subscribe((data) => {
@@ -40,5 +43,12 @@ export class ReviewedComponent implements OnInit {
                 this.showNoItemHint = true;
             }
         });
+    }
+    remove(id: number) {
+        for (let i = 0; i < this.items.length; i++) {
+            if (this.items[i].id === id) {
+                this.items.splice(i, 1);
+            }
+        }
     }
 }

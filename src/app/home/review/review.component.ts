@@ -32,6 +32,9 @@ export class ReviewComponent implements OnInit {
         this.itemService.onReview.subscribe((id:number)=> {
             this.remove(id);
         });
+        this.itemService.onRemove.subscribe((id:number)=> {
+            this.remove(id);
+        });
     }
 
     
