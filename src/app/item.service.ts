@@ -20,7 +20,7 @@ export class ItemService {
 
     remove(id: number) {
         this.onRemove.next(id);
-        this.http.delete(`${environment.apiMainUrl}/${environment.itemsPath}/${id}`).subscribe((err) => {
+        this.http.delete(`${environment.apiMainUrl}/${environment.itemPath}/${id}`).subscribe((err) => {
             console.log(err);
         });
     }
@@ -82,7 +82,7 @@ export class ItemService {
     }
 
     getItem(id: number): Observable<Item> {
-        const url = `${environment.apiMainUrl}/${environment.itemsPath}/${id}`;
+        const url = `${environment.apiMainUrl}/${environment.itemPath}/${id}`;
         return this.http.get<Item>(url).pipe(
             tap(_ => console.log(`fetched item id=${id}`)),
             catchError(this.handleError<Item>(`getItem id=${id}`))
@@ -91,14 +91,14 @@ export class ItemService {
 
     put(item:Item): Observable<Item>{
         this.onEdit.next(item);
-        return this.http.put<Item>(`${environment.apiMainUrl}/${environment.itemsPath}/${item.id}`, item).pipe(
+        return this.http.put<Item>(`${environment.apiMainUrl}/${environment.itemPath}/${item.id}`, item).pipe(
             tap(_ => console.log(`fetched item id=${item.id}`)),
             catchError(this.handleError<Item>(`getItem id=${item.id}`))
         )
     }
 
     add(item:Item){
-        return this.http.post<Item>(`${environment.apiMainUrl}/${environment.itemsPath}`, item).pipe(
+        return this.http.post<Item>(`${environment.apiMainUrl}/${environment.itemPath}`, item).pipe(
             tap(_ => {
                 console.log(`added item id=${item.id}`)
                 this.onAdd.next(item);

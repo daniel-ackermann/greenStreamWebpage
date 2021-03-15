@@ -7,6 +7,7 @@ export const environment = {
     apiMainUrl: "https://localhost:4200",
     importPath: "api/import",
     itemsPath: "api/items",
+    itemPath: "api/item",
     reviewedItemsPath: "api/items/reviewed",
     createdItemsPath: "api/items/created",
     likedItemsPath: "api/items/liked",

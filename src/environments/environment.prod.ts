@@ -7,6 +7,7 @@ export const environment = {
     apiMainUrl: "https://appsterdb.ackermann.digital",
     importPath: "api/import",
     itemsPath: "api/items",
+    itemPath: "api/item",
     reviewedItemsPath: "api/items/reviewed",
     createdItemsPath: "api/items/created",
     likedItemsPath: "api/items/liked",
@@ -25,6 +26,6 @@ export const environment = {
     languagesPath: "api/languages",
     feedbackItemsPath: "api/feedback/item",
     deleteFeedbackPath: "api/feedback",
-    toggleLikePath: "api/items/status",
+    toggleLikePath: "api/item/status",
     version: "0.1.3"
 };

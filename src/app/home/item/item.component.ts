@@ -43,7 +43,7 @@ export class ItemComponent implements OnInit {
         if (this.id === undefined) {
             this.router.navigate(['item']);
         }
-        this.http.get(`${environment.apiMainUrl}/${environment.itemsPath}/${this.id}`).subscribe((data: Item[]) => {
+        this.http.get(`${environment.apiMainUrl}/${environment.itemPath}/${this.id}`).subscribe((data: Item[]) => {
             if (data.length < 1) {
                 console.log("item not found");
                 this.router.navigate(['/']);
