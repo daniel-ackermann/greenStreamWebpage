@@ -1,14 +1,16 @@
 <h2 class="d-flex justify-content-between">
-    <span class="d-flex">
+    <span>
         Overview
-        <span class="badge badge-light ml-2">{{items.length}}</span>
     </span>
     <label for="search" class="sr-only">Suche</label>
     <input class="form-control ml-3" id="search" type="search" placeholder="search" [(ngModel)]="searchText">
 </h2>
-<div *ngIf="showNoItemHint" class="alert alert-light" role="alert">
-    There went something wrong! Please try again later.
-</div>
-<div class="card-columns">
+<div class="cards">
     <app-list-item [items]="items" [searchText]="searchText"></app-list-item>
+</div>
+<div *ngIf="!showNoItemHint" class="d-flex justify-content-center pb-3 pt-2">
+    <button type="button" (click)="getItems(10,items[items.length-1 ].id)" class="btn btn-secondary">Weitere Laden</button>
+</div>
+<div *ngIf="showNoItemHint" class="alert alert-light pb-3 pt-2" role="alert">
+    There went something wrong! Please try again later.
 </div>

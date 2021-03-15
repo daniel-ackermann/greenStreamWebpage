@@ -9,6 +9,6 @@
 <div *ngIf="showNoItemHint" class="alert alert-light" role="alert">
     Start exploring <a [routerLink]="['..', 'list']">here!</a>
 </div>
-<div class="card-columns">
+<div class="cards">
     <app-list-item [items]="items" [searchText]="searchText"></app-list-item>
 </div>

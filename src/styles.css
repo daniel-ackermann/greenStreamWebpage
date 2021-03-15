@@ -25,10 +25,19 @@ body {
     border-top: solid 1px lightgray;
 }
 
+app-list-item {
+    display: flex;
+    flex-flow: row wrap;
+}
+
 .item {
-    padding-bottom: 1rem;
+    /* padding-bottom: 1rem;
     display: inline-block;
     width: 100%;
+    */
+    /* max-width: 60%; */
+    flex: auto;
+    margin: .3em .3em .3em .3em;
 }
 
 .footer {

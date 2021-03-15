@@ -10,7 +10,7 @@ import { LoginService } from 'src/app/login.service';
 })
 export class ListComponent implements OnInit {
     searchText = "";
-        items: Item[] = [];
+    items: Item[] = [];
     showNoItemHint: boolean = false;
     loaded: boolean = false;
     constructor(public itemService: ItemService, private loginService: LoginService) { }
@@ -26,20 +26,27 @@ export class ListComponent implements OnInit {
             this.items.push(item);
         });
         this.loginService.onLanguageChange.subscribe((language: string[]) => {
-            this.getItems();
+            this.itemService.getItems(20, 0).subscribe(data => {
+                if(data.length > 0){
+                    this.items = data;
+                }else{
+                    this.showNoItemHint = true;
+                }
+            });
         });
         this.getItems();
     }
 
-    getItems() {
-        this.itemService.getItems().subscribe(data => {
+    getItems(limit:number = 20, index: number = 0) {
+        this.itemService.getItems(limit, index).subscribe(data => {
             if(data.length > 0){
-                this.items = data;
+                this.items = this.items.concat(data);
             }else{
                 this.showNoItemHint = true;
             }
         });
     }
+
     remove(id: number) {
         for (let i = 0; i < this.items.length; i++) {
             if (this.items[i].id === id) {

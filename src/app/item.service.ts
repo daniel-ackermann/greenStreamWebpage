@@ -25,8 +25,8 @@ export class ItemService {
         });
     }
 
-    getItems() {
-        return this.http.get<[Item]>(`${environment.apiMainUrl}/${environment.itemsPath}`).pipe(
+    getItems(limit: number = 10, start: number = 0) {
+        return this.http.get<[Item]>(`${environment.apiMainUrl}/${environment.itemsPath}/${limit}/${start}`).pipe(
             tap(_ => console.log('fetched items')),
             catchError(this.handleError<Item[]>('getItems', []))
         );
