@@ -66,7 +66,10 @@ export class ItemComponent implements OnInit {
         }
         const newFeedback = {
             feedback: this.feedbackText.value,
-            information_id: this.id
+            information_id: this.id,
+            // created, username sind nur für das webinterface und werden nicht gespeichert! Gespeichert werden automatisch generierte Versionen
+            created: new Date(),
+            username: this.loginService.user.username
         };
         this.feedback.push(newFeedback);
         this.http.post(`${environment.apiMainUrl}/${environment.deleteFeedbackPath}`, newFeedback).subscribe();

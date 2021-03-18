@@ -27,9 +27,11 @@
                 <h6>Gegebenes Feedback:</h6>
                 <ul class="list-group">
                     <li class="list-group-item d-flex justify-content-between align-items-start" *ngFor="let entry of feedback; let i = index">
-                        <span class="text-muted">
-                            {{entry.username}}:
-                        </span> {{entry.feedback}}
+                        <div>
+                            <span class="text-muted" title="{{entry.created | date:'medium'}}">
+                                {{entry.username}}:
+                            </span> {{entry.feedback}}
+                        </div>
                         <i class="material-icons action p-0" (click)="deleteFeedback(entry.id, i)">delete</i>
                     </li>
                 </ul>
