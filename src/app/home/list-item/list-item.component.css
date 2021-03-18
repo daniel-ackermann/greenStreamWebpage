@@ -2,8 +2,11 @@
     color: #D32F2F;
 }
 
-.h5 {
+.pointer {
     cursor: pointer;
+}
+
+.h5 {
     color: black;
 }
 
@@ -22,7 +25,8 @@
 button {
     border: none;
     background-color: transparent;
-    padding: 0;
+    padding: 0 0 .5em 0;
+    margin: 0;
     text-align: left;
 }
 
