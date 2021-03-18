@@ -28,7 +28,7 @@ export class CreatedComponent implements OnInit {
                 this.loginRequestService.requestLogin().then(() => {
                     this.requestItems();
                 }).catch(err => {
-                    this.router.navigate(['']);
+                    this.router.navigate(['list']);
                 });
             }
         })

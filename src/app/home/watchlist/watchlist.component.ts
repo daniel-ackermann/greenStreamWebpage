@@ -28,8 +28,7 @@ export class WatchlistComponent implements OnInit {
                 this.loginRequestService.requestLogin().then(() => {
                     this.requestItems();
                 }).catch(err => {
-                    console.log("mist!");
-                    this.router.navigate(['']);
+                    this.router.navigate(['list']);
                 });
             }
         })

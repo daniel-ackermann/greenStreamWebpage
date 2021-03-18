@@ -28,7 +28,7 @@ export class LikedComponent implements OnInit {
                 this.loginRequestService.requestLogin().then(() => {
                     this.requestItems();
                 }).catch(err => {
-                    this.router.navigate(['']);
+                    this.router.navigate(['list']);
                 });
             }
         })
