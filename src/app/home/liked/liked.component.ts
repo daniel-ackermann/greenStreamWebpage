@@ -41,9 +41,6 @@ export class LikedComponent implements OnInit {
         this.itemService.onAdd.subscribe((item: Item) => {
             this.items.push(item);
         });
-        this.loginService.onLanguageChange.subscribe((language: string[]) => {
-            this.requestItems();
-        });
     }
     requestItems(){
         this.itemService.getLikedItems().subscribe((data) => {

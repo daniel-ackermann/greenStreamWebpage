@@ -12,7 +12,7 @@ import { Item } from 'src/typings';
 })
 export class WatchlistComponent implements OnInit {
     searchText = "";
-        items: Item[] = [];
+    items: Item[] = [];
     showNoItemHint: boolean = false;
     constructor(
         public itemService: ItemService,
@@ -40,9 +40,6 @@ export class WatchlistComponent implements OnInit {
         });
         this.itemService.onAdd.subscribe((item: Item) => {
             this.items.push(item);
-        });
-        this.loginService.onLanguageChange.subscribe((language: string[]) => {
-            this.requestItems();
         });
     }
     requestItems(){

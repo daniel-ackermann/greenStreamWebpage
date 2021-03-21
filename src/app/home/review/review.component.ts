@@ -19,8 +19,7 @@ export class ReviewComponent implements OnInit {
 
     ngOnInit(): void {
         this.loginService.onStatusChange.subscribe(status => {
-            if(!status){
-                this.router.navigate(['list']);
+            if (status === false) {
                 this.loginRequestService.requestLogin().then(() => {
                     this.requestItems();
                 }).catch(err => {
