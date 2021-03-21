@@ -50,15 +50,7 @@ export class ItemEditComponent implements OnInit {
     id: number;
     topics:Topic[] = [];
     types:Type[] = [];
-    languages:Language[] = [{
-            name: "Deutsch",
-            value: "de"
-        },
-        {
-            name: "English",
-            value: "en"
-        }
-    ];
+    languages:Language[] = [];
 
     ngOnInit(): void {
         this.http.get<Topic[]>(`${environment.apiMainUrl}/${environment.topicsPath}`).subscribe((data: Topic[]) => {
