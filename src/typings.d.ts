@@ -13,6 +13,7 @@ export interface Item {
 export interface Topic {
     id: number;
     topic: string;
+    selected?: boolean| number;
 }
 
 export interface Type {
@@ -29,13 +30,15 @@ export interface User {
     id: number;
     email: string;
     role: string;
-    language: string[];
+    languages: Language[];
     username?: string;
+    topics: Topic[];
 }
 
 export interface Language {
-    value: string;
+    code: string;
     name: string;
+    selected?: boolean;
 }
 
 export interface Feedback { 

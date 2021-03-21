@@ -4,23 +4,33 @@
             <svg height="200" width="200" class="m-3">
                 <circle cx="100" cy="100" r="100" stroke="none" fill="aqua" />
                 <text x="100" y="100" text-anchor="middle" dominant-baseline="middle" stroke="none" font-color="white"
-                font-size="100">{{loginService.user.username.substring(0,2)}}</text>
+                font-size="100">{{settings.value.username.substring(0,2)}}</text>
             </svg>
         </div>
         <form [formGroup]="settings" class="" (ngSubmit)="submit()">
             <h3>Sprachen</h3>
-            <div class="form-group m-0" formArrayName="selectedLanguage"
-                *ngFor="let order of ordersFormArray.controls; let i = index">
-                <label>
-                    <input class="" type="checkbox" [formControlName]="i">
-                    {{languages[i].name}}
-                </label>
+            <div formArrayName="selectedLanguages">
+                <div class="form-group m-0" *ngFor="let language of getLanguages.controls; let i = index" [formGroupName]="i">
+                    <label>
+                        <input class="" type="checkbox" formControlName="selected">
+                        {{language.value.name}}
+                    </label>
+                </div>
             </div>
             <small>Select at least one language, otherwise english will be selected.</small>
-            
+            <h3>Themen</h3>
+            <div formArrayName="selectedTopics">
+                <div class="form-group m-0" *ngFor="let topic of getTopics.controls; let i = index" [formGroupName]="i">
+                    <label>
+                        <input class="" [value]="true" type="checkbox" formControlName="selected">
+                        {{topic.value.name}}
+                    </label>
+                </div>
+            </div>
+            <small>Select at least one topic, otherwise we will select some interesting topics for you.</small>
             <h3>Benutzername</h3>
             <input class="form-control" type="text" name="username" id="username" formControlName="username">
-            
+
             <h3>Email</h3>
             <input class="form-control" type="text" value="{{loginService.user.email}}" disabled>
 

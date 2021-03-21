@@ -2,20 +2,21 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { User } from 'src/typings';
+import { Language, User } from 'src/typings';
 
 @Injectable()
 export class LoginService {
     isLoggedIn: boolean = false;
     onStatusChange: Subject<boolean> = new Subject<boolean>();
-    onLanguageChange: Subject<string[]> = new Subject<string[]>();
+    onLanguageChange: Subject<Language[]> = new Subject<Language[]>();
     onNameChange: Subject<string> = new Subject<string>();
 
     user: User = {
         id: -1,
         email: "",
         role: "visitor",
-        language: [],
+        languages: [],
+        topics: [],
         username: ""
     };
     constructor(private http: HttpClient) { }
@@ -35,7 +36,7 @@ export class LoginService {
                         reject();
                     } else {
                         this.user = result as User;
-                        this.setUserLanguage(this.user.language);
+                        this.setUserLanguage(this.user.languages);
                         this.isLoggedIn = true;
                         this.onStatusChange.next(true);
                         resolve(this.user);
@@ -55,11 +56,11 @@ export class LoginService {
                     console.log("Erfolgreich eingeloggt!");
                     this.onStatusChange.next(true);
                     this.isLoggedIn = true;
-                    if (this.user.language != user.language) {
-                        this.setUserLanguage(user.language);
+                    if (this.user.languages != user.languages) {
+                        this.setUserLanguage(user.languages);
                     }
                     this.user = user;
-                    console.log(user.language);
+                    console.log(user.languages);
                     resolve(user);
                 }
             });
@@ -105,10 +106,10 @@ export class LoginService {
         });
     }
 
-    setUserLanguage(language: string[]) {
-        console.log("set language to ", language);
-        this.user.language = language;
-        this.onLanguageChange.next(language);
+    setUserLanguage(languages: Language[]) {
+        console.log("set language to ", languages);
+        this.user.languages = languages;
+        this.onLanguageChange.next(languages);
     }
 
     setUserName(username: string) {
