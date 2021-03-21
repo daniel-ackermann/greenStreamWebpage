@@ -13,6 +13,7 @@ import { LikedComponent } from './liked/liked.component';
 import { WatchedComponent } from './watched/watched.component';
 import { WatchlistComponent } from './watchlist/watchlist.component';
 import { SharedModule } from '../shared/shared.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -33,6 +34,7 @@ import { SharedModule } from '../shared/shared.module';
         SharedModule,
         CommonModule,
         FormsModule,
+        NgbModule,
         ReactiveFormsModule,
         RouterModule.forChild([
             { path: 'item', outlet: 'itemModal', loadChildren: () => import('./item/item.module').then(m => m.ItemModule) },

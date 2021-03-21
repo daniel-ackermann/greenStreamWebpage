@@ -6,17 +6,21 @@ import { catchError, tap } from 'rxjs/operators';
 import { Observable, of, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { LoginService } from './login.service';
+import { LoginRequestService } from './loginRequest.service';
+import { Router } from '@angular/router';
 
 
 @Injectable({
     providedIn: 'root'
 })
 export class ItemService {
-    constructor(private http: HttpClient, private loginService: LoginService) { }
+    constructor(private http: HttpClient, private loginService: LoginService, private loginRequestService: LoginRequestService, private router: Router) { }
     onRemove: Subject<number> = new Subject<number>();
     onEdit: Subject<Item> = new Subject<Item>();
     onAdd: Subject<Item> = new Subject<Item>();
     onReview: Subject<number> = new Subject<number>();
+
+    items:Item[] = [];
 
     remove(id: number) {
         this.onRemove.next(id);
@@ -25,8 +29,8 @@ export class ItemService {
         });
     }
 
-    getItems(limit: number = 10, start: number = 0) {
-        return this.http.get<[Item]>(`${environment.apiMainUrl}/${environment.itemsPath}/${limit}/${start}`).pipe(
+    getItems(topics: number[] = [], limit: number = 10, start: number = 0) {
+        return this.http.get<[Item]>(`${environment.apiMainUrl}/${environment.itemsPath}/${limit}/${start}?topics=${topics}`).pipe(
             tap(_ => console.log('fetched items')),
             catchError(this.handleError<Item[]>('getItems', []))
         );
@@ -58,7 +62,7 @@ export class ItemService {
     getLikedItems(){
         return this.http.get<[Item]>(`${environment.apiMainUrl}/${environment.likedItemsPath}`).pipe(
             tap(_ => console.log('fetched items')),
-            catchError(this.handleError<Item[]>('getCreatedItems', []))
+            catchError(this.handleError<Item[]>('getLikedItems', []))
         );
     }
 
