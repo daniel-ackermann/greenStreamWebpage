@@ -6,24 +6,34 @@ import { LoginComponent } from './login/login.component';
 @Injectable()
 export class LoginRequestService {
     isLoggedIn: boolean = false;
+    private requestActive: boolean = false;
+    pendingRequest: Promise<void>;
     user: User = {
         id: -1,
         email: "",
         role: "visitor",
-        language: []
+        languages: [],
+        topics: []
     };
-    constructor(private modalService: NgbModal) {
-    }
+    constructor(private modalService: NgbModal) {}
+
     requestLogin(mode: number = 0) {
-        return new Promise<void>((resolve, reject) => {
-            let modalRef = this.modalService.open(LoginComponent, { ariaLabelledBy: 'modal-basic-title' });
-            modalRef.result.then((result) => {
-                console.log(result);
-                resolve();
-            }, (reason) => {
-                reject();
-            });
-            modalRef.componentInstance.register = mode;
-        })
+        if(!this.requestActive){
+            this.requestActive = true;
+            return this.pendingRequest = new Promise<void>((resolve, reject) => {
+                let modalRef = this.modalService.open(LoginComponent, { ariaLabelledBy: 'modal-basic-title' });
+                modalRef.result.then((result) => {
+                    console.log(result);
+                    this.requestActive = false;
+                    resolve();
+                }, (reason) => {
+                    this.requestActive = false;
+                    reject();
+                });
+                modalRef.componentInstance.register = mode;
+            })
+        }else{
+            return this.pendingRequest;
+        }
     }
 }
