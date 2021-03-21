@@ -21,6 +21,7 @@ export class ListItemComponent {
         public router: Router,
         private http: HttpClient) { }
     @Input() items: any;
+    @Input() loading: boolean;
     @Input() searchText: any;
 
     deleteItem(id: number) {

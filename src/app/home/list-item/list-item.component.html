@@ -1,7 +1,10 @@
-<!-- <div *ngIf="items?.length == 0">
-    <div class="item" *ngFor="let i of [].constructor(15)">
+<div *ngIf="loading" class="d-flex justify-content-center">
+    <div class="spinner-border" role="status">
+        <span class="visually-hidden sr-only">Loading...</span>
+    </div>
+    <!-- <div class="item" *ngFor="let i of [].constructor(15)">
         <div class="list-item">
-            <div class="h5 card-title d-flex justify-content-between w-50" style="height: 1.5em;">
+            <div class="h5 card-title pointer d-flex justify-content-between" style="height: 1.5em;">
                 <div class="load-wraper">
                     <div class="activity"></div>
                 </div>
@@ -17,7 +20,7 @@
                         <i class="material-icons action">favorite</i>
                     </button>
                     <button title="watch later">
-                        <i class="material-icons action">turned_in</i>
+                        <i class="material-icons action">turned_in_not</i>
                     </button>
                 </span>
                 <div>
@@ -25,35 +28,37 @@
                 </div>
             </div>
         </div>
-    </div>
-</div> -->
-<div *ngFor="let item of items | filter: searchText let i = index" class="item">
-    <div class="list-item">
-        <button class="h5 card-title pointer d-flex justify-content-between" title="Open in a new Tab" (click)="openItem(item.url, item.id, i)">
-            <!-- <span class="d-block"> -->
+    </div> -->
+</div>
+<div class="app-list-item">
+    <div *ngFor="let item of items | filter: searchText let i = index" class="item">
+        <div class="list-item">
+            <button class="h5 card-title pointer d-flex justify-content-between" title="Open in a new Tab" (click)="openItem(item.url, item.id, i)">
                 {{item.title}}
-            <!-- </span> -->
-            <i class="material-icons green pl-2" [ngClass]="{'rotate45': item.type_id>7}" title="{{item.name}}">{{item.icon}}</i>
-        </button>
-        <p class="text-muted d-block pointer" title="Open in a new Tab" (click)="openItem(item.url, item.id, i)">{{item.description}}</p>
-        <div class="icon-footer d-flex justify-content-between">
-            <span>
-                <button title="like/unlike" (click)="updateStatus({id: item.id, liked: !item.liked}, i)">
-                    <i class="material-icons action">{{item.liked | likeIcon}}</i>
-                </button>
-                <button title="watch later" (click)="updateStatus({id: item.id, watchlist: !item.watchlist}, i)">
-                    <i class="material-icons action">{{item.watchlist | watchList}}</i>
-                </button>
-            </span>
-            <span *ngIf="loginService.isLoggedIn" class="my-auto">
-                <i class="material-icons green" *ngIf="item.created_by_id == loginService.user.id"
-                    title="Reviewed by Admin and Published">{{item.reviewed | reviewed}}</i>
-            </span>
+                <i class="material-icons green pl-2" [ngClass]="{'rotate45': item.type_id>7}"
+                    title="{{item.name}}">{{item.icon}}</i>
+            </button>
+            <p class="text-muted d-block pointer" title="Open in a new Tab" (click)="openItem(item.url, item.id, i)">
+                {{item.description}}</p>
+            <div class="icon-footer d-flex justify-content-between">
+                <span>
+                    <button title="like/unlike" (click)="updateStatus({id: item.id, liked: !item.liked}, i)">
+                        <i class="material-icons action">{{item.liked | likeIcon}}</i>
+                    </button>
+                    <button title="watch later" (click)="updateStatus({id: item.id, watchlist: !item.watchlist}, i)">
+                        <i class="material-icons action">{{item.watchlist | watchList}}</i>
+                    </button>
+                </span>
+                <span *ngIf="loginService.isLoggedIn" class="my-auto">
+                    <i class="material-icons green" *ngIf="item.created_by_id == loginService.user.id"
+                        title="Reviewed by Admin and Published">{{item.reviewed | reviewed}}</i>
+                </span>
 
-            <div>
-                <i class="material-icons action" title="Edit Item" *ngIf="loginService.isLoggedIn && loginService.user.role === 'admin'" [routerLink]="['..', { outlets: { itemModal: ['edit', item.id] } }]" tabindex="-1">edit</i>
-                <i class="material-icons action red" title="Delete Item" *ngIf="loginService.isLoggedIn && loginService.user.role === 'admin'" (click)="deleteItem(item.id)">delete</i>
-                <i class="material-icons action" [routerLink]="['..', { outlets: { itemModal: ['item', item.id] } }]" title="give feedback" tabindex="-1">feedback</i>
+                <div>
+                    <i class="material-icons action" title="Edit Item" *ngIf="loginService.isLoggedIn && loginService.user.role === 'admin'" [routerLink]="['..', { outlets: { itemModal: ['edit', item.id] } }]" tabindex="-1">edit</i>
+                    <i class="material-icons action red" title="Delete Item" *ngIf="loginService.isLoggedIn && loginService.user.role === 'admin'" (click)="deleteItem(item.id)">delete</i>
+                    <i class="material-icons action" [routerLink]="['..', { outlets: { itemModal: ['item', item.id] } }]" title="give feedback" tabindex="-1">feedback</i>
+                </div>
             </div>
         </div>
     </div>

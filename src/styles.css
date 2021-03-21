@@ -25,7 +25,7 @@ body {
     border-top: solid 1px lightgray;
 }
 
-app-list-item {
+.app-list-item {
     display: flex;
     flex-flow: row wrap;
 }
