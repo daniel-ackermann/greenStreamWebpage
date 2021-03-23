@@ -1,13 +1,6 @@
 <h1 id="home">Spannende Ergebnisse aus der Forschung</h1>
 <br>
-<ul class="d-flex justify-content-around">
-    <li>Nachhaltigkeit</li>
-    <li>Fortschritt</li>
-    <li>Bildung</li>
-    <li>Wissenschaft</li>
-</ul>
-<br>
-<ngb-carousel>
+<ngb-carousel [showNavigationIndicators]="false" [interval]="2500" [pauseOnHover]="true" [pauseOnFocus]="true">
     <ng-template ngbSlide *ngFor="let item of items">
         <div class="picsum-img-wrapper">
             <img [src]="item.image" class="w-100" alt="{{item.title}}">
