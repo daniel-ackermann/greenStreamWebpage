@@ -54,3 +54,11 @@ export interface Status {
     watchlist?: boolean;
     watched?: boolean;
 }
+
+export interface Category {
+    name: string,
+    title: string,
+    pattern: string,
+    url: string,
+    requiresAuth: boolean
+}
