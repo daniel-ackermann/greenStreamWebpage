@@ -16,6 +16,7 @@ export class LoginComponent {
     title = "Login";
     registerError = "";
     loginError = "";
+    userMessage: string = "";
     requested = false;
     email = new FormControl('', [
         Validators.required,

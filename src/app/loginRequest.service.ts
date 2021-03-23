@@ -8,6 +8,7 @@ export class LoginRequestService {
     isLoggedIn: boolean = false;
     private requestActive: boolean = false;
     pendingRequest: Promise<void>;
+    userMessage: string = "";
     user: User = {
         id: -1,
         email: "",
@@ -31,9 +32,13 @@ export class LoginRequestService {
                     reject();
                 });
                 modalRef.componentInstance.register = mode;
+                modalRef.componentInstance.userMessage = this.userMessage;
             })
         }else{
             return this.pendingRequest;
         }
+    }
+    setUserMessage(message: string){
+        this.userMessage = message;
     }
 }
