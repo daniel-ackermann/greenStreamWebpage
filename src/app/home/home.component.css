@@ -1,3 +1,11 @@
+h1 {
+    font-size: 1.8rem;
+}
+
+.cards {
+    padding: 10px;
+}
+
 .active,
 .nav-link:hover,
 .nav-link:focus {

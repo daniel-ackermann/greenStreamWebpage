@@ -1,25 +1,42 @@
-<ul class="nav justify-content-center" *ngIf="loginService.isLoggedIn">
-    <li class="nav-item">
-        <a class="nav-link" [routerLink]="['all']" [routerLinkActive]="['active']">All</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" [routerLink]="['created']" [routerLinkActive]="['active']">Created</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" [routerLink]="['liked']" [routerLinkActive]="['active']" *ngIf="loginService.isLoggedIn">Liked</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" [routerLink]="['history']" [routerLinkActive]="['active']" *ngIf="loginService.isLoggedIn">History</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" [routerLink]="['watchlist']" [routerLinkActive]="['active']" *ngIf="loginService.isLoggedIn">Watch Later</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" [routerLink]="['reviewed']" [routerLinkActive]="['active']" *ngIf="loginService.user.role=='admin'">Reviewed</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" [routerLink]="['review']" [routerLinkActive]="['active']" *ngIf="loginService.user.role=='admin'">Review</a>
-    </li>
-</ul>
-<router-outlet></router-outlet>
+<h2 class="d-flex justify-content-between">
+    <span>
+        {{categories[selected].title}}
+    </span>
+    <span class="d-flex">
+        <label for="search" class="sr-only">Suche</label>
+        <input class="form-control ml-3" id="search" type="search" placeholder="search" [(ngModel)]="searchText">
+    </span>
+</h2>
+
+<div class="d-flex">
+    <ul class="nav justify-content-center" *ngIf="loginService.isLoggedIn">
+        <li class="nav-item" *ngFor="let category of categoryArray; let i = index">
+            <a class="nav-link" [routerLink]="['..', category.pattern]" [routerLinkActive]="['active']">{{category.name}}</a>
+        </li>
+    </ul>
+    <div ngbDropdown placement="bottom-right" class="d-inline-block ml-auto">
+        <button class="btn btn-outline-primary" id="dropdownBasic2" ngbDropdownToggle>Kategorie</button>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic2">
+            <form [formGroup]="selection">
+                <div class="form-group m-2" formArrayName="topics">
+                    <div *ngFor="let topic of selectionFormArray.controls; let i = index" [formGroupName]="i">
+                        <label>
+                            <input type="checkbox" formControlName="selected" (change)="submit()">
+                            {{topic.value.name}}
+                        </label>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="cards">
+    <app-list-item [items]="itemService.getItems()" [loading]="itemService.isLoading()" [searchText]="searchText"></app-list-item>
+    <div *ngIf="itemService.moreItemsAvailable()" class="d-flex justify-content-center pb-3 pt-2">
+        <button type="button" (click)="itemService.loadMore(itemService.loadedTopic, selectedTopicIds, 10, itemService.getItems()[itemService.getItems().length-1].id)" class="btn btn-secondary ">Weitere Laden</button>
+    </div>
+    <div *ngIf="!itemService.moreItemsAvailable() " class="alert alert-light m-2" role="alert ">
+        There are no more Items in this category.
+    </div>
+</div>
 <router-outlet name="itemModal"></router-outlet>
