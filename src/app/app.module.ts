@@ -23,27 +23,28 @@ import { environment } from '../environments/environment';
         FormsModule,
         ReactiveFormsModule,
         RouterModule.forRoot([
-            { path: 'impressum', loadChildren: () => import('./impressum/impressum.module').then(m => m.ImpressumModule) },
-            { path: 'privacy', loadChildren: () => import('./privacy/privacy.module').then(m => m.PrivacyModule) },
-            { path: 'import', loadChildren: () => import('./import-json/import-json.module').then(m => m.ImportJSONModule) },
-            { path: 'me', loadChildren: () => import('./me/me.module').then(m => m.MeModule) },
-            { path: 'list', loadChildren: () => import('./home/home.module').then(m => m.HomeModule) },
-            { path: 'index', loadChildren: () => import('./index/index.module').then(m => m.IndexModule) },
-            { path: 'about', loadChildren: () => import('./about/about.module').then(m => m.AboutModule) },
-            { path: 'passwordRestore', loadChildren: () => import('./password-restore/password-restore.module').then(m => m.PasswordRestoreModule) },
-            { path: 'new', outlet: 'itemModal', loadChildren: () => import('./item-edit/item-edit.module').then(m => m.ItemEditModule) },
-            // { path: 'item',         loadChildren: () => import('./item/')}
+                { path: 'impressum', loadChildren: () => import('./impressum/impressum.module').then(m => m.ImpressumModule) },
+                { path: 'privacy', loadChildren: () => import('./privacy/privacy.module').then(m => m.PrivacyModule) },
+                { path: 'import', loadChildren: () => import('./import-json/import-json.module').then(m => m.ImportJSONModule) },
+                { path: 'me', loadChildren: () => import('./me/me.module').then(m => m.MeModule) },
+                { path: 'list', loadChildren: () => import('./home/home.module').then(m => m.HomeModule) },
+                { path: 'index', loadChildren: () => import('./index/index.module').then(m => m.IndexModule) },
+                { path: 'about', loadChildren: () => import('./about/about.module').then(m => m.AboutModule) },
+                { path: 'passwordRestore', loadChildren: () => import('./password-restore/password-restore.module').then(m => m.PasswordRestoreModule) },
+                { path: 'new', outlet: 'itemModal', loadChildren: () => import('./item-edit/item-edit.module').then(m => m.ItemEditModule) },
+                {
+                    path: '**',
+                    redirectTo: 'index',
+                    pathMatch: 'full'
+                }
+            ],
             {
-                path: '**',
-                redirectTo: 'index',
-                pathMatch: 'full'
+                useHash: false,
+                scrollPositionRestoration: 'enabled',
+                anchorScrolling: 'enabled',
+                relativeLinkResolution: 'legacy'
             }
-        ], {
-    useHash: false,
-    scrollPositionRestoration: 'enabled',
-    anchorScrolling: 'enabled',
-    relativeLinkResolution: 'legacy'
-}),
+        ),
         ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
     ],
     declarations: [
