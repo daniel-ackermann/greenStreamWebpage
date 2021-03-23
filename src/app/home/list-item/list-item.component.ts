@@ -25,7 +25,7 @@ export class ListItemComponent {
     @Input() searchText: any;
 
     deleteItem(id: number) {
-        this.itemService.remove(id);
+        this.itemService.delete(id);
     }
 
     updateStatus(data: Status, index: number, remove: boolean = false) {

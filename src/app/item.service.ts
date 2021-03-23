@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy, OnInit } from '@angular/core';
 import { Item } from 'src/typings';
 
 import { catchError, tap } from 'rxjs/operators';
@@ -13,75 +13,99 @@ import { Router } from '@angular/router';
 @Injectable({
     providedIn: 'root'
 })
-export class ItemService {
-    constructor(private http: HttpClient, private loginService: LoginService, private loginRequestService: LoginRequestService, private router: Router) { }
-    onRemove: Subject<number> = new Subject<number>();
-    onEdit: Subject<Item> = new Subject<Item>();
-    onAdd: Subject<Item> = new Subject<Item>();
-    onReview: Subject<number> = new Subject<number>();
+export class ItemService implements OnInit {
+    items: Item[] = [];
+    loading: boolean = true;
+    moreAvailable: boolean = false;
+    loadedTopic: string = environment.itemsPath;
 
-    items:Item[] = [];
+    constructor(private http: HttpClient, private loginService: LoginService, private loginRequestService: LoginRequestService, private router: Router) {}
 
-    remove(id: number) {
-        this.onRemove.next(id);
+    ngOnInit() {
+        this.loading = true;
+        this.load(environment.itemsPath, [], 20, 0);
+    }
+
+    getItems(): Item[] {
+        return this.items;
+    }
+
+    isLoading(): boolean {
+        return this.loading;
+    }
+
+    moreItemsAvailable(): boolean {
+        return this.moreAvailable;
+    }
+
+    loadMore(type: string, topics: number[] = [], limit: number = 10, start: number = 0) {
+        this.loadItems(type, topics, limit, start).subscribe((data: Item[]) => {
+            this.items = this.items.concat(data);
+        });
+    }
+    load(type: string, topics: number[] = [], limit: number = 10, start: number = 0) {
+        console.log("ItemService.load", type);
+        return this.loadItems(type, topics, limit, start).pipe(tap((data: Item[]) => {
+            console.log(data);
+            this.items = data;
+        }))
+    }
+
+    loadItems(type: string, topics: number[] = [], limit: number = 10, start: number = 0): Observable<Item[]> {
+        this.loadedTopic = type;
+        const url = `${environment.apiMainUrl}/${type}/${limit + 1}/${start}?topics=${topics}`;
+        console.log("ItemService.loadItems");
+        return this.http.get<Item[]>(url).pipe(
+            tap((data: Item[]) => {
+                console.log('fetched items')
+                if (data.length > 0) {
+                    if (data.length > limit) {
+                        data.pop();
+                        this.moreAvailable = true;
+                    } else {
+                        this.moreAvailable = false;
+                    }
+                } else {
+                    this.moreAvailable = false;
+                }
+                this.loading = false;
+                return data;
+            })
+        );
+    }
+    add(item: Item): Observable<Item> {
+        return this.http.post<Item>(`${environment.apiMainUrl}/${environment.itemPath}`, item).pipe(
+            tap(_ => {
+                this.items.push(item);
+            }),
+            catchError(this.handleError<Item>(`failed ${item}`))
+        )
+    }
+
+    delete(id: number) {
         this.http.delete(`${environment.apiMainUrl}/${environment.itemPath}/${id}`).subscribe((err) => {
             console.log(err);
         });
+        for (let i = 0; i < this.items.length; i++) {
+            if (this.items[i].id === id) {
+                this.items.splice(i, 1);
+            }
+        }
     }
 
-    getItems(topics: number[] = [], limit: number = 10, start: number = 0) {
-        return this.http.get<[Item]>(`${environment.apiMainUrl}/${environment.itemsPath}/${limit}/${start}?topics=${topics}`).pipe(
-            tap(_ => console.log('fetched items')),
-            catchError(this.handleError<Item[]>('getItems', []))
-        );
+    put(item: Item) {
+        for (let i = 0; i < this.items.length; i++) {
+            if (this.items[i].id === item.id) {
+                this.items[i] = item;
+            }
+        }
+        return this.http.put<Item>(`${environment.apiMainUrl}/${environment.itemPath}/${item.id}`, item).pipe(
+            tap(_ => console.log(`fetched item id=${item.id}`)),
+            catchError(this.handleError<Item>(`getItem id=${item.id}`))
+        )
     }
 
-
-
-    getReviewItems(){
-        return this.http.get<[Item]>(`${environment.apiMainUrl}/${environment.reviewItemsPath}`).pipe(
-            tap(_ => console.log('fetched items')),
-            catchError(this.handleError<Item[]>('getReviewItems', []))
-        );
-    }
-
-    getReviewedItems(){
-        return this.http.get<[Item]>(`${environment.apiMainUrl}/${environment.reviewedItemsPath}`).pipe(
-            tap(_ => console.log('fetched items')),
-            catchError(this.handleError<Item[]>('getReviewedItems', []))
-        );
-    }
-
-    getCreatedItems(){
-        return this.http.get<[Item]>(`${environment.apiMainUrl}/${environment.createdItemsPath}`).pipe(
-            tap(_ => console.log('fetched items')),
-            catchError(this.handleError<Item[]>('getCreatedItems', []))
-        );
-    }
-
-    getLikedItems(){
-        return this.http.get<[Item]>(`${environment.apiMainUrl}/${environment.likedItemsPath}`).pipe(
-            tap(_ => console.log('fetched items')),
-            catchError(this.handleError<Item[]>('getLikedItems', []))
-        );
-    }
-
-    getWatchedItems(){
-        return this.http.get<[Item]>(`${environment.apiMainUrl}/${environment.watchedItemsPath}`).pipe(
-            tap(_ => console.log('fetched items')),
-            catchError(this.handleError<Item[]>('getCreatedItems', []))
-        );        
-    }
-
-    getWatchListItems(){
-        return this.http.get<[Item]>(`${environment.apiMainUrl}/${environment.watchListItemsPath}`).pipe(
-            tap(_ => console.log('fetched items')),
-            catchError(this.handleError<Item[]>('getCreatedItems', []))
-        );        
-    }
-
-    review(id:number){
-        this.onReview.next(id);
+    review(id: number) {
         return this.http.get(`${environment.apiMainUrl}/${environment.reviewItemsPath}/${id}`).subscribe();
     }
 
@@ -93,26 +117,16 @@ export class ItemService {
         );
     }
 
-    put(item:Item): Observable<Item>{
-        this.onEdit.next(item);
-        return this.http.put<Item>(`${environment.apiMainUrl}/${environment.itemPath}/${item.id}`, item).pipe(
-            tap(_ => console.log(`fetched item id=${item.id}`)),
-            catchError(this.handleError<Item>(`getItem id=${item.id}`))
-        )
-    }
-
-    add(item:Item){
-        return this.http.post<Item>(`${environment.apiMainUrl}/${environment.itemPath}`, item).pipe(
-            tap(_ => {
-                console.log(`added item id=${item.id}`)
-                this.onAdd.next(item);
-            }),
-            catchError(this.handleError<Item>(`failed ${item}`))
-        )
-    }
-
     private handleError<T>(operation = 'operation', result?: T) {
         return (error: any): Observable<T> => {
+            // if(error.status === 401){
+            //     this.loginRequestService.requestLogin().then(() => {
+            //         // loadItems();
+            //     }).catch(err => {
+            //         this.loginService.doLogout();
+            //         this.router.navigate(['list']);
+            //     });
+            // }
 
             // TODO: send the error to remote logging infrastructure
             console.error(error); // log to console instead
