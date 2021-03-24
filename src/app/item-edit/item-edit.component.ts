@@ -8,6 +8,7 @@ import { Item, Language, Topic, Type } from 'src/typings';
 import { environment } from "src/environments/environment";
 import { LoginService } from 'src/app/login.service';
 import { LoginRequestService } from 'src/app/loginRequest.service';
+import { catchError, tap } from 'rxjs/operators';
 
 @Component({
     selector: 'app-item-edit',
@@ -16,6 +17,11 @@ import { LoginRequestService } from 'src/app/loginRequest.service';
 })
 export class ItemEditComponent implements OnInit {
     title = "Hinzufügen";
+    id: number;
+    topics:Topic[] = [];
+    types:Type[] = [];
+    languages:Language[] = [];
+    isLoading: boolean = false;
     item = new FormGroup({
         title: new FormControl(''),
         description: new FormControl(''),
@@ -31,6 +37,7 @@ export class ItemEditComponent implements OnInit {
         view_external: new FormControl(),
         name: new FormControl()
     });
+
     constructor(    private http: HttpClient,
                     private route: ActivatedRoute,
                     private router: Router,
@@ -38,21 +45,23 @@ export class ItemEditComponent implements OnInit {
                     public loginService: LoginService,
                     private loginRequestService: LoginRequestService,
                     private location: Location
-                    ) {
-                        this.loginService.onStatusChange.subscribe((loggedIn) => {
-                            if(loggedIn === false){
-                                this.loginRequestService.requestLogin().catch(() => {
-                                    this.router.navigate(['/']);
-                                })
-                            }
-                        });
-                    }
-    id: number;
-    topics:Topic[] = [];
-    types:Type[] = [];
-    languages:Language[] = [];
+                    ) {}
 
     ngOnInit(): void {
+
+        this.loginService.onStatusChange.subscribe((loggedIn) => {
+            if(loggedIn === false){
+                this.loginRequestService.requestLogin().catch(() => {
+                    this.router.navigate([{outlets: {'itemModal': null}}]);
+                })
+            }
+        });
+        this.loginService.isSignedIn().catch(() => {
+            this.loginRequestService.requestLogin().catch(() => {
+                this.router.navigate([{outlets: {'itemModal': null}}]);
+            })
+        });
+
         this.http.get<Topic[]>(`${environment.apiMainUrl}/${environment.topicsPath}`).subscribe((data: Topic[]) => {
             this.topics = data;
         })
@@ -67,8 +76,10 @@ export class ItemEditComponent implements OnInit {
             console.log("new Item");
         }else{
             this.title = "Bearbeiten";
+            this.isLoading = true;
             this.itemService.getItem(this.id).subscribe((data: Item) => {
-                this.item.patchValue(data[0]);
+                this.isLoading = false;
+                this.item.patchValue(data);
             });
         }
     }
@@ -91,6 +102,16 @@ export class ItemEditComponent implements OnInit {
     }
 
     close(){
+        
+        // It was broken: https://github.com/angular/angular/issues/13523
+        // Should now work, but does not with (11.2.5): https://github.com/angular/angular/issues/13523
+        // this.router.navigate([
+        //         { outlets: { itemModal: null } }
+        //     ]
+        // );
+        
+        // the workaround is but does not work on page reload: If you follow a link you can close the auth-window and the modal remains visible. 
         this.location.back();
+
     }
 }
