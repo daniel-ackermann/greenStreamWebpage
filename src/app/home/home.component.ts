@@ -16,7 +16,6 @@ import { ActivatedRoute, ActivationStart, NavigationStart, Router, RouterEvent }
 export class HomeComponent implements OnInit {
     searchText = "";
     items: Item[] = [];
-    loading: boolean = true;
     showNoItemHint: boolean = false;
     moreItemsAvailable: boolean = true;
     topics: Topic[] = [];
@@ -28,7 +27,7 @@ export class HomeComponent implements OnInit {
         "all": {
             requiresAuth: false,
             pattern: "all",
-            name: "Browse",
+            name: "Feed",
             url: environment.itemsPath,
             title: "Overview"
         },
@@ -45,6 +44,13 @@ export class HomeComponent implements OnInit {
             name: "Liked",
             url: environment.likedItemsPath,
             title: "Liked"
+        },
+        "watchlater": {
+            requiresAuth: true,
+            pattern: "watchlater",
+            name: "Later",
+            url: environment.watchListItemsPath,
+            title: "Watch later"
         },
         "history": {
             requiresAuth: true,
@@ -133,7 +139,7 @@ export class HomeComponent implements OnInit {
                     return this.loginRequestService.requestLogin().then((user) => {
                         this.switchView(index)
                     }).catch(() => {
-                        this.switchView(this.categories["all"])
+                        this.router.navigate(['list', 'all']);
                     });
                 }
             }
