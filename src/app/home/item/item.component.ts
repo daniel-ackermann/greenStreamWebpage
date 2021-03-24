@@ -31,6 +31,7 @@ export class ItemComponent implements OnInit {
         this.item = {
             title: '',
             likes: 0,
+            marked: 0,
             description: '',
             url: '',
             id: undefined,

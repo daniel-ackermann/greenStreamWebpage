@@ -62,3 +62,11 @@ button {
         left: 100%;
     }
 }
+
+.counter {
+    font-size: 16px;
+    line-height: 24px;
+    position: relative;
+    top: 8px;
+    left: -19px;
+}

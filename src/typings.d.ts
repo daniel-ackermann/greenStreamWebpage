@@ -2,6 +2,7 @@ export interface Item {
     title: string;
     description: string;
     likes: number;
+    marked: number;
     url: string;
     id: number;
     reviewed?:number;

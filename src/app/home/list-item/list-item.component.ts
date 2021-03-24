@@ -4,7 +4,7 @@ import { LoginService } from 'src/app/login.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { Status } from 'src/typings';
+import { Item, Status } from 'src/typings';
 import { LoginRequestService } from 'src/app/loginRequest.service';
 
 @Component({
@@ -20,7 +20,7 @@ export class ListItemComponent {
         private itemService: ItemService,
         public router: Router,
         private http: HttpClient) { }
-    @Input() items: any;
+    @Input() items: Item[];
     @Input() loading: boolean;
     @Input() searchText: any;
 
@@ -44,12 +44,23 @@ export class ListItemComponent {
     }
 
     setStatus(data: Status, index: number, remove: boolean = false) {
+        console.log(data);
         this.http.post(`${environment.apiMainUrl}/${environment.toggleLikePath}`, data).subscribe();
         if (typeof data.liked !== 'undefined') {
             this.items[index].liked = data.liked;
+            if (data.liked) {
+                this.items[index].likes += 1;
+            } else {
+                this.items[index].likes -= 1;
+            }
         }
-        if ( typeof data.watchlist !== 'undefined' ) {
+        if (typeof data.watchlist !== 'undefined') {
             this.items[index].watchlist = data.watchlist;
+            if (data.watchlist) {
+                this.items[index].marked += 1;
+            } else {
+                this.items[index].marked -= 1;
+            }
         }
         if (remove) {
             delete this.items[index];
