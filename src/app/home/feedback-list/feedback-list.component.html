@@ -1,0 +1,58 @@
+<h2 class="d-flex justify-content-between">
+    <span>
+        Feedback
+    </span>
+    <span class="d-flex">
+        <label for="search" class="sr-only">Suche</label>
+        <input class="form-control ml-3" id="search" type="search" placeholder="search" [(ngModel)]="searchText">
+    </span>
+</h2>
+
+<div class="d-flex">
+    <ul class="nav justify-content-center" *ngIf="loginService.isLoggedIn">
+        <li class="nav-item">
+            <a class="nav-link" [routerLink]="['..', 'all']" [routerLinkActive]="['active']">Feed</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" [routerLink]="['..', 'created']" [routerLinkActive]="['active']">Created</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" [routerLink]="['..', 'liked']" [routerLinkActive]="['active']">Liked</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" [routerLink]="['..', 'watchlist']" [routerLinkActive]="['active']">Later</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" [routerLink]="['..', 'watched']" [routerLinkActive]="['active']">History</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" [routerLink]="['..', 'reviewed']" [routerLinkActive]="['active']">Reviewed</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" [routerLink]="['..', 'review']" [routerLinkActive]="['active']">Review</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" [routerLink]="['..', 'feedback']" [routerLinkActive]="['active']">Feedback</a>
+        </li>
+    </ul>
+</div>
+<div *ngFor="let feedback of feedbacks" class="item">
+    <div class="list-item">
+        <div class="h5 card-title pointer d-flex justify-content-between">
+            {{feedback.title}}
+            <i class="material-icons green pl-2" title="{{feedback.name}}">{{feedback.icon}}</i>
+        </div>
+        <p class="text-muted d-block pointer" title="Open in a new Tab">
+            {{feedback.description}}</p>
+        <div class="icon-footer d-flex justify-content-between">
+            <div>
+                <p>
+                    {{feedback.feedback}}
+                </p>
+                <!-- <i class="material-icons action" title="Edit Item" *ngIf="loginService.isLoggedIn && loginService.user.role === 'admin'" [routerLink]="['..', { outlets: { itemModal: ['edit', item.id] } }]" tabindex="-1">edit</i>
+                <i class="material-icons action red" title="Delete Item" *ngIf="loginService.isLoggedIn && loginService.user.role === 'admin'" (click)="deleteItem(item.id)">delete</i>
+                <i class="material-icons action" [routerLink]="['..', { outlets: { itemModal: ['item', item.id] } }]" title="give feedback" tabindex="-1">feedback</i> -->
+            </div>
+        </div>
+    </div>
+</div>

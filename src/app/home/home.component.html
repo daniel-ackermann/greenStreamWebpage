@@ -13,6 +13,9 @@
         <li class="nav-item" *ngFor="let category of categoryArray; let i = index">
             <a class="nav-link" [routerLink]="['..', category.pattern]" [routerLinkActive]="['active']">{{category.name}}</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" [routerLink]="['..', 'feedback']" [routerLinkActive]="['active']">Feedback</a>
+        </li>
     </ul>
     <div ngbDropdown placement="bottom-right" class="d-inline-block ml-auto">
         <button class="btn btn-outline-primary" id="dropdownBasic2" ngbDropdownToggle>Kategorie</button>
@@ -35,7 +38,7 @@
     <div *ngIf="itemService.moreItemsAvailable()" class="d-flex justify-content-center pb-3 pt-2">
         <button type="button" (click)="itemService.loadMore(itemService.loadedTopic, selectedTopicIds, 10, itemService.getItems()[itemService.getItems().length-1].id)" class="btn btn-secondary ">Weitere Laden</button>
     </div>
-    <div *ngIf="!itemService.moreItemsAvailable() " class="alert alert-light m-2" role="alert ">
+    <div *ngIf="!itemService.moreItemsAvailable() && !itemService.isLoading()" class="alert alert-light m-2" role="alert ">
         There are no more Items in this category.
     </div>
 </div>
