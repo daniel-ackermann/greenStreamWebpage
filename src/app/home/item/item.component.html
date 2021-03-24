@@ -4,7 +4,7 @@
         <div class="card-body">
             <div class="d-flex justify-content-between list-item-header">
                 <h5 class="card-title" target="_blank" title="open in a new tab" (click)="openItem(item)">
-                    {{item.title}}
+                    {{item.title || "Loading..."}}
                     <span *ngIf="item.reviewed==0" class="text-truncate text-muted"> | Not reviewed yet!</span>
                 </h5>
                 <div class="d-flex align-items-start">
@@ -22,7 +22,7 @@
                     <i class="material-icons action" (click)="close()" title="Schließen">close</i>
                 </div>
             </div>
-            <p class="card-text">{{item.description}}</p>
+            <p class="card-text">{{item.description || "Loading..."}}</p>
             <div *ngIf="loginService.isLoggedIn && (loginService.user.role =='admin') && feedback.length != 0">
                 <h6>Gegebenes Feedback:</h6>
                 <ul class="list-group">
@@ -32,7 +32,7 @@
                                 {{entry.username}}:
                             </span> {{entry.feedback}}
                         </div>
-                        <i class="material-icons action p-0" (click)="deleteFeedback(entry.id, i)">delete</i>
+                        <i class="material-icons action p-0" (click)="deleteFeedback(entry.id, i)" *ngIf="entry.id">delete</i>
                     </li>
                 </ul>
             </div>
