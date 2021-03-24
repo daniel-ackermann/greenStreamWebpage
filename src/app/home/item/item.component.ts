@@ -33,22 +33,33 @@ export class ItemComponent implements OnInit {
             likes: 0,
             description: '',
             url: '',
-            id: undefined
+            id: undefined,
+            reviewed: 1
         };
     }
     id: number;
 
     ngOnInit(): void {
+
+        this.loginService.onStatusChange.subscribe((loggedIn) => {
+            if(loggedIn === false){
+                this.loginRequestService.requestLogin().catch(() => {
+                    this.router.navigate(['list', 'all']);
+                })
+            }
+        });
+        this.loginService.isSignedIn().catch(() => {
+            this.loginRequestService.requestLogin().catch(() => {
+                this.router.navigate(['list']);
+            })
+        });
+
         this.id = parseInt(this.route.snapshot.paramMap.get('id'), 10) || undefined;
         if (this.id === undefined) {
             this.router.navigate(['item']);
         }
-        this.http.get(`${environment.apiMainUrl}/${environment.itemPath}/${this.id}`).subscribe((data: Item[]) => {
-            if (data.length < 1) {
-                console.log("item not found");
-                this.router.navigate(['/']);
-            }
-            this.item = data[0];
+        this.http.get(`${environment.apiMainUrl}/${environment.itemPath}/${this.id}`).subscribe((data: Item) => {
+            this.item = data;
         });
         this.http.get(`${environment.apiMainUrl}/${environment.feedbackItemsPath}/${this.id}`).subscribe((data: Feedback[]) => {
             this.feedback = data;
