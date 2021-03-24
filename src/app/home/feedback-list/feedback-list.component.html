@@ -36,22 +36,25 @@
         </li>
     </ul>
 </div>
-<div *ngFor="let feedback of feedbacks" class="item">
-    <div class="list-item">
-        <div class="h5 card-title pointer d-flex justify-content-between">
-            {{feedback.title}}
-            <i class="material-icons green pl-2" title="{{feedback.name}}">{{feedback.icon}}</i>
+<div *ngFor="let feedback of feedbacks; let i = index" class="item">
+    <div class="card">
+        <div class="card-body">
+
+            <div class="h5 card-title pointer d-flex justify-content-between">
+                {{feedback.title}}
+                <i class="material-icons green pl-2" title="{{feedback.name}}">{{feedback.icon}}</i>
+                <i class="material-icons action" title="Edit Item" *ngIf="loginService.isLoggedIn && loginService.user.role === 'admin'" [routerLink]="['..', { outlets: { itemModal: ['edit', feedback.id] } }]" tabindex="-1">edit</i>
+            </div>
+            <p class=" card-text text-muted d-block pointer" title="Open in a new Tab">{{feedback.description}}</p>
         </div>
-        <p class="text-muted d-block pointer" title="Open in a new Tab">
-            {{feedback.description}}</p>
-        <div class="icon-footer d-flex justify-content-between">
+        <div class="card-footer py-0 d-flex justify-content-between">
+            <p class="my-auto">
+                <span>{{feedback.username}}</span>: {{feedback.feedback}}
+            </p>
             <div>
-                <p>
-                    {{feedback.feedback}}
-                </p>
-                <!-- <i class="material-icons action" title="Edit Item" *ngIf="loginService.isLoggedIn && loginService.user.role === 'admin'" [routerLink]="['..', { outlets: { itemModal: ['edit', item.id] } }]" tabindex="-1">edit</i>
-                <i class="material-icons action red" title="Delete Item" *ngIf="loginService.isLoggedIn && loginService.user.role === 'admin'" (click)="deleteItem(item.id)">delete</i>
-                <i class="material-icons action" [routerLink]="['..', { outlets: { itemModal: ['item', item.id] } }]" title="give feedback" tabindex="-1">feedback</i> -->
+                <!-- <i class="material-icons action red" title="Delete Item" *ngIf="loginService.isLoggedIn && loginService.user.role === 'admin'" (click)="deleteItem(item.id)">delete</i> -->
+                <!-- <i class="material-icons action" [routerLink]="['..', { outlets: { itemModal: ['item', item.id] } }]" title="give feedback" tabindex="-1">feedback</i> -->
+                <i class="material-icons action red" title="Feedback löschen" (click)="deleteFeedback(feedback.feedback_id, i)">delete</i>
             </div>
         </div>
     </div>
