@@ -24,7 +24,8 @@ export const environment = {
     setPassword: "passwordRestore",
     userPath: "api/user",
     languagesPath: "api/languages",
-    feedbackItemsPath: "api/feedback/item",
+    feedbackItemsPath: "api/feedbacks/item",
+    feedbacksPath: "api/feedbacks",
     deleteFeedbackPath: "api/feedback",
     toggleLikePath: "api/item/status",
     version: "0.1.3"
