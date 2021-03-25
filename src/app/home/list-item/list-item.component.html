@@ -42,14 +42,14 @@
                 {{item.description}}</p>
             <div class="icon-footer d-flex justify-content-between">
                 <div>
-                    <button title="like/unlike" (click)="updateStatus({id: item.id, liked: !item.liked}, i)">
-                        <i class="material-icons pr-3 action">{{item.liked | likeIcon}}</i>
+                    <button class="action" title="like/unlike" (click)="updateStatus({id: item.id, liked: !item.liked}, i)">
+                        <i class="material-icons pointer">{{item.liked | likeIcon}}</i>
                         <span class="counter">
                             {{item.likes}}
                         </span>
                     </button>
-                    <button title="watch later" (click)="updateStatus({id: item.id, watchlist: !item.watchlist}, i)">
-                        <i class="material-icons pr-3 action">{{item.watchlist | watchList}}</i>
+                    <button class="action" title="watch later" (click)="updateStatus({id: item.id, watchlist: !item.watchlist}, i)">
+                        <i class="material-icons pointer">{{item.watchlist | watchList}}</i>
                         <span class="counter">
                             {{item.marked}}
                         </span>
