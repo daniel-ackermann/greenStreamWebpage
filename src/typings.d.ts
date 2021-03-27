@@ -47,8 +47,12 @@ export interface Language {
 export interface Feedback { 
     id?: number;
     information_id: number;
+    label: number;
     feedback:string;
     created_by_id?: number;
+    done?: boolean;
+    color?:string;
+    name?: string;
 }
 
 export interface Status {
@@ -70,4 +74,5 @@ export interface Label{
     name: string;
     color: string;
     count: number;
+    id: number;
 }

@@ -28,7 +28,7 @@ export class FeedbackListComponent implements OnInit {
     }
 
     loadMore(topics: number[] = [], limit: number = 10, start: number = 0) {
-        this.loadFeedbacks(topics, limit, start).subscribe({
+        this.loadItemsWithFeedbacks(topics, limit, start).subscribe({
             next: (data:Feedback[]) => {
                 this.feedbacks.concat(data);
             },
@@ -47,7 +47,7 @@ export class FeedbackListComponent implements OnInit {
 
     load(topics: number[] = [], limit: number = 10, start: number = 0) {
         console.log("FeedbackService.load");
-        this.loadFeedbacks(topics, limit, start).subscribe({
+        this.loadItemsWithFeedbacks(topics, limit, start).subscribe({
             next: (data: Feedback[])=> {
                 this.feedbacks = data;
             },
@@ -64,7 +64,7 @@ export class FeedbackListComponent implements OnInit {
         });
     }
 
-    loadFeedbacks(topics: number[] = [], limit: number = 10, start: number = 0): Observable<Feedback[]> {
+    loadItemsWithFeedbacks(topics: number[] = [], limit: number = 10, start: number = 0): Observable<Feedback[]> {
         const url = `${environment.apiMainUrl}/${environment.allFeedbackItemsPath}/${limit + 1}/${start}?topics=${topics}`;
         console.log("FeedbackService.loadFeedbacks");
         return this.http.get<Feedback[]>(url).pipe(

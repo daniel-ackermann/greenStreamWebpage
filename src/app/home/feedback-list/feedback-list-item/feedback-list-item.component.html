@@ -1,19 +1,21 @@
 <div class="card">
     <div class="card-body">
-        <div class="h5 card-title pointer d-flex justify-content-between">
-            {{item.title}}
+        <div class="h5 card-title d-flex justify-content-between">
+            <div class="d-block pointer" (click)="collapse.toggle()">
+                {{item.title}}
+            </div>
             <div>
                 <i class="material-icons action" title="Edit Item" *ngIf="loginService.isLoggedIn && loginService.user.role === 'admin'" [routerLink]="['..', { outlets: { itemModal: ['edit', item.id] } }]" tabindex="-1">edit</i>
                 <i class="material-icons action red" title="Delete Item" *ngIf="loginService.isLoggedIn && loginService.user.role === 'admin'" (click)="deleteItem()">delete</i>
             </div>
         </div>
-        <p class=" card-text text-muted d-block pointer" title="Open in a new Tab">{{item.description}}</p>
-        <div (click)="collapse.toggle()" class="d-flex justify-content-between pointer" [attr.aria-expanded]="!labelsCollapsed" aria-controls="collapseExample">
+        <p class=" card-text text-muted d-block pointer" (click)="collapse.toggle()" title="Open in a new Tab">{{item.description}}</p>
+        <div class="d-flex justify-content-between" [attr.aria-expanded]="!labelsCollapsed" aria-controls="collapseExample">
             <div>
-                <div *ngFor="let label of labels" class="badge badge-{{label.color}} mr-2">{{label.count}} {{label.name}} <i class="material-icons xs-action xs-icon" title="Mark as done" (click)="resolve()">check</i>
+                <div *ngFor="let label of labels; let i = index" class="badge badge-{{label.color}} mr-2">{{label.count}} {{label.name}} <i class="material-icons xs-action xs-icon" title="Mark as done" (click)="resolveLabel(label.id, i, item.id)">check</i>
                 </div>
             </div>
-            <i class="material-icons">{{labelsCollapsed ? 'keyboard_arrow_down': 'keyboard_arrow_up'}}</i>
+            <i class="material-icons action" (click)="collapse.toggle()" *ngIf="feedbacks.length > 0">{{labelsCollapsed ? 'keyboard_arrow_down': 'keyboard_arrow_up'}}</i>
         </div>
     </div>
     <div #collapse="ngbCollapse" [(ngbCollapse)]="labelsCollapsed" class="">
@@ -23,8 +25,8 @@
             </p>
             <div>
                 <span class="badge badge-{{feedback.color}} m-2">{{feedback.name}}</span>
-                <i class="material-icons action" title="Mark as done" (click)="resolve()">check</i>
-                <i class="material-icons action" [routerLink]="['..', { outlets: { itemModal: ['item', item.id] } }]" title="give feedback" tabindex="-1">feedback</i>
+                <i class="material-icons action" title="Mark as done" (click)="resolve(feedback.feedback_id, i)">{{feedback.done ? 'done_all': 'close'}}</i>
+                <!-- <i class="material-icons action" [routerLink]="['..', { outlets: { itemModal: ['item', item.id] } }]" title="give feedback" tabindex="-1">feedback</i> -->
             </div>
         </div>
     </div>
