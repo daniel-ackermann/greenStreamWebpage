@@ -65,7 +65,7 @@ export class FeedbackListComponent implements OnInit {
     }
 
     loadFeedbacks(topics: number[] = [], limit: number = 10, start: number = 0): Observable<Feedback[]> {
-        const url = `${environment.apiMainUrl}/${environment.feedbacksPath}/${limit + 1}/${start}?topics=${topics}`;
+        const url = `${environment.apiMainUrl}/${environment.allFeedbackItemsPath}/${limit + 1}/${start}?topics=${topics}`;
         console.log("FeedbackService.loadFeedbacks");
         return this.http.get<Feedback[]>(url).pipe(
             tap((data: Feedback[]) => {
@@ -88,6 +88,13 @@ export class FeedbackListComponent implements OnInit {
 
     deleteFeedback(id: number, index: number) {
         this.http.delete(`${environment.apiMainUrl}/${environment.deleteFeedbackPath}/${id}`).subscribe();
+        this.feedbacks.splice(index, 1);
+    }
+
+    deleteItem(id: number, index: number){
+        this.http.delete(`${environment.apiMainUrl}/${environment.itemPath}/${id}`).subscribe((err) => {
+            console.log(err);
+        });
         this.feedbacks.splice(index, 1);
     }
 }

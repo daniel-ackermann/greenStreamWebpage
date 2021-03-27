@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ItemService } from 'src/app/item.service';
-import { Category, Item, Language, Topic } from "src/typings";
+import { Item, Topic } from "src/typings";
 import { LoginService } from 'src/app/login.service';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { LoginRequestService } from 'src/app/loginRequest.service';
-import { ActivatedRoute, ActivationStart, NavigationStart, Router, RouterEvent } from '@angular/router';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
     selector: 'app-list',
@@ -16,71 +15,69 @@ import { ActivatedRoute, ActivationStart, NavigationStart, Router, RouterEvent }
 export class HomeComponent implements OnInit {
     searchText = "";
     items: Item[] = [];
+    allSelected: boolean = false;
     showNoItemHint: boolean = false;
     moreItemsAvailable: boolean = true;
     topics: Topic[] = [];
     selection: FormGroup;
-    selected: string = "all";
+    selected: string = "/list/all";
     // I would prefer an array, but I did not find any other working solution.
     // Problem was to get the array information by the pattern in the uri. I do want words and not numbers there.
     categories = {
-        "all": {
+        "/list/all": {
             requiresAuth: false,
             pattern: "all",
             name: "Feed",
-            url: environment.itemsPath,
             title: "Overview"
         },
-        "created": {
+        "/list/created": {
             requiresAuth: true,
             pattern: "created",
             name: "Created",
-            url: environment.createdItemsPath,
             title: "Created"
         },
-        "liked": {
+        "/list/liked": {
             requiresAuth: true,
             pattern: "liked",
             name: "Liked",
-            url: environment.likedItemsPath,
             title: "Liked"
         },
-        "watchlater": {
+        "/list/watchlist": {
             requiresAuth: true,
-            pattern: "watchlater",
+            pattern: "watchlist",
             name: "Later",
-            url: environment.watchListItemsPath,
             title: "Watch later"
         },
-        "history": {
+        "/list/history": {
             requiresAuth: true,
             pattern: "history",
             name: "History",
-            url: environment.watchedItemsPath,
             title: "History"
         },
-        "reviewed": {
+        "/list/reviewed": {
             requiresAuth: true,
             pattern: "reviewed",
             name: "Reviewed",
-            url: environment.reviewedItemsPath,
             title: "Reviewed"
         },
-        "review": {
+        "/list/review": {
             requiresAuth: true,
             pattern: "review",
             name: "Review",
-            url: environment.reviewItemsPath,
             title: "Review"
+        },
+        "/list/feedback": {
+            requiresAuth: true,
+            pattern: "feedback",
+            name: "Feedback",
+            title: "Feedback"
         }
     };
     
     constructor(public itemService: ItemService,
         public loginService: LoginService,
-        private loginRequestService: LoginRequestService,
         private http: HttpClient,
         private formBuilder: FormBuilder,
-        private route: ActivatedRoute,
         private router: Router) {
         
         // topic form 
@@ -88,19 +85,15 @@ export class HomeComponent implements OnInit {
             topics: new FormArray([])
         });
 
-        // load category according to route
-        const foo = this.route.snapshot.paramMap.get('topic');
-        this.switchView(this.categories[foo]);
-
         // switch page on logout
         this.loginService.onStatusChange.subscribe((loggedIn) => {
             if(loggedIn === false){
-                this.switchView(this.categories["all"]);
+                this.router.navigate(["all"]);
             }
         });
-        this.router.events.subscribe((event: RouterEvent) => {
-            if(event instanceof ActivationStart && event.snapshot.params.topic){
-                this.switchView(this.categories[event.snapshot.params.topic]);
+        this.router.events.subscribe((data) => {
+            if(data instanceof NavigationEnd){
+                this.selected = data.urlAfterRedirects;
             }
         });
     }
@@ -129,29 +122,20 @@ export class HomeComponent implements OnInit {
         });
     }
 
-    // load category into view, request login or redirect
-    switchView(index: Category) {
-        this.selected = index.pattern;
-        this.itemService.load(index.url, this.selectedTopicIds, 10, 0).subscribe({
-            error:(err) => {
-                console.log(err);
-                if(index.requiresAuth && !this.loginService.isLoggedIn){
-                    return this.loginRequestService.requestLogin().then((user) => {
-                        this.switchView(index)
-                    }).catch(() => {
-                        this.router.navigate(['list', 'all']);
-                    });
-                }
-            }
-        }); 
-    }
-
     loadCategory(limit: number = 20, index: number = 0) {
         this.items = [];
-        this.itemService.load(this.itemService.loadedTopic, this.selectedTopicIds, limit, index).subscribe();
+        this.itemService.load(this.itemService.loadedTopic, limit, index).subscribe();
     }
 
     submit() {
+        this.itemService.setTopics(this.selectedTopicIds);
         this.loadCategory(20, 0);
+    }
+    
+    selectAllCategories(){
+        this.allSelected = !this.allSelected;
+        this.selectionFormArray.patchValue(new Array(this.selectionFormArray.length).fill({selected: this.allSelected}))
+        this.itemService.setTopics(this.selectedTopicIds);
+        this.loadCategory();
     }
 }

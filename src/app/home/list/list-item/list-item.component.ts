@@ -22,7 +22,6 @@ export class ListItemComponent {
         private http: HttpClient) { }
     @Input() items: Item[];
     @Input() loading: boolean;
-    @Input() searchText: any;
 
     deleteItem(id: number) {
         this.itemService.delete(id);
@@ -44,9 +43,8 @@ export class ListItemComponent {
     }
 
     setStatus(data: Status, index: number, remove: boolean = false) {
-        console.log(data);
         this.http.post(`${environment.apiMainUrl}/${environment.toggleLikePath}`, data).subscribe();
-        if (typeof data.liked !== 'undefined') {
+        if (typeof data.liked !== 'undefined' && this.items[index].liked != data.liked) {
             this.items[index].liked = data.liked;
             if (data.liked) {
                 this.items[index].likes += 1;
@@ -54,7 +52,7 @@ export class ListItemComponent {
                 this.items[index].likes -= 1;
             }
         }
-        if (typeof data.watchlist !== 'undefined') {
+        if (typeof data.watchlist !== 'undefined' && this.items[index].watchlist != data.watchlist) {
             this.items[index].watchlist = data.watchlist;
             if (data.watchlist) {
                 this.items[index].marked += 1;

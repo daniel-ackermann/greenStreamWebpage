@@ -2,17 +2,20 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FeedbackListComponent } from './feedback-list.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+import { FeedbackListItemComponent } from './feedback-list-item/feedback-list-item.component';
+import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
 @NgModule({
   declarations: [
-      FeedbackListComponent
+      FeedbackListComponent,
+      FeedbackListItemComponent
   ],
   imports: [
     CommonModule,
-    // ReactiveFormsModule,
+    NgbCollapseModule,
     FormsModule,
     RouterModule.forChild([
         {
@@ -20,6 +23,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
             component: FeedbackListComponent
         }
     ])
-  ]
+  ],
+  bootstrap: [FeedbackListItemComponent]
 })
 export class FeedbackListModule { }

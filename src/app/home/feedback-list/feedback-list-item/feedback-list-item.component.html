@@ -1,0 +1,31 @@
+<div class="card">
+    <div class="card-body">
+        <div class="h5 card-title pointer d-flex justify-content-between">
+            {{item.title}}
+            <div>
+                <i class="material-icons action" title="Edit Item" *ngIf="loginService.isLoggedIn && loginService.user.role === 'admin'" [routerLink]="['..', { outlets: { itemModal: ['edit', item.id] } }]" tabindex="-1">edit</i>
+                <i class="material-icons action red" title="Delete Item" *ngIf="loginService.isLoggedIn && loginService.user.role === 'admin'" (click)="deleteItem()">delete</i>
+            </div>
+        </div>
+        <p class=" card-text text-muted d-block pointer" title="Open in a new Tab">{{item.description}}</p>
+        <div (click)="collapse.toggle()" class="d-flex justify-content-between pointer" [attr.aria-expanded]="!labelsCollapsed" aria-controls="collapseExample">
+            <div>
+                <div *ngFor="let label of labels" class="badge badge-{{label.color}} mr-2">{{label.count}} {{label.name}} <i class="material-icons xs-action xs-icon" title="Mark as done" (click)="resolve()">check</i>
+                </div>
+            </div>
+            <i class="material-icons">{{labelsCollapsed ? 'keyboard_arrow_down': 'keyboard_arrow_up'}}</i>
+        </div>
+    </div>
+    <div #collapse="ngbCollapse" [(ngbCollapse)]="labelsCollapsed" class="">
+        <div class="card-footer d-flex justify-content-between py-0" *ngFor="let feedback of feedbacks; let i = index" #collapse="ngbCollapse" [(ngbCollapse)]="labelsCollapsed">
+            <p class="my-auto">
+                <span>{{feedback.username}}</span>: {{feedback.feedback}}
+            </p>
+            <div>
+                <span class="badge badge-{{feedback.color}} m-2">{{feedback.name}}</span>
+                <i class="material-icons action" title="Mark as done" (click)="resolve()">check</i>
+                <i class="material-icons action" [routerLink]="['..', { outlets: { itemModal: ['item', item.id] } }]" title="give feedback" tabindex="-1">feedback</i>
+            </div>
+        </div>
+    </div>
+</div>

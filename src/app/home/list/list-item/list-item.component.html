@@ -31,12 +31,12 @@
     </div> -->
 </div>
 <div class="app-list-item">
-    <div *ngFor="let item of items | filter: searchText let i = index" class="item">
+    <div *ngFor="let item of items; let i = index" class="item">
         <div class="list-item">
-            <button class="h5 card-title pointer d-flex justify-content-between" title="Open in a new Tab" (click)="openItem(item.url, item.id, i)">
+            <button class="h5 card-title pointer d-flex justify-content-between p-0" title="Open in a new Tab" (click)="openItem(item.url, item.id, i)">
                 {{item.title}}
                 <i class="material-icons green pl-2" [ngClass]="{'rotate45': item.type_id>7}"
-                    title="{{item.name}}">{{item.icon}}</i>
+                    title="{{item.type_name}}">{{item.icon}}</i>
             </button>
             <p class="text-muted d-block pointer" title="Open in a new Tab" (click)="openItem(item.url, item.id, i)">
                 {{item.description}}</p>
@@ -50,9 +50,6 @@
                     </button>
                     <button class="action" title="watch later" (click)="updateStatus({id: item.id, watchlist: !item.watchlist}, i)">
                         <i class="material-icons pointer">{{item.watchlist | watchList}}</i>
-                        <span class="counter">
-                            {{item.marked}}
-                        </span>
                     </button>
                 </div>
                 <span *ngIf="loginService.isLoggedIn" class="my-auto">

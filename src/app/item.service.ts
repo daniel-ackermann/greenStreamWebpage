@@ -17,13 +17,14 @@ export class ItemService implements OnInit {
     items: Item[] = [];
     loading: boolean = true;
     moreAvailable: boolean = false;
+    selectedTopics: number[] = [];
     loadedTopic: string = environment.itemsPath;
 
     constructor(private http: HttpClient, private loginService: LoginService, private loginRequestService: LoginRequestService, private router: Router) {}
 
     ngOnInit() {
         this.loading = true;
-        this.load(environment.itemsPath, [], 20, 0);
+        this.load(environment.itemsPath, 20, 0);
     }
 
     getItems(): Item[] {
@@ -38,23 +39,20 @@ export class ItemService implements OnInit {
         return this.moreAvailable;
     }
 
-    loadMore(type: string, topics: number[] = [], limit: number = 10, start: number = 0) {
-        this.loadItems(type, topics, limit, start).subscribe((data: Item[]) => {
+    loadMore(type: string, limit: number = 10, start: number = 0) {
+        this.loadItems(type, limit, start).subscribe((data: Item[]) => {
             this.items = this.items.concat(data);
         });
     }
-    load(type: string, topics: number[] = [], limit: number = 10, start: number = 0) {
-        console.log("ItemService.load", type);
-        return this.loadItems(type, topics, limit, start).pipe(tap((data: Item[]) => {
-            console.log(data);
+    load(type: string, limit: number = 10, start: number = 0) {
+        return this.loadItems(type, limit, start).pipe(tap((data: Item[]) => {
             this.items = data;
         }))
     }
 
-    loadItems(type: string, topics: number[] = [], limit: number = 10, start: number = 0): Observable<Item[]> {
+    loadItems(type: string, limit: number = 10, start: number = 0): Observable<Item[]> {
         this.loadedTopic = type;
-        const url = `${environment.apiMainUrl}/${type}/${limit + 1}/${start}?topics=${topics}`;
-        console.log("ItemService.loadItems");
+        const url = `${environment.apiMainUrl}/${type}/${limit + 1}/${start}?topics=${this.selectedTopics}`;
         return this.http.get<Item[]>(url).pipe(
             tap((data: Item[]) => {
                 console.log('fetched items')
@@ -115,6 +113,10 @@ export class ItemService implements OnInit {
             tap(_ => console.log(`fetched item id=${id}`)),
             catchError(this.handleError<Item>(`getItem id=${id}`))
         );
+    }
+
+    setTopics(topics: number[]){
+        this.selectedTopics = topics;
     }
 
     private handleError<T>(operation = 'operation', result?: T) {
