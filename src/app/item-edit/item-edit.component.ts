@@ -33,6 +33,7 @@ export class ItemEditComponent implements OnInit {
         language: new FormControl("de"),
         simple: new FormControl(0),
         reviewed: new FormControl(0),
+        public: new FormControl(1),
         // not set for each item, but for each type
         view_external: new FormControl(),
         name: new FormControl()
