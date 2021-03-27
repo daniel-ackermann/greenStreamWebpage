@@ -25,9 +25,12 @@ export const environment = {
     userPath: "api/user",
     languagesPath: "api/languages",
     feedbackItemsPath: "api/feedbacks/item",
+    allFeedbackItemsPath: "api/items/feedbacks",
     feedbacksPath: "api/feedbacks",
     deleteFeedbackPath: "api/feedback",
     toggleLikePath:"api/item/status",
+    labelItemPath: "api/labels/item",
+    labelsPath: "api/labels",
     version:"0.1.0"
 };
 

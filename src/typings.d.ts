@@ -9,6 +9,8 @@ export interface Item {
     liked?: boolean;
     watchlist?: boolean;
     created_by_id?: number;
+    icon?: string;
+    type_name?: string;
 }
 
 export interface Topic {
@@ -62,4 +64,10 @@ export interface Category {
     pattern: string,
     url: string,
     requiresAuth: boolean
+}
+
+export interface Label{
+    name: string;
+    color: string;
+    count: number;
 }

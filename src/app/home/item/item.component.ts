@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Feedback, Item, Status } from 'src/typings';
+import { Feedback, Item, Label, Status } from 'src/typings';
 import { environment } from 'src/environments/environment';
 import { LoginService } from 'src/app/login.service';
 import { ItemModule } from './item.module';
@@ -19,6 +19,9 @@ export class ItemComponent implements OnInit {
     item: Item;
     feedback: Feedback[] = [];
     feedbackText = new FormControl('');
+    label:number = 1;
+    labels: Label[] = [];
+    itemLabels: Label[] = [];
     constructor(
         public loginService: LoginService,
         private loginRequestService: LoginRequestService,
@@ -65,6 +68,10 @@ export class ItemComponent implements OnInit {
         this.http.get(`${environment.apiMainUrl}/${environment.feedbackItemsPath}/${this.id}`).subscribe((data: Feedback[]) => {
             this.feedback = data;
         })
+        this.loadLabel();
+        this.loadItemLabel(this.id).subscribe((data: Label[]) => {
+            this.itemLabels = data;
+        });
     }
     
     deleteFeedback(id: number, index: number) {
@@ -73,19 +80,23 @@ export class ItemComponent implements OnInit {
     }
 
     addFeedback(){
-        if(this.feedbackText.value == ""){
+        if(this.label == 0 && this.feedbackText.value == ""){
             return;
         }
         const newFeedback = {
+            label: this.label,
             feedback: this.feedbackText.value,
             information_id: this.id,
             // created, username sind nur für das webinterface und werden nicht gespeichert! Gespeichert werden automatisch generierte Versionen
+            name: this.labels[this.label-1].name,
+            color: this.labels[this.label-1].color,
             created: new Date(),
             username: this.loginService.user.username
         };
         this.feedback.push(newFeedback);
         this.http.post(`${environment.apiMainUrl}/${environment.deleteFeedbackPath}`, newFeedback).subscribe();
         this.feedbackText.setValue('');
+        this.label = 0;
     }
 
     updateStatus(data: Status) {
@@ -121,5 +132,16 @@ export class ItemComponent implements OnInit {
     review(id: number) {
         this.itemService.review(id);
         this.location.back()
+    }
+
+    loadLabel(){
+        this.http.get<Label[]>(`${environment.apiMainUrl}/${environment.labelsPath}`).subscribe((data: Label[]) => {
+            this.labels = data;
+        })
+    }
+    
+    loadItemLabel(id: number){
+        const url = `${environment.apiMainUrl}/${environment.labelItemPath}/${id}`;
+        return this.http.get<Label[]>(url); 
     }
 }
