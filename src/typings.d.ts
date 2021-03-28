@@ -63,9 +63,7 @@ export interface Status {
 }
 
 export interface Category {
-    name: string,
     title: string,
-    pattern: string,
     url: string,
     requiresAuth: boolean
 }

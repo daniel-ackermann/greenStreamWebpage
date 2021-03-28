@@ -1,22 +1,43 @@
 <h2 class="d-flex justify-content-between">
     <span>
-        {{categories[selected].title}}
+        {{titleService.getTitle()}}
     </span>
     <span class="d-flex">
         <label for="search" class="sr-only">Suche</label>
-        <input class="form-control ml-3" id="search" type="search" placeholder="search" [(ngModel)]="searchText">
+        <input class="form-control ml-3" id="search" type="search" placeholder="search" (focus)="router.navigate(['list', 'all'])" (input)="search()" [(ngModel)]="searchText">
     </span>
 </h2>
 <div class="d-flex">
     <ul class="nav justify-content-center" *ngIf="loginService.isLoggedIn">
-        <li class="nav-item" *ngFor="let category of categoryArray; let i = index">
-            <a class="nav-link" [routerLink]="[category.pattern]" [routerLinkActive]="['active']">{{category.name}}</a>
+        <li class="nav-item">
+            <a class="nav-link" routerLink="all" routerLinkActive="active">Feed</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" routerLink="created" routerLinkActive="active">Created</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" routerLink="liked" routerLinkActive="active">Liked</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" routerLink="watchlist" routerLinkActive="active">Later</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" routerLink="history" routerLinkActive="active">History</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" routerLink="reviewed" routerLinkActive="active">Reviewed</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" routerLink="review" routerLinkActive="active">Review</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" routerLink="feedback" routerLinkActive="active">Feedback</a>
         </li>
     </ul>
     <div ngbDropdown placement="bottom-right" class="d-inline-block ml-auto">
         <button class="btn btn-outline-primary" id="dropdownBasic2" ngbDropdownToggle>Kategorie</button>
         <div ngbDropdownMenu aria-labelledby="dropdownBasic2">
-            <div class="form-check mx-2" (click)="selectAllCategories()">
+            <div class="form-check mx-2" (click)="selectAllTopics()">
                 <input class="form-check-input" type="checkbox" id="public" [(ngModel)]="allSelected">
                 <label class="form-check-label">alle Ausgewählt</label>
             </div>

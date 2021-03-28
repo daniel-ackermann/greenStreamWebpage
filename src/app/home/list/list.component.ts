@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ItemService } from 'src/app/item.service';
 import { LoginService } from 'src/app/login.service';
 import { LoginRequestService } from 'src/app/loginRequest.service';
+import { TitleService } from 'src/app/title.service';
 import { environment } from 'src/environments/environment';
 import { Category, Item, Topic } from 'src/typings';
 
@@ -20,56 +21,42 @@ export class ListComponent implements OnInit {
     showNoItemHint: boolean = false;
     moreItemsAvailable: boolean = true;
     topics: Topic[] = [];
-    selected: string = "all";
+
     // I would prefer an array, but I did not find any other working solution.
     // Problem was to get the array information by the pattern in the uri. I do want words and not numbers there.
     categories = {
         "all": {
             requiresAuth: false,
-            pattern: "all",
-            name: "Feed",
             url: environment.itemsPath,
             title: "Overview"
         },
         "created": {
             requiresAuth: true,
-            pattern: "created",
-            name: "Created",
             url: environment.createdItemsPath,
             title: "Created"
         },
         "liked": {
             requiresAuth: true,
-            pattern: "liked",
-            name: "Liked",
             url: environment.likedItemsPath,
             title: "Liked"
         },
         "watchlist": {
             requiresAuth: true,
-            pattern: "watchlist",
-            name: "Later",
             url: environment.watchListItemsPath,
             title: "Watch later"
         },
         "history": {
             requiresAuth: true,
-            pattern: "history",
-            name: "History",
             url: environment.watchedItemsPath,
             title: "History"
         },
         "reviewed": {
             requiresAuth: true,
-            pattern: "reviewed",
-            name: "Reviewed",
             url: environment.reviewedItemsPath,
             title: "Reviewed"
         },
         "review": {
             requiresAuth: true,
-            pattern: "review",
-            name: "Review",
             url: environment.reviewItemsPath,
             title: "Review"
         }
@@ -77,8 +64,7 @@ export class ListComponent implements OnInit {
     constructor(public itemService: ItemService,
         public loginService: LoginService,
         private loginRequestService: LoginRequestService,
-        private http: HttpClient,
-        private formBuilder: FormBuilder,
+        private titleService: TitleService,
         private route: ActivatedRoute,
         private router: Router) {
 
@@ -102,8 +88,7 @@ export class ListComponent implements OnInit {
 
     // load category into view, request login or redirect
     switchView(index: Category) {
-        console.log(index);
-        this.selected = index.pattern;
+        this.titleService.setTitle(index.title);
         this.itemService.load(index.url, 15, 0).subscribe({
             error:(err) => {
                 console.log(err);

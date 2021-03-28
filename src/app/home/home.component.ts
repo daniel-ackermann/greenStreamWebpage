@@ -5,7 +5,8 @@ import { LoginService } from 'src/app/login.service';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TitleService } from '../title.service';
 
 @Component({
     selector: 'app-list',
@@ -20,65 +21,15 @@ export class HomeComponent implements OnInit {
     moreItemsAvailable: boolean = true;
     topics: Topic[] = [];
     selection: FormGroup;
-    selected: string = "/list/all";
-    // I would prefer an array, but I did not find any other working solution.
-    // Problem was to get the array information by the pattern in the uri. I do want words and not numbers there.
-    categories = {
-        "/list/all": {
-            requiresAuth: false,
-            pattern: "all",
-            name: "Feed",
-            title: "Overview"
-        },
-        "/list/created": {
-            requiresAuth: true,
-            pattern: "created",
-            name: "Created",
-            title: "Created"
-        },
-        "/list/liked": {
-            requiresAuth: true,
-            pattern: "liked",
-            name: "Liked",
-            title: "Liked"
-        },
-        "/list/watchlist": {
-            requiresAuth: true,
-            pattern: "watchlist",
-            name: "Later",
-            title: "Watch later"
-        },
-        "/list/history": {
-            requiresAuth: true,
-            pattern: "history",
-            name: "History",
-            title: "History"
-        },
-        "/list/reviewed": {
-            requiresAuth: true,
-            pattern: "reviewed",
-            name: "Reviewed",
-            title: "Reviewed"
-        },
-        "/list/review": {
-            requiresAuth: true,
-            pattern: "review",
-            name: "Review",
-            title: "Review"
-        },
-        "/list/feedback": {
-            requiresAuth: true,
-            pattern: "feedback",
-            name: "Feedback",
-            title: "Feedback"
-        }
-    };
     
     constructor(public itemService: ItemService,
         public loginService: LoginService,
         private http: HttpClient,
         private formBuilder: FormBuilder,
-        private router: Router) {
+        public router: Router,
+        private route: ActivatedRoute,
+        public titleService: TitleService
+        ) {
         
         // topic form 
         this.selection = this.formBuilder.group({
@@ -91,19 +42,10 @@ export class HomeComponent implements OnInit {
                 this.router.navigate(["all"]);
             }
         });
-        this.router.events.subscribe((data) => {
-            if(data instanceof NavigationEnd){
-                this.selected = data.urlAfterRedirects;
-            }
-        });
     }
 
     get selectionFormArray() {
         return this.selection.get('topics') as FormArray;
-    }
-
-    get categoryArray(){
-        return Object.values(this.categories);
     }
 
 
@@ -132,10 +74,14 @@ export class HomeComponent implements OnInit {
         this.loadCategory(20, 0);
     }
     
-    selectAllCategories(){
+    selectAllTopics(){
         this.allSelected = !this.allSelected;
         this.selectionFormArray.patchValue(new Array(this.selectionFormArray.length).fill({selected: this.allSelected}))
         this.itemService.setTopics(this.selectedTopicIds);
         this.loadCategory();
+    }
+
+    search(){
+        this.itemService.load(`api/items/search`, 20, 0, `/${this.searchText}`).subscribe();
     }
 }
