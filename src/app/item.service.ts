@@ -44,18 +44,18 @@ export class ItemService implements OnInit {
             this.items = this.items.concat(data);
         });
     }
-    load(type: string, limit: number = 10, start: number = 0) {
-        return this.loadItems(type, limit, start).pipe(tap((data: Item[]) => {
+    load(type: string, limit: number = 10, start: number = 0, searchText: string = "") {
+        return this.loadItems(type, limit, start, searchText).pipe(tap((data: Item[]) => {
             this.items = data;
         }))
     }
 
-    loadItems(type: string, limit: number = 10, start: number = 0): Observable<Item[]> {
+    loadItems(type: string, limit: number = 10, start: number = 0, searchText: string = ""): Observable<Item[]> {
         this.loadedTopic = type;
-        const url = `${environment.apiMainUrl}/${type}/${limit + 1}/${start}?topics=${this.selectedTopics}`;
+        const url = `${environment.apiMainUrl}/${type}/${limit + 1}/${start}${searchText}?topics=${this.selectedTopics}`;
+        console.log(url);
         return this.http.get<Item[]>(url).pipe(
             tap((data: Item[]) => {
-                console.log('fetched items')
                 if (data.length > 0) {
                     if (data.length > limit) {
                         data.pop();
@@ -84,11 +84,7 @@ export class ItemService implements OnInit {
         this.http.delete(`${environment.apiMainUrl}/${environment.itemPath}/${id}`).subscribe((err) => {
             console.log(err);
         });
-        for (let i = 0; i < this.items.length; i++) {
-            if (this.items[i].id === id) {
-                this.items.splice(i, 1);
-            }
-        }
+        this.removeFromList(id);
     }
 
     put(item: Item) {
@@ -104,7 +100,8 @@ export class ItemService implements OnInit {
     }
 
     review(id: number) {
-        return this.http.get(`${environment.apiMainUrl}/${environment.reviewItemsPath}/${id}`).subscribe();
+        this.removeFromList(id);
+        return this.http.get(`${environment.apiMainUrl}/${environment.reviewItemPath}/${id}`).subscribe();
     }
 
     getItem(id: number): Observable<Item> {
@@ -139,5 +136,13 @@ export class ItemService implements OnInit {
             // Let the app keep running by returning an empty result.
             return of(result as T);
         };
+    }
+
+    removeFromList(id: number){
+        for (let i = 0; i < this.items.length; i++) {
+            if (this.items[i].id === id) {
+                this.items.splice(i, 1);
+            }
+        }
     }
 }
