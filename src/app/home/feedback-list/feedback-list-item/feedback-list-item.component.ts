@@ -28,14 +28,12 @@ export class FeedbackListItemComponent implements OnInit {
             this.feedbacks = data;
         });
         this.loadLabels().subscribe((data: Label[]) => {
-            console.log(data);
             this.labels = data;
         });
     }
 
     loadFeedbacks() {
         const url = `${environment.apiMainUrl}/${environment.feedbackItemsPath}/${this.item.id}`;
-        console.log("FeedbackService.loadFeedbacks");
         return this.http.get<Feedback[]>(url);
     }
 
@@ -51,8 +49,6 @@ export class FeedbackListItemComponent implements OnInit {
     resolveLabel(label: number, index: number, item: number) {
         console.log("setLabelDone:", label);
         this.http.post(`${environment.apiMainUrl}/${environment.setFeedbackDoneByLabel}`, { item: item, label: label }).subscribe((counter: number) => {
-            console.log(counter);
-            console.log(this.labels[index].count);
             this.labels[index].count -= counter;
             if(this.labels[index].count == 0){
                 this.labels.splice(index, 1);
