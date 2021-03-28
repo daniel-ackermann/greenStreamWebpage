@@ -35,13 +35,6 @@ export class HomeComponent implements OnInit {
         this.selection = this.formBuilder.group({
             topics: new FormArray([])
         });
-
-        // switch page on logout
-        this.loginService.onStatusChange.subscribe((loggedIn) => {
-            if(loggedIn === false){
-                this.router.navigate(["all"]);
-            }
-        });
     }
 
     get selectionFormArray() {
