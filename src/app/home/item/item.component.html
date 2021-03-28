@@ -16,7 +16,7 @@
                         }}</i>
                     <span *ngIf="loginService.isLoggedIn">
                         <i class="material-icons action" *ngIf="loginService.user.role === 'admin'"
-                            (click)="review(item.id)" title="Review">{{ item.reviewed ? 'check_box': 'check_box_outline_blank'}}</i>
+                            (click)="review(item.id)" title="{{ item.reviewed ? 'Reviewed': 'Review'}}">{{ item.reviewed ? 'check_box': 'check_box_outline_blank'}}</i>
 
                     </span>
                     <i class="material-icons action" (click)="close()" title="Schließen">close</i>
