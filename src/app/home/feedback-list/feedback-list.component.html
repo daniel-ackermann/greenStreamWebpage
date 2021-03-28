@@ -1,1 +1,13 @@
+<div *ngIf="loading" class="d-flex justify-content-center">
+    <div class="spinner-border" role="status">
+        <span class="visually-hidden sr-only">Loading...</span>
+    </div>
+</div>
 <app-feedback-list-item *ngFor="let item of feedbacks; let i = index" [item]="item" class="item"></app-feedback-list-item>
+
+<div *ngIf="moreAvailable" class="d-flex justify-content-center pb-3 pt-2">
+    <button type="button" (click)="loadMore([], 10, feedbacks[feedbacks.length-1].id)" class="btn btn-secondary ">Weitere Laden</button>
+</div>
+<div *ngIf="!moreAvailable && !loading" class="alert alert-light m-2" role="alert ">
+    There are only {{feedbacks.length}} Items in this category.
+</div>
