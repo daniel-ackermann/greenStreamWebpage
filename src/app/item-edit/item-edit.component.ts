@@ -115,4 +115,12 @@ export class ItemEditComponent implements OnInit {
         this.location.back();
 
     }
+
+
+    review() {
+        if(this.id){
+            this.item.controls.reviewed.setValue(true)
+            this.itemService.review(this.id);
+        }
+    }
 }
