@@ -19,6 +19,7 @@ export class ItemService implements OnInit {
     moreAvailable: boolean = false;
     selectedTopics: number[] = [];
     loadedTopic: string = environment.itemsPath;
+    loadedSearchText: string = "";
 
     constructor(private http: HttpClient, private loginService: LoginService, private loginRequestService: LoginRequestService, private router: Router) {}
 
@@ -45,6 +46,7 @@ export class ItemService implements OnInit {
         });
     }
     load(type: string, limit: number = 10, start: number = 0, searchText: string = "") {
+        console.log(type, searchText, this.selectedTopics);
         return this.loadItems(type, limit, start, searchText).pipe(tap((data: Item[]) => {
             this.items = data;
         }))
@@ -52,8 +54,8 @@ export class ItemService implements OnInit {
 
     loadItems(type: string, limit: number = 10, start: number = 0, searchText: string = ""): Observable<Item[]> {
         this.loadedTopic = type;
-        const url = `${environment.apiMainUrl}/${type}/${limit + 1}/${start}${searchText}?topics=${this.selectedTopics}`;
-        console.log(url);
+        this.loadedSearchText = searchText;
+        const url = `${environment.apiMainUrl}/${type}/${limit + 1}/${start}${this.loadedSearchText}?topics=${this.selectedTopics}`;
         return this.http.get<Item[]>(url).pipe(
             tap((data: Item[]) => {
                 if (data.length > 0) {

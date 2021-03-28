@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
     moreItemsAvailable: boolean = true;
     topics: Topic[] = [];
     selection: FormGroup;
-    
+
     constructor(public itemService: ItemService,
         public loginService: LoginService,
         private http: HttpClient,
@@ -29,8 +29,8 @@ export class HomeComponent implements OnInit {
         public router: Router,
         private route: ActivatedRoute,
         public titleService: TitleService
-        ) {
-        
+    ) {
+
         // topic form 
         this.selection = this.formBuilder.group({
             topics: new FormArray([])
@@ -42,7 +42,7 @@ export class HomeComponent implements OnInit {
     }
 
 
-    get selectedTopicIds(){
+    get selectedTopicIds() {
         return this.selection.value.topics.map(topic => topic.selected ? topic.id : null).filter(x => x !== null);
     }
 
@@ -59,22 +59,21 @@ export class HomeComponent implements OnInit {
 
     loadCategory(limit: number = 20, index: number = 0) {
         this.items = [];
-        this.itemService.load(this.itemService.loadedTopic, limit, index).subscribe();
+        this.itemService.setTopics(this.selectedTopicIds);
+        this.itemService.load(this.itemService.loadedTopic, limit, index, this.itemService.loadedSearchText).subscribe();
     }
 
     submit() {
-        this.itemService.setTopics(this.selectedTopicIds);
-        this.loadCategory(20, 0);
-    }
-    
-    selectAllTopics(){
-        this.allSelected = !this.allSelected;
-        this.selectionFormArray.patchValue(new Array(this.selectionFormArray.length).fill({selected: this.allSelected}))
-        this.itemService.setTopics(this.selectedTopicIds);
         this.loadCategory();
     }
 
-    search(){
+    selectAllTopics() {
+        this.allSelected = !this.allSelected;
+        this.selectionFormArray.patchValue(new Array(this.selectionFormArray.length).fill({ selected: this.allSelected }))
+        this.loadCategory();
+    }
+
+    search() {
         this.itemService.load(`api/items/search`, 20, 0, `/${this.searchText}`).subscribe();
     }
 }
