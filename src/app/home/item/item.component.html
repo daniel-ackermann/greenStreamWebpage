@@ -15,8 +15,8 @@
                     <i class=" material-icons action" (click)="updateStatus({id: item.id, watchlist: !item.watchlist})">{{ item.watchlist | watchList
                         }}</i>
                     <span *ngIf="loginService.isLoggedIn">
-                        <i class="material-icons action" *ngIf="item.reviewed!=1 && loginService.user.role === 'admin'"
-                            (click)="review(item.id)" title="Review">check_box</i>
+                        <i class="material-icons action" *ngIf="loginService.user.role === 'admin'"
+                            (click)="review(item.id)" title="Review">{{ item.reviewed ? 'check_box': 'check_box_outline_blank'}}</i>
 
                     </span>
                     <i class="material-icons action" (click)="close()" title="Schließen">close</i>

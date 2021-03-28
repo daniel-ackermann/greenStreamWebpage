@@ -130,8 +130,8 @@ export class ItemComponent implements OnInit {
     }
 
     review(id: number) {
+        this.item.reviewed = 1;
         this.itemService.review(id);
-        this.location.back()
     }
 
     loadLabel(){
