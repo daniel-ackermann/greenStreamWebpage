@@ -35,7 +35,7 @@ export class PasswordRestoreComponent {
 
     password = new FormControl('', [
         Validators.required,
-        Validators.minLength(4)
+        Validators.minLength(8)
     ]);
 
     save() {
