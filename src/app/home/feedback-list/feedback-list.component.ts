@@ -19,12 +19,14 @@ export class FeedbackListComponent implements OnInit {
     searchText: string = "";
     loading: boolean = true;
     moreAvailable: boolean = true;
-    
-    constructor(private http: HttpClient,
+
+    constructor(
+        private http: HttpClient,
         public loginService: LoginService,
         private loginRequestService: LoginRequestService,
         private titleService: TitleService,
-        private router: Router) {
+        private router: Router
+    ) {
         this.titleService.setTitle("Feedback");
     }
 
