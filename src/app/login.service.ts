@@ -31,14 +31,12 @@ export class LoginService {
                     console.log("isSignedIn", result);
                     if (result === false || result === null) {
                         this.isLoggedIn = false;
-                        this.onStatusChange.next(false);
                         this.setUserLanguage([]);
                         reject();
                     } else {
                         this.user = result as User;
                         this.setUserLanguage(this.user.languages);
                         this.isLoggedIn = true;
-                        this.onStatusChange.next(true);
                         resolve(this.user);
                     }
                 }
