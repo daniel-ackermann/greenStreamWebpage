@@ -1,16 +1,26 @@
 export interface Item {
-    title: string;
-    description: string;
+    id: number;
     likes: number;
     marked: number;
+    explanation_id?: number;
     url: string;
-    id: number;
+    description: string;
+    title: string;
+    simple?: boolean|number;
     reviewed?:number;
-    liked?: boolean;
-    watchlist?: boolean;
+    public?: boolean; 
+    position?: number
+    type?: Type;
+    topic?: Topic;
+    language?: Language;
+    liked?: number;
+    watched?: number | null;
+    watchlist?: number | null;
+    last_recommended?: number | null;
     created_by_id?: number;
-    icon?: string;
-    type_name?: string;
+    created?:number;
+    score?: number;
+    readingDuration?: number;
 }
 
 export interface Topic {
@@ -73,4 +83,18 @@ export interface Label{
     color: string;
     count: number;
     id: number;
+}
+
+export interface PublicUser {
+    id: number;
+    name: string;
+}
+
+export interface Collection {
+    id: number;
+    title: string;
+    language: string;
+    owner: PublicUser;
+    created: number;
+    likes?: number;
 }
