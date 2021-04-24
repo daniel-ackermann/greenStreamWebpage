@@ -1,0 +1,9 @@
+<div class="cards">
+    <app-list-item [items]="itemService.getItems()" [loading]="itemService.isLoading()"></app-list-item>
+    <div *ngIf="itemService.moreItemsAvailable()" class="d-flex justify-content-center pb-3 pt-2">
+        <button type="button" (click)="itemService.loadMore(itemService.loadedTopic, 10, itemService.getItems()[itemService.getItems().length-1].position)" class="btn btn-secondary ">Weitere Laden</button>
+    </div>
+    <div *ngIf="itemService.getItems().length == 0 && !itemService.isLoading()" class="alert alert-light m-2" role="alert ">
+        There are no more items to review. Take a break! <i class="material-icons">free_breakfast</i>
+    </div>
+</div>
