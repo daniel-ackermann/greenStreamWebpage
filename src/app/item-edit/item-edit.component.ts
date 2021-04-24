@@ -28,9 +28,17 @@ export class ItemEditComponent implements OnInit {
         id: new FormControl(),
         url: new FormControl(''),
         explanation_id: new FormControl(0),
-        type_id: new FormControl(1),
-        topic_id: new FormControl(1),
-        language: new FormControl("de"),
+        type: new FormGroup({
+            id: new FormControl(1),
+        }),
+        topic: new FormGroup({
+            id: new FormControl(1),
+        }),
+        language: new FormGroup({
+            code: new FormControl("de"),
+        }),
+        score: new FormControl(0),
+        readingDuration: new FormControl(0),
         simple: new FormControl(0),
         reviewed: new FormControl(0),
         public: new FormControl(1),
@@ -89,14 +97,16 @@ export class ItemEditComponent implements OnInit {
         const newItem = this.item.getRawValue();
         delete newItem.view_external;
         delete newItem.name;
+        newItem.type = this.types.filter(type => type.id == newItem.type.id)[0];
+        newItem.topic = this.topics.filter(topic => topic.id == newItem.topic.id)[0];
         console.log("save");
         if(this.id === undefined){
             this.itemService.add(newItem).subscribe(err => {
-                console.log("err");
+                console.log(err);
             });
         }else{
             this.itemService.put(newItem).subscribe(err => {
-                console.log("err");
+                console.log(err);
             });
         }
         this.location.back();
