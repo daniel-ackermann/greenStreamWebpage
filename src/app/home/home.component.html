@@ -1,60 +1,70 @@
-<h2 class="d-flex justify-content-between">
-    <span>
-        {{titleService.getTitle()}}
-    </span>
-    <span class="d-flex">
-        <label for="search" class="sr-only">Suche</label>
-        <input class="form-control ml-3" id="search" type="search" placeholder="search" (focus)="router.navigate(['list', 'all'])" (input)="search()" [(ngModel)]="searchText">
-    </span>
-</h2>
-<div class="d-flex">
-    <ul class="nav justify-content-center" *ngIf="loginService.isLoggedIn">
-        <li class="nav-item">
-            <a class="nav-link" routerLink="all" routerLinkActive="active">Feed</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" routerLink="created" routerLinkActive="active">Created</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" routerLink="liked" routerLinkActive="active">Liked</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" routerLink="watchlist" routerLinkActive="active">Later</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" routerLink="history" routerLinkActive="active">History</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" routerLink="reviewed" routerLinkActive="active">Reviewed</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" routerLink="review" routerLinkActive="active">Review</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" routerLink="feedback" routerLinkActive="active">Feedback</a>
-        </li>
-    </ul>
-    <div ngbDropdown placement="bottom-right" class="d-inline-block ml-auto">
-        <button class="btn btn-outline-primary" id="dropdownBasic2" ngbDropdownToggle>Kategorie</button>
-        <div ngbDropdownMenu aria-labelledby="dropdownBasic2">
-            <div class="form-check mx-2" (click)="selectAllTopics()">
-                <input class="form-check-input" type="checkbox" id="public" [(ngModel)]="allSelected">
-                <label class="form-check-label">alle Ausgewählt</label>
-            </div>
-            <div class="dropdown-divider"></div>
-            <form [formGroup]="selection">
-                <div formArrayName="topics" class="px-2">
-                    <div class="form-check" *ngFor="let topic of selectionFormArray.controls; let i = index" [formGroupName]="i">
-                        <input class="form-check-input" type="checkbox" id="{{i}}" formControlName="selected" (change)="submit()">
-                        <label class="form-check-label" for="{{i}}">
-                            {{topic.value.name}}
-                        </label>
+<div class="container-xxl">
+    <div class="row m-0">
+        <div class="col-sm-2" style="padding-top: 5rem;"></div>
+        <div class="col-sm-8 p-0">
+            <h2 class="d-flex justify-content-between px-2">
+                <span>
+                    {{ titleService.getTitle() }}
+                </span>
+                <span class="d-flex">
+                    <label for="search" class="sr-only">Suche</label>
+                    <input class="form-control ml-3" id="search" type="search" placeholder="search"
+                        (focus)="router.navigate(['list', 'all'])" (input)="search()" [(ngModel)]="searchText">
+                </span>
+            </h2>
+            <div class="d-flex px-2">
+                <ul class="nav justify-content-center" *ngIf="loginService.isLoggedIn">
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="all" routerLinkActive="active">Feed</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="created" routerLinkActive="active">Created</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="liked" routerLinkActive="active">Liked</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="watchlist" routerLinkActive="active">Later</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="history" routerLinkActive="active">History</a>
+                    </li>
+                    <li class="nav-item" *ngIf="loginService.user.role==='admin'">
+                        <a class="nav-link" routerLink="reviewed" routerLinkActive="active">Reviewed</a>
+                    </li>
+                    <li class="nav-item" *ngIf="loginService.user.role==='admin'">
+                        <a class="nav-link" routerLink="review" routerLinkActive="active">Review</a>
+                    </li>
+                    <li class="nav-item" *ngIf="loginService.user.role==='admin'">
+                        <a class="nav-link" routerLink="feedback" routerLinkActive="active">Feedback</a>
+                    </li>
+                </ul>
+                <div ngbDropdown placement="bottom-right" class="d-inline-block ml-auto">
+                    <button class="btn btn-outline-primary" id="dropdownBasic2" ngbDropdownToggle>Kategorie</button>
+                    <div ngbDropdownMenu aria-labelledby="dropdownBasic2">
+                        <div class="form-check mx-2" (click)="selectAllTopics()">
+                            <input class="form-check-input" type="checkbox" id="public" [(ngModel)]="allSelected">
+                            <label class="form-check-label">alle Ausgewählt</label>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <form [formGroup]="selection">
+                            <div formArrayName="topics" class="px-2">
+                                <div class="form-check" *ngFor="let topic of selectionFormArray.controls; let i = index" [formGroupName]="i">
+                                    <input class="form-check-input" type="checkbox" id="{{i}}" formControlName="selected" (change)="submit()">
+                                    <label class="form-check-label" for="{{i}}">
+                                        {{topic.value.name}}
+                                    </label>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
-            </form>
+            </div>
+
+            <router-outlet></router-outlet>
         </div>
+        <div class="col-sm-2"></div>
     </div>
 </div>
 
-<router-outlet></router-outlet>
 <router-outlet name="itemModal"></router-outlet>
