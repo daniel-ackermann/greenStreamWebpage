@@ -1,0 +1,10 @@
+<div class="cards">
+    <app-list-item [items]="itemService.getItems()" [loading]="itemService.isLoading()">
+    </app-list-item>
+    <div *ngIf="itemService.moreItemsAvailable()" class="d-flex justify-content-center pb-3 pt-2">
+        <button type="button" (click)="itemService.loadMore(itemService.loadedTopic, 10, itemService.getItems()[itemService.getItems().length-1].watchlist)" class="btn btn-secondary ">Weitere Laden</button>
+    </div>
+    <div *ngIf="itemService.getItems().length == 0 && !itemService.isLoading()" class="alert alert-light m-2" role="alert ">
+        Your watch list is empty. You can add items with the <i class="material-icons">turned_in_not</i>-icon.
+    </div>
+</div>
