@@ -1,6 +1,7 @@
 import { Location } from '@angular/common';
 import { Component, ComponentFactoryResolver, Injector, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
+import { environment } from 'src/environments/environment';
 import { LoginService } from './login.service';
 
 @Component({
@@ -16,9 +17,9 @@ export class AppComponent implements OnInit {
         private viewContainerRef: ViewContainerRef,
         private cfr: ComponentFactoryResolver,
         private injector: Injector,
-        private swUpdate: SwUpdate,
-        private location: Location
+        private swUpdate: SwUpdate
     ) {
+        console.log("Version: " + environment.version);
         // get signedIn status from server
         this.loginService.isSignedIn().catch(() => { });
     }
@@ -35,9 +36,5 @@ export class AppComponent implements OnInit {
                 window.location.reload();
             });
         }
-    }
-
-    closeModal(){
-        // this.location.back();
     }
 }
