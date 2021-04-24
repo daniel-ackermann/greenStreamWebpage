@@ -27,41 +27,18 @@ export class ListItemComponent {
         this.itemService.delete(id);
     }
 
-    updateStatus(data: Status, index: number, remove: boolean = false) {
+    updateStatus(id: number, type: string) {
         if (this.loginService.isLoggedIn) {
-            this.setStatus(data, index, remove);
+            this.itemService.updateStatus(id, type);
         } else {
             this.loginRequestService.requestLogin().then(() => {
-                this.setStatus(data, index, remove);
+                this.itemService.updateStatus(id, type);
             }).catch(() => { })
         }
     }
 
     openItem(url: string, id: number, index: number) {
         window.open(url, "_blank", "noopener noreferrer");
-        this.setStatus({ id: id, watched: true }, index);
-    }
-
-    setStatus(data: Status, index: number, remove: boolean = false) {
-        this.http.post(`${environment.apiMainUrl}/${environment.toggleLikePath}`, data).subscribe();
-        if (typeof data.liked !== 'undefined' && this.items[index].liked != data.liked) {
-            this.items[index].liked = data.liked;
-            if (data.liked) {
-                this.items[index].likes += 1;
-            } else {
-                this.items[index].likes -= 1;
-            }
-        }
-        if (typeof data.watchlist !== 'undefined' && this.items[index].watchlist != data.watchlist) {
-            this.items[index].watchlist = data.watchlist;
-            if (data.watchlist) {
-                this.items[index].marked += 1;
-            } else {
-                this.items[index].marked -= 1;
-            }
-        }
-        if (remove) {
-            delete this.items[index];
-        }
+        this.itemService.updateStatus(id, 'watched');
     }
 }

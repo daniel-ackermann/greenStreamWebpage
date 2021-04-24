@@ -1,5 +1,5 @@
 <div *ngIf="loading" class="d-flex justify-content-center">
-    <div class="spinner-border" role="status">
+    <div class="spinner-border pt-3" role="status">
         <span class="visually-hidden sr-only">Loading...</span>
     </div>
     <!-- <div class="item" *ngFor="let i of [].constructor(15)">
@@ -35,26 +35,27 @@
         <div class="list-item">
             <button class="h5 card-title pointer d-flex justify-content-between p-0" title="Open in a new Tab" (click)="openItem(item.url, item.id, i)">
                 {{item.title}}
-                <i class="material-icons green pl-2" [ngClass]="{'rotate45': item.type_id>7}"
-                    title="{{item.type_name}}">{{item.icon}}</i>
+                <i class="material-icons green pl-2" [ngClass]="{'rotate45': item.type.id==7}"
+                    title="{{item.type.name}}">{{item.type.icon}}</i>
             </button>
             <p class="text-muted d-block pointer" title="Open in a new Tab" (click)="openItem(item.url, item.id, i)">
-                {{item.description}}</p>
+                {{item.description}}
+            </p>
             <div class="icon-footer d-flex justify-content-between">
                 <div>
-                    <button class="action" title="like/unlike" (click)="updateStatus({id: item.id, liked: !item.liked}, i)">
+                    <button class="action" title="like/unlike" (click)="updateStatus(item.id, 'liked')">
                         <i class="material-icons pointer">{{item.liked | likeIcon}}</i>
                         <span class="counter">
                             {{item.likes}}
                         </span>
                     </button>
-                    <button class="action" title="watch later" (click)="updateStatus({id: item.id, watchlist: !item.watchlist}, i)">
+                    <button class="action" title="watch later" (click)="updateStatus(item.id, 'watchlist')">
                         <i class="material-icons pointer">{{item.watchlist | watchList}}</i>
                     </button>
                 </div>
                 <span *ngIf="loginService.isLoggedIn" class="my-auto">
                     <i class="material-icons green" *ngIf="item.created_by_id == loginService.user.id"
-                        title="Reviewed by Admin and Published">{{item.reviewed | reviewed}}</i>
+                        title="Reviewed by Admin and Published {{item.reviewed}}">{{item.reviewed | reviewed}}</i>
                 </span>
                 <div>
                     <i class="material-icons action" title="Edit Item" *ngIf="loginService.isLoggedIn && loginService.user.role === 'admin'" [routerLink]="['..', { outlets: { itemModal: ['edit', item.id] } }]" tabindex="-1">edit</i>
