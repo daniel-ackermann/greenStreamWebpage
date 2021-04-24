@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, OnDestroy, OnInit } from '@angular/core';
 import { Item } from 'src/typings';
 
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { Observable, of, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { LoginService } from './login.service';
@@ -15,13 +15,15 @@ import { Router } from '@angular/router';
 })
 export class ItemService implements OnInit {
     items: Item[] = [];
+    recommended: Item[] = [];
     loading: boolean = true;
     moreAvailable: boolean = false;
     selectedTopics: number[] = [];
     loadedTopic: string = environment.itemsPath;
     loadedSearchText: string = "";
+    start = 10;
 
-    constructor(private http: HttpClient, private loginService: LoginService, private loginRequestService: LoginRequestService, private router: Router) {}
+    constructor(private http: HttpClient, private loginService: LoginService, private loginRequestService: LoginRequestService, private router: Router) { }
 
     ngOnInit() {
         this.loading = true;
@@ -40,19 +42,31 @@ export class ItemService implements OnInit {
         return this.moreAvailable;
     }
 
-    loadMore(type: string, limit: number = 10, start: number = 0) {
+    loadMore(type: string, limit: number = 10, start: number = this.start) {
         this.loadItems(type, limit, start).subscribe((data: Item[]) => {
             this.items = this.items.concat(data);
         });
     }
-    load(type: string, limit: number = 10, start: number = 0, searchText: string = "") {
-        console.log(type, searchText, this.selectedTopics);
-        return this.loadItems(type, limit, start, searchText).pipe(tap((data: Item[]) => {
-            this.items = data;
-        }))
+    load(type: string, limit: number = 10, start: number = this.start, searchText: string = "") {
+        return this.loadItems(type, limit, start, searchText).pipe(
+            tap((data: Item[]) => {
+                this.items = data;
+            }),
+            catchError((err) => {
+                console.log(err);
+                if (!this.loginService.isLoggedIn) {
+                    return this.loginRequestService.requestLogin().then((user) => {
+                        this.load(type, limit, start, searchText);
+                    }).catch(() => {
+                        this.router.navigate(['list', 'all']);
+                    });
+                }
+            })
+        )
     }
 
-    loadItems(type: string, limit: number = 10, start: number = 0, searchText: string = ""): Observable<Item[]> {
+    loadItems(type: string, limit: number = 10, start: number = this.start, searchText: string = ""): Observable<Item[]> {
+        this.start = start;
         this.loadedTopic = type;
         this.loadedSearchText = searchText;
         const url = `${environment.apiMainUrl}/${type}/${limit + 1}/${start}${this.loadedSearchText}?topics=${this.selectedTopics}`;
@@ -89,6 +103,28 @@ export class ItemService implements OnInit {
         this.removeFromList(id);
     }
 
+    updateStatus(id: number, type: string) {
+        for (let i = 0; i < this.items.length; i++) {
+            if (this.items[i].id === id) {
+                let value;
+                let url = `${environment.apiMainUrl}/${environment.itemPath}/status/${type}/${id}`;
+                if (this.items[i][type] === null) {
+                    this.items[i][type] = Math.floor(new Date().getTime() / 1000);
+                    if (type === "liked") {
+                        this.items[i].likes += 1;
+                    }
+                    this.http.put(url, {}).subscribe();
+                } else {
+                    this.items[i][type] = null;
+                    if (type === "liked") {
+                        this.items[i].likes -= 1;
+                    }
+                    this.http.delete(url, {}).subscribe();
+                }
+            }
+        }
+    }
+
     put(item: Item) {
         for (let i = 0; i < this.items.length; i++) {
             if (this.items[i].id === item.id) {
@@ -114,7 +150,21 @@ export class ItemService implements OnInit {
         );
     }
 
-    setTopics(topics: number[]){
+    getRecommended(): Item[] {
+        return this.recommended;
+    }
+
+    loadRecommended(counter: number): Observable<Item[]> {
+        return this.http.get<Item[]>(`${environment.apiMainUrl}/${environment.recommendedItemPath}/${counter}`)
+            .pipe(
+                tap((data: Item[]) => {
+                    this.recommended = data;
+                }),
+                catchError(this.handleError<Item[]>(`getRecommended counter=${counter}`))
+            );
+    }
+
+    setTopics(topics: number[]) {
         this.selectedTopics = topics;
     }
 
@@ -140,7 +190,7 @@ export class ItemService implements OnInit {
         };
     }
 
-    removeFromList(id: number){
+    removeFromList(id: number) {
         for (let i = 0; i < this.items.length; i++) {
             if (this.items[i].id === id) {
                 this.items.splice(i, 1);

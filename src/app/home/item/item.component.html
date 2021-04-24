@@ -9,10 +9,10 @@
                 </h5>
                 <div class="d-flex align-items-start">
                     <i class="material-icons green mx-2" *ngIf="item.reviewed==1 && item.created_by_id == loginService.user.id" title="Reviewed by Admin and Published">verified</i>
-                    <i class=" material-icons action" (click)="updateStatus({id: item.id, liked: !item.liked})">{{
+                    <i class=" material-icons action" (click)="updateStatus(item.id, 'liked')">{{
                         item.liked | likeIcon}}</i>
 
-                    <i class=" material-icons action" (click)="updateStatus({id: item.id, watchlist: !item.watchlist})">{{ item.watchlist | watchList
+                    <i class=" material-icons action" (click)="updateStatus(item.id, 'watchlist')">{{ item.watchlist | watchList
                         }}</i>
                     <span *ngIf="loginService.isLoggedIn">
                         <i class="material-icons action" *ngIf="loginService.user.role === 'admin'"

@@ -19,7 +19,7 @@ export class ItemComponent implements OnInit {
     item: Item;
     feedback: Feedback[] = [];
     feedbackText = new FormControl('');
-    label:number = 1;
+    label: number = 1;
     labels: Label[] = [];
     itemLabels: Label[] = [];
     constructor(
@@ -46,7 +46,7 @@ export class ItemComponent implements OnInit {
     ngOnInit(): void {
 
         this.loginService.onStatusChange.subscribe((loggedIn) => {
-            if(loggedIn === false){
+            if (loggedIn === false) {
                 this.loginRequestService.requestLogin().catch(() => {
                     this.router.navigate(['list', 'all']);
                 })
@@ -73,14 +73,14 @@ export class ItemComponent implements OnInit {
             this.itemLabels = data;
         });
     }
-    
+
     deleteFeedback(id: number, index: number) {
         this.http.delete(`${environment.apiMainUrl}/${environment.deleteFeedbackPath}/${id}`).subscribe();
         this.feedback.splice(index, 1);
     }
 
-    addFeedback(){
-        if(this.label == 0 && this.feedbackText.value == ""){
+    addFeedback() {
+        if (this.label == 0 && this.feedbackText.value == "") {
             return;
         }
         const newFeedback = {
@@ -88,8 +88,8 @@ export class ItemComponent implements OnInit {
             feedback: this.feedbackText.value,
             information_id: this.id,
             // created, username sind nur für das webinterface und werden nicht gespeichert! Gespeichert werden automatisch generierte Versionen
-            name: this.labels[this.label-1].name,
-            color: this.labels[this.label-1].color,
+            name: this.labels[this.label - 1].name,
+            color: this.labels[this.label - 1].color,
             created: new Date(),
             username: this.loginService.user.username
         };
@@ -99,34 +99,23 @@ export class ItemComponent implements OnInit {
         this.label = 0;
     }
 
-    updateStatus(data: Status) {
+    updateStatus(id: number, type: string) {
         if (this.loginService.isLoggedIn) {
-            this.setStatus(data);
-        }else{
+            this.itemService.updateStatus(id, type);
+        } else {
             this.loginRequestService.requestLogin().then(() => {
-                this.setStatus(data);
-            }).catch(() => {})
+                this.itemService.updateStatus(id, type);
+            }).catch(() => { })
         }
-    }
-
-    setStatus(data: Status) {
-        this.http.post(`${environment.apiMainUrl}/${environment.toggleLikePath}`, data).subscribe();
-        if(typeof data.liked !== 'undefined'){
-            this.item.liked = data.liked;
-        }
-        if(typeof data.watchlist !== 'undefined'){
-            this.item.watchlist = data.watchlist;
-        }
-        this.itemService.put(this.item).subscribe();
     }
 
     close() {
         this.location.back()
     }
 
-    openItem(item: Item){
+    openItem(item: Item) {
         window.open(item.url, "_blank", "noopener noreferrer");
-        this.updateStatus({id: this.item.id, watched: true});
+        this.updateStatus(this.item.id, "watched");
     }
 
     review(id: number) {
@@ -134,14 +123,14 @@ export class ItemComponent implements OnInit {
         this.itemService.review(id);
     }
 
-    loadLabel(){
+    loadLabel() {
         this.http.get<Label[]>(`${environment.apiMainUrl}/${environment.labelsPath}`).subscribe((data: Label[]) => {
             this.labels = data;
         })
     }
-    
-    loadItemLabel(id: number){
+
+    loadItemLabel(id: number) {
         const url = `${environment.apiMainUrl}/${environment.labelItemPath}/${id}`;
-        return this.http.get<Label[]>(url); 
+        return this.http.get<Label[]>(url);
     }
 }

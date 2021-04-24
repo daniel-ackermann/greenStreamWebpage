@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class LikeIconPipe implements PipeTransform {
 
-    transform(status: boolean): string {
+    transform(status: number): string {
         if (status) {
             return "favorite";
         } else {
