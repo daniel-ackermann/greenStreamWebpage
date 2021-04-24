@@ -61,7 +61,7 @@
        inkscape:export-xdpi="48"
        inkscape:export-ydpi="48">
       <circle
-         style="fill:#ececec;fill-opacity:0.9755435;stroke:none;stroke-width:2.42541361;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         style="fill:#66666f;fill-opacity:0.9755435;stroke:none;stroke-width:2.42541361;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
          id="circle1175"
          cx="-70.518723"
          cy="-1027.2136"
@@ -76,7 +76,7 @@
          sodipodi:nodetypes="scccs" />
       <path
          inkscape:connector-curvature="0"
-         style="fill:none;fill-opacity:1;stroke:#71c837;stroke-width:25.56824875;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.98823529"
+         style="fill:none;fill-opacity:1;stroke:#5aa02b;stroke-width:25.56824875;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.98823529"
          d="m 36.546456,-1077.4593 c 0.13763,-41.5721 -35.61091967,-35.8306 -62.90678,-36.154 -21.037525,-0.2492 -49.899243,-4.1142 -59.18855,18.0134 -1.994485,4.7509 -3.086694,10.7001 -3.00546,18.1406 0.43792,40.0978 38.89657,35.6473 61.83765,35.6686 25.3341603,0.023 63.12711,5.4192 63.26314,-35.6686 z"
          id="path1181"
          sodipodi:nodetypes="scsccs" />
@@ -101,13 +101,13 @@
            height="57.196053"
            width="25.828302"
            id="rect1193"
-           style="fill:#554400;fill-opacity:1;stroke:none;stroke-width:21.81427956;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.98823529" />
+           style="fill:#59351f;fill-opacity:1;stroke:none;stroke-width:21.81427956;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.98823529" />
         <!-- Wurzeln -->
         <path
            inkscape:connector-curvature="0"
            id="path1195"
            d="m -319.26871,309.01075 -31.04747,30.85009 60.2958,0.17353 z m 29.24833,31.02362 -0.0832,1.09352 0.57524,-0.57157 z"
-           style="fill:#554400;fill-opacity:1;stroke:none;stroke-width:25.56861877;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.98823529" />
+           style="fill:#59351f;fill-opacity:1;stroke:none;stroke-width:25.56861877;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.98823529" />
       </g>
       <!-- Rechter Stamm -->
       <g
@@ -119,13 +119,13 @@
            height="57.196053"
            width="25.828302"
            id="rect1199"
-           style="fill:#554400;fill-opacity:1;stroke:none;stroke-width:21.81427956;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.98823529" />
+           style="fill:#59351f;fill-opacity:1;stroke:none;stroke-width:21.81427956;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.98823529" />
         <!-- Wurzeln -->
         <path
            inkscape:connector-curvature="0"
            id="path1201"
            d="m -19.861254,-984.5382 -31.04747,30.85009 60.2958003,0.17353 z m 29.2483303,31.02362 -0.0832,1.09352 0.57524,-0.57157 z"
-           style="fill:#554400;fill-opacity:1;stroke:none;stroke-width:25.56861877;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.98823529" />
+           style="fill:#59351f;fill-opacity:1;stroke:none;stroke-width:25.56861877;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.98823529" />
       </g>
     </g>
     <path

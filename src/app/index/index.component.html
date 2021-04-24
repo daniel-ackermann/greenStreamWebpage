@@ -1,20 +1,51 @@
-<h1 id="home">Spannende Ergebnisse aus der Forschung</h1>
-<br>
-<ngb-carousel [showNavigationIndicators]="false" [interval]="2500" [pauseOnHover]="true" [pauseOnFocus]="true">
-    <ng-template ngbSlide *ngFor="let item of items">
-        <div class="picsum-img-wrapper">
-            <img [src]="item.image" class="w-100" alt="{{item.title}}">
+<div class="container">
+    <h1 id="home">Das solltest du über den Klimawandel wissen!</h1>
+    <h4 id="home">Unsere Top 3: Links, die du auf jeden Fall kennen solltest:</h4>
+    <br>
+    <ngb-carousel [showNavigationIndicators]="false" [interval]="3500" [pauseOnHover]="true" [pauseOnFocus]="true">
+        <ng-template ngbSlide *ngFor="let item of items">
+            <div class="picsum-img-wrapper">
+                <img [src]="item.image" class="w-100" alt="{{item.title}}">
+            </div>
+            <div class="carousel-caption">
+                <a href="{{item.link}}" class="caption-title" rel="noopener noreferrer" target="_blank">{{item.title}}</a>
+                <a href="{{item.link}}" class="caption-description" rel="noopener noreferrer" target="_blank">{{item.description}}</a>
+            </div>
+        </ng-template>
+    </ngb-carousel>
+    <br>
+    <h1>Neugierig?</h1>
+    <br> Du willst dich schnell und einfach zum Thema Nachhaltigkeit und Klimawandel informieren?
+    <br> Dann bist du hier genau richtig!
+    <br> Stöbere gerne in der <u><a [routerLink]="['../list']">Liste</a></u> nach Themen und Links, die dich interessieren!
+    <br><br> Wenn du möchtest, kannst du dich anmelden und Beiträge, die dich interessieren, speichern, liken oder uns Feedback geben.
+    <br><br> Viel Spaß!
+    <br><br>
+
+    <h1>Mehr Wissen rund um den Klimawandel</h1>
+    <div class="row">
+        <div class="col-sm-4" *ngFor="let item of klimawandel">
+            <div class="card">
+                <div class="card-body">
+                    <a href="{{item.link}}" class="list-title" rel="noopener noreferrer" target="_blank">{{item.title}}</a>
+                    <a href="{{item.link}}" class="list-description" rel="noopener noreferrer" target="_blank">{{item.description}}</a>
+                </div>
+            </div>
         </div>
-        <div class="carousel-caption">
-            <a href="{{item.link}}" class="caption-title" rel="noopener noreferrer" target="_blank">{{item.title}}</a>
-            <a href="{{item.link}}" rel="noopener noreferrer" target="_blank">{{item.description}}</a>
+    </div>
+    <br>
+    <h1>Du kannst etwas tun!</h1>
+    <div class="row">
+        <div class="col-sm-4" *ngFor="let item of tun">
+            <div class="card">
+                <div class="card-body">
+                    <a href="{{item.link}}" class="list-title" rel="noopener noreferrer" target="_blank">{{item.title}}</a>
+                    <a href="{{item.link}}" class="list-description" rel="noopener noreferrer" target="_blank">{{item.description}}</a>
+                </div>
+            </div>
         </div>
-    </ng-template>
-</ngb-carousel>
-<br>
-<h1>Neugierig?</h1>
-<br>
-<ul>
-    <li>Schaue in der <a [routerLink]="['../list']">Liste</a> nach weiteren Ideen!</li>
-    <li>Lade dir die App herrunter. (Coming soon!)</li>
-</ul>
+    </div>
+    <div class="d-flex justify-content-center pb-3 pt-2">
+        <a type="button" [routerLink]="['../list']" class="btn btn-secondary ">Mehr ansehen</a>
+    </div>
+</div>

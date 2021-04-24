@@ -3,11 +3,11 @@
     h3 {
         text-decoration: underline;
         text-decoration-color: lightgrey;
-        text-decoration-thickness: 5px;
+        text-decoration-thickness: .1em;
     }
     
     .carousel-caption {
-        background-color: rgba(0, 0, 0, 0.3);
+        background-color: rgba(0, 0, 0, 0.4);
         padding-top: 0;
     }
     
@@ -32,8 +32,38 @@
         font-size: 1.75rem;
         padding-bottom: .5em;
         cursor: pointer;
+        font-weight: 400;
+    }
+    
+    .caption-description {
+        font-weight: 700;
     }
     
     .carousel-caption:hover .caption-title {
+        text-decoration: underline;
+    }
+    
+    .list-title {
+        color: black;
+        display: block;
+        font-size: 1.75rem;
+        cursor: pointer;
+        font-weight: 400;
+    }
+    
+    .list-description {
+        display: block;
+        color: black;
+    }
+    /*     
+    .list-description:hover {
+        text-decoration: none;
+    } */
+    
+    .list-title:hover {
+        text-decoration: underline;
+    }
+    
+    .list-description:hover .list-title {
         text-decoration: underline;
     }
