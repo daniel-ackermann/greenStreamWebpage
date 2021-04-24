@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TitleService } from '../title.service';
+import { tap, catchError } from 'rxjs/operators';
 
 @Component({
     selector: 'app-list',
@@ -21,8 +22,12 @@ export class HomeComponent implements OnInit {
     moreItemsAvailable: boolean = true;
     topics: Topic[] = [];
     selection: FormGroup;
+    recommended: Item[] = [];
+    trending: Item[] = [];
+    recommendedId = 1;
 
-    constructor(public itemService: ItemService,
+    constructor(
+        public itemService: ItemService,
         public loginService: LoginService,
         private http: HttpClient,
         private formBuilder: FormBuilder,
@@ -34,6 +39,19 @@ export class HomeComponent implements OnInit {
         // topic form 
         this.selection = this.formBuilder.group({
             topics: new FormArray([])
+        });
+
+        this.loginService.onStatusChange.subscribe((loggedIn) => {
+            if (loggedIn === false) {
+                this.router.navigate(['list', 'all']).then((e) => {
+                    // if 'all' is already focused, reload to remove user_data
+                    if(e === null){
+                        this.itemService.load(this.itemService.loadedTopic, 16, this.itemService.start, this.itemService.loadedSearchText).subscribe();
+                    }
+                })
+            } else {
+                this.itemService.load(this.itemService.loadedTopic, 16, this.itemService.start, this.itemService.loadedSearchText).subscribe();
+            }
         });
     }
 
@@ -47,6 +65,7 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit() {
+
         // load topics into form
         this.http.get<Topic[]>(`${environment.apiMainUrl}/${environment.topicsPath}`).subscribe((data) => {
             this.topics = data;
@@ -54,6 +73,25 @@ export class HomeComponent implements OnInit {
                 topic.selected = false;
                 this.selectionFormArray.push(this.formBuilder.group(topic));
             });
+        });
+        this.http.get<Item[]>(`${environment.apiMainUrl}/${environment.collectionItems}/${this.recommendedId}`)
+        .subscribe({
+            next: (data) => {
+                this.recommended = data;
+            },
+            error: (e) => {
+                console.log(e);
+            }
+        });
+
+        this.http.get<Item[]>(`${environment.apiMainUrl}/api/collection/trending`)
+        .subscribe({
+            next: (data) => {
+                this.trending = data;
+            },
+            error: (e) => {
+                console.log(e);
+            }
         });
     }
 
