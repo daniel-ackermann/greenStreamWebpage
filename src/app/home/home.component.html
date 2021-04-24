@@ -63,7 +63,10 @@
 
             <router-outlet></router-outlet>
         </div>
-        <div class="col-sm-2"></div>
+        <div class="col-sm-2">
+            <app-collection [collection]="recommended" [title]="'Trending'"></app-collection>
+            <app-collection [collection]="recommended" [title]="'Leseempfehlung'"></app-collection>
+        </div>
     </div>
 </div>
 

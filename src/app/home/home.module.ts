@@ -3,23 +3,20 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HomeComponent } from './home.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ListItemComponent } from './list/list-item/list-item.component';
-import { FilterPipe } from './list/list-item/filter.pipe';
 import { SharedModule } from '../shared/shared.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ListComponent } from './list/list.component';
+import { TitleService } from '../title.service';
+import { CollectionModule } from './collection/collection.module';
 
 
 
 @NgModule({
     declarations: [
-        HomeComponent,
-        ListItemComponent,
-        FilterPipe,
-        ListComponent
+        HomeComponent
     ],
     imports: [
         SharedModule,
+        CollectionModule,
         CommonModule,
         FormsModule,
         NgbModule,
@@ -30,7 +27,13 @@ import { ListComponent } from './list/list.component';
             {
                 path: '', component: HomeComponent, children: [
                     { path: 'feedback', loadChildren: () => import('./feedback-list/feedback-list.module').then(m => m.FeedbackListModule) },
-                    { path: ':topic', component: ListComponent },
+                    { path: 'liked', loadChildren: () => import('./liked/liked.module').then(m => m.LikedModule) },
+                    { path: 'created', loadChildren: () => import('./created/created.module').then(m => m.CreatedModule) },
+                    { path: 'all', loadChildren: () => import('./feed/feed.module').then(m => m.FeedModule) },
+                    { path: 'watchlist', loadChildren: () => import('./watchlist/watchlist.module').then(m => m.WatchlistModule) },
+                    { path: 'history', loadChildren: () => import('./watched/watched.module').then(m => m.WatchedModule) },
+                    { path: 'review', loadChildren: () => import('./review/review.module').then(m => m.ReviewModule) },
+                    { path: 'reviewed', loadChildren: () => import('./reviewed/reviewed.module').then(m => m.ReviewedModule) },
                     {
                         path: '**', redirectTo: 'all', pathMatch: 'full'
                     }
@@ -44,6 +47,7 @@ import { ListComponent } from './list/list.component';
         ])
     ],
     bootstrap: [],
+    providers: [TitleService],
     exports: []
 })
 export class HomeModule { }

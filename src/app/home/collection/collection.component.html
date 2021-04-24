@@ -1,0 +1,13 @@
+<h4 class="px-2 pt-4">
+    {{title}}
+</h4>
+<div class="card">
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item p-2" *ngFor="let item of collection; let i = index">
+            <button class="h6 card-title pointer d-flex justify-content-between p-0  m-0" title="Open in a new Tab" (click)="openItem(item.url, item.id, i)">
+            {{item.title}}
+        </button>
+            <!-- <div (click)="openItem(item.url, item.id, i)">{{item.description}}</div> -->
+        </li>
+    </ul>
+</div>
