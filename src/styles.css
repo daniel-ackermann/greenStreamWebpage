@@ -37,7 +37,14 @@ body {
     */
     /* max-width: 60%; */
     flex: auto;
-    margin: .3em .3em .3em .3em;
+    margin: .3em 0;
+}
+
+@media (min-width: 576px) {
+    .item {
+        flex: auto;
+        margin: .3em;
+    }
 }
 
 .footer {
@@ -129,6 +136,20 @@ a:hover {
     left: 50%;
     transform: translate(-50%, 0%);
     width: 90%;
+}
+
+@media (max-width: 768px) {
+    .mobile-menu-dropdown {
+        display: block;
+        background-color: inherit;
+        border: none;
+    }
+}
+
+@media (min-width: 768px) {
+    .dropdown-item:hover {
+        color: black!important;
+    }
 }
 
 @media (min-width: 576px) {

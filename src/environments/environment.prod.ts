@@ -34,5 +34,7 @@ export const environment = {
     labelsPath: "api/labels",
     setFeedbackDoneByLabel: "api/feedbacks/status",
     toggleFeedbackStatus: "api/feedback/status",
-    version: "0.1.3"
+    recommendedItemPath: "api/items/recommended",
+    collectionItems: "api/collection/items",
+    version: "0.1.31"
 };

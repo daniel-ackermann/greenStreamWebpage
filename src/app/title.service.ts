@@ -1,17 +1,15 @@
 import { Injectable } from "@angular/core";
 
-@Injectable({
-    providedIn: "root"
-})
-export class TitleService{
+@Injectable()
+export class TitleService {
     private title: string = "Overview";
-    constructor(){}
+    constructor() { }
 
-    getTitle(){
+    getTitle() {
         return this.title;
     }
 
-    setTitle(title: string){
+    setTitle(title: string) {
         this.title = title;
     }
 }
