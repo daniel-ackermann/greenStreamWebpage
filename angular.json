@@ -37,21 +37,18 @@
                     },
                     "configurations": {
                         "production": {
-                            "fileReplacements": [
-                                {
-                                    "replace": "src/environments/environment.ts",
-                                    "with": "src/environments/environment.prod.ts"
-                                }
-                            ],
-                            "optimization": true,
+                            "fileReplacements": [{
+                                "replace": "src/environments/environment.ts",
+                                "with": "src/environments/environment.prod.ts"
+                            }],
+                            "optimization": false,
                             "outputHashing": "all",
                             "sourceMap": false,
                             "namedChunks": false,
                             "extractLicenses": true,
                             "vendorChunk": false,
                             "buildOptimizer": true,
-                            "budgets": [
-                                {
+                            "budgets": [{
                                     "type": "initial",
                                     "maximumWarning": "500kb",
                                     "maximumError": "1mb"
@@ -64,33 +61,6 @@
                             ],
                             "serviceWorker": true,
                             "ngswConfigPath": "ngsw-config.json"
-                        },
-                        "backend": {
-                            "fileReplacements": [
-                                {
-                                    "replace": "src/environments/environment.ts",
-                                    "with": "src/environments/environment.backend.ts"
-                                }
-                            ],
-                            "optimization": true,
-                            "outputHashing": "all",
-                            "sourceMap": false,
-                            "namedChunks": false,
-                            "extractLicenses": true,
-                            "vendorChunk": false,
-                            "buildOptimizer": true,
-                            "budgets": [
-                                {
-                                    "type": "initial",
-                                    "maximumWarning": "500kb",
-                                    "maximumError": "1mb"
-                                },
-                                {
-                                    "type": "anyComponentStyle",
-                                    "maximumWarning": "2kb",
-                                    "maximumError": "4kb"
-                                }
-                            ]
                         }
                     }
                 },
@@ -103,9 +73,6 @@
                     "configurations": {
                         "production": {
                             "browserTarget": "green-stream-webpage:build:production"
-                        },
-                        "backend": {
-                            "browserTarget": "green-stream-webpage:build:backend"
                         }
                     }
                 },
