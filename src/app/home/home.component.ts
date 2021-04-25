@@ -84,7 +84,7 @@ export class HomeComponent implements OnInit {
             }
         });
 
-        this.http.get<Item[]>(`${environment.apiMainUrl}/api/collection/trending`)
+        this.http.get<Item[]>(`${environment.apiMainUrl}/${environment.itemsTrending}/5`)
         .subscribe({
             next: (data) => {
                 this.trending = data;

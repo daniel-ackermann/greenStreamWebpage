@@ -36,5 +36,6 @@ export const environment = {
     toggleFeedbackStatus: "api/feedback/status",
     recommendedItemPath: "api/items/recommended",
     collectionItems: "api/collection/items",
-    version: "0.1.31"
+    itemsTrending: "api/items/trending",
+    version: "0.1.32"
 };
