@@ -31,10 +31,10 @@ export class AppComponent implements OnInit {
             const { instance } = this.viewContainerRef.createComponent(factory, null, this.injector);
         }
 
-        if (this.swUpdate.isEnabled) {
-            this.swUpdate.available.subscribe(() => {
-                window.location.reload();
-            });
-        }
+        // if (this.swUpdate.isEnabled) {
+        //     this.swUpdate.available.subscribe(() => {
+        //         window.location.reload();
+        //     });
+        // }
     }
 }

@@ -6,9 +6,9 @@ export interface Item {
     url: string;
     description: string;
     title: string;
-    simple?: boolean|number;
+    simple?: number;
     reviewed?:number;
-    public?: boolean; 
+    public?: number; 
     position?: number
     type?: Type;
     topic?: Topic;

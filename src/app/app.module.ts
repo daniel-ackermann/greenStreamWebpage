@@ -41,8 +41,7 @@ import { environment } from '../environments/environment';
             {
                 useHash: false,
                 scrollPositionRestoration: 'enabled',
-                anchorScrolling: 'enabled',
-                relativeLinkResolution: 'legacy'
+                anchorScrolling: 'enabled'
             }
         ),
         ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })

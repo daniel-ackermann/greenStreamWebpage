@@ -4,7 +4,6 @@ import { RouterModule } from '@angular/router';
 import { ItemComponent } from './item.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { NgbButtonsModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -15,7 +14,6 @@ import { NgbButtonsModule } from '@ng-bootstrap/ng-bootstrap';
         SharedModule,
         CommonModule,
         FormsModule,
-        NgbButtonsModule,
         ReactiveFormsModule,
         RouterModule.forChild([
             {

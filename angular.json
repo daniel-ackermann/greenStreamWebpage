@@ -128,5 +128,8 @@
             }
         }
     },
-    "defaultProject": "green-stream-webpage"
+    "defaultProject": "green-stream-webpage",
+    "cli": {
+      "analytics": false
+    }
 }

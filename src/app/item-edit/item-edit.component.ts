@@ -94,9 +94,7 @@ export class ItemEditComponent implements OnInit {
     }
 
     save() {
-        const newItem = this.item.getRawValue();
-        delete newItem.view_external;
-        delete newItem.name;
+        let newItem = this.getFormDataAsItem(this.item.getRawValue())
         newItem.type = this.types.filter(type => type.id == newItem.type.id)[0];
         newItem.topic = this.topics.filter(topic => topic.id == newItem.topic.id)[0];
         console.log("save");
@@ -110,6 +108,16 @@ export class ItemEditComponent implements OnInit {
             });
         }
         this.location.back();
+    }
+
+    getFormDataAsItem(data:any): Item{
+        delete data.view_external;
+        delete data.name;
+        return {
+            ...data,
+            likes: 0,
+            marked: 0
+        }
     }
 
     close(){
@@ -129,7 +137,7 @@ export class ItemEditComponent implements OnInit {
 
     review() {
         if(this.id){
-            this.item.controls.reviewed.setValue(true)
+            this.item.controls.reviewed.setValue(1)
             this.itemService.review(this.id);
         }
     }
